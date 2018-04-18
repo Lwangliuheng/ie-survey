@@ -2354,6 +2354,8 @@
            for(var i = 0; i < this.ImgInfo.length; i++){
               var obj = {};
               obj.licenseNo = this.ImgInfo[i].originalVehicleLicenseNo;
+              //cs
+              //obj.surveyBaseInfoId = 1997;
               obj.surveyBaseInfoId = this.ImgInfo[i].id;
               obj.damagedPart = arr[i];
               obj.claimAmount = this.claimMoneyOne[i];
@@ -3914,9 +3916,13 @@
          var data = {};
          if(!this.checkedTwoState){
             data.type =  this.typeSelection();
+            //cs
+            //data.surveyNo = "9e9d5480311b4b3496b16c9664fd84e3"
             data.surveyNo = this.leftData.surveyNo;
          }else{
             data.type =  this.typeSelection();
+            //cs
+            //data.surveyNo = "9e9d5480311b4b3496b16c9664fd84e3"
             data.surveyNo = this.leftData.surveyNo;
             data.isTargetSign = this.isTargetSign;
             data.isThirdSign = this.isThirdSign;
@@ -3924,7 +3930,9 @@
          };
           axios.post(this.ajaxUrl+"/survey_single/v1/send",data)
           .then(response => {
+              console.log("测试接口失败")
              if(response.rescode == 200){
+              console.log(response,"测试接口通过")
                $(".orderSelectDialog").addClass("hide");
                this.open6();
              }
@@ -3941,11 +3949,13 @@
     //查勘完成
       openOrderEndBox(){
 //        $(".loadingBox").removeClass('hide')
-         
+          //测试
+         this.setElectronic();
+         return
         var data = {
           "surveyNo":this.roomId,
           "isExceptionComplete":this.isExceptionComplete,
-          "exceptionCode":this.exceptionCode,
+          // "exceptionCode":this.exceptionCode,
           "exceptionComment": this.exceptionComment
         }
         axios.post(this.ajaxUrl+"/survey/order/v1/weixin/complete",data)

@@ -601,9 +601,13 @@ export default {
          var type =  this.typeSelection();
          var data = {};
            data.type =  this.typeSelection();
+           //cs
+           //data.surveyNo = "9e9d5480311b4b3496b16c9664fd84e3"
            data.surveyNo = this.caseDetailData.accidentInfo.surveyNo;
           if(this.selectStateOne){
             data.type =  this.typeSelection();
+            //cs
+            //data.surveyNo = "9e9d5480311b4b3496b16c9664fd84e3"
             data.surveyNo = this.caseDetailData.accidentInfo.surveyNo;
             data.isTargetSign = this.isTargetSign;
             data.isThirdSign = this.isThirdSign;
@@ -634,6 +638,8 @@ export default {
              for(var i = 0; i < this.ImgInfo.length; i++){
                var obj = {};
                 obj.licenseNo = this.ImgInfo[i].originalVehicleLicenseNo;
+                //cs
+                //obj.surveyBaseInfoId = 1997;
                 obj.surveyBaseInfoId = this.ImgInfo[i].id;
                 obj.damagedPart = arr[i];
                 obj.claimAmount = this.claimMoneyOne[i];
