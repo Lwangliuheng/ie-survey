@@ -202,6 +202,34 @@
     left: 0;
     z-index: 201;
   }
+  .szc-wrap{
+     background: rgba(0,0,0,0.3);
+    width:100%;
+    position: fixed;
+    overflow: scroll;
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 201;
+  }
+  .czm-wrap{
+    background: rgba(0,0,0,0.3);
+    width:100%;
+    position: fixed;
+    overflow: scroll;
+    min-height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 201;
+  }
+  .czm-content{
+    width: 500px;
+    margin: 6vh;
+    margin-left:35%;
+    background: #fff;
+    margin-top: 20vh;
+    position: relative;
+  }
   .claim-content{
     width: 650px;
     margin: 6vh;
@@ -257,6 +285,11 @@
     padding-left:30px;
     padding-bottom:30px;
   }
+  .but-czm{
+     width:300px;
+     margin-left:100px;
+     margin-bottom:20px;
+  }
   .but-claim{
     width:300px;
     margin-left:180px;
@@ -270,6 +303,10 @@
      color:#000;
     background-color:#fff;
   }
+  .czxm{
+    margin-left:10px;
+    color:#2fab3b;
+  }
 </style>
 <template>
   <div class="caseDetail">
@@ -278,15 +315,17 @@
       <div class="oneMonitor clear">
         <h4 class="dialogTitle">案件详情</h4>
          <div class="send-documents">
-             <span class="sent-but" @click="setElectronic">发送单证</span>
+            <!--  <span class="sent-but" @click="setElectronic">发送单证</span> -->
              <div class="select-wrap">
                 <el-checkbox-group v-model="checkedTypes" @change="handleCheckedChange">
                    <!--  <el-checkbox v-for="city in cityOptions" :label="city" :key="city">{{city}}</el-checkbox> -->
-                    <el-checkbox label="电子查勘单" disabled></el-checkbox>
+                    <el-checkbox label="电子查勘单" disabled @click="getDetails"></el-checkbox>
                     <el-checkbox label="专赔授权书" :disabled="selectStateOne"></el-checkbox>
                     <el-checkbox label="快赔协议" :disabled="selectStateTwo"></el-checkbox>
                 </el-checkbox-group>
              </div>
+             <span class="sent-but" @click="setElectronic">发送单证</span>
+             <span class="sent-but" @click="setDetails">查看</span>
             
          </div>
 
@@ -321,6 +360,36 @@
           </el-checkbox-group>
           </div>
           <el-button type="primary" class="but-claim" @click="claimButton">确定</el-button>
+        </div>
+    </div>
+        <!-- 标车姓名弹框 -->
+    <div class="czm-wrap hide">
+        <div class="czm-content">
+          <div class="top-wrap">
+              <h4>请完善理信息</h4>
+              <span @click="closeCzmDiolag" class="xmark">×</span>
+          </div>
+          
+          <div class="che-one">
+                <el-input placeholder="请输入姓名" clearable @blur="czmInput"></el-input>
+          </div>
+    
+          <el-button type="primary" class="but-czm" @click="czmButton">确定</el-button>
+        </div>
+    </div>
+        <!-- 三者车姓名弹框 -->
+    <div class="szc-wrap hide">
+        <div class="czm-content">
+          <div class="top-wrap">
+              <h4>请完善理信息</h4>
+              <span @click="closeSzcDiolag" class="xmark">×</span>
+          </div>
+          
+          <div class="che-one">
+                <el-input placeholder="请输入手机号" @blur="szcInput"></el-input>
+          </div>
+    
+          <el-button type="primary" class="but-czm" @click="szcButton">确定</el-button>
         </div>
     </div>
 
@@ -359,7 +428,7 @@
             <div class="aimheader">标的车</div>
             <div class="aimInfo">
               <table class="table" border="0" cellspacing="0" cellpadding="0">
-                <tr><td>车牌号:</td><td>{{caseDetailData.reportVehicleInfo.vehicleLicenseNo}}</td><td>车主姓名:</td><td>{{caseDetailData.reportVehicleInfo.reporterName}}</td><td>车主电话: </td><td>{{caseDetailData.reportVehicleInfo.reporterPhoneNo}}</td></tr>
+                <tr><td>车牌号:</td><td>{{caseDetailData.reportVehicleInfo.vehicleLicenseNo}}</td><td>车主姓名:</td><td>{{caseDetailData.reportVehicleInfo.reporterName}}<span class="czxm" @click="czxm($event,caseDetailData.reportVehicleInfo.id)">编辑</span></td><td>车主电话: </td><td>{{caseDetailData.reportVehicleInfo.reporterPhoneNo}}</td></tr>
                 <tr><td>保险公司:</td><td> {{caseDetailData.reportVehicleInfo.insuranceCompanyName}}</td><td>保险公司城市： </td><td>{{caseDetailData.reportVehicleInfo.insuranceCompanyCity}}</td><td> 处理机构：</td><td>{{caseDetailData.reportVehicleInfo.processOrgName}}</td></tr>
               </table>
               <div class="aimCarImg" v-if="totalCountAim != 0">
@@ -386,7 +455,7 @@
             <div class="aimheader">三者车({{item.vehicleLicenseNo}})<span style="color:#fff;padding-right:10px;cursor: pointer;" @click="savethirdCar(item.vehicleLicenseNo)" class="right">保存</span></div>
             <div class="aimInfo">
               <table class="table" border="0" cellspacing="0" cellpadding="0">
-                <tr><td>车牌号:</td><td>{{item.vehicleLicenseNo}}</td><td>车主电话: </td><td v-if="item.contactPhoneNo == null || item.contactPhoneNo == ''"> <input class="thirdphone" type="tel" maxlength="11" style="height:35px;" value="暂无"/></td><td v-else><input  maxlength="11" class="thirdphone" style="height:35px;" type="tel" :value="item.contactPhoneNo"/></td></tr>
+                <tr><td>车牌号:</td><td>{{item.vehicleLicenseNo}}</td><td>车主电话: </td><td v-if="item.contactPhoneNo == null || item.contactPhoneNo == ''"> <input class="thirdphone" type="tel" maxlength="11" style="height:35px;" value="暂无"/><span class="czxm" @click="szcPhone($event,item.id,index)">编辑</span></td><td v-else><input  maxlength="11" class="thirdphone" style="height:35px;" type="tel" :value="item.contactPhoneNo"/><span class="czxm" @click="szcPhone($event,item.id,index)">编辑</span></td></tr>
               </table>
               <div class="aimCarImg thirdImg" v-if="item.thirdCarImg.length!=0">
                 <ul class="suibian">
@@ -451,12 +520,18 @@
   </div>
 </template>
 <script>
-
+import Bus from "../assets/js/bus.js"
 import Viewer from 'viewerjs';
 import axios from 'axios'
 export default {
   data() {
       return{
+        id:"",
+        szcInputIndex:"",
+        szcInputId:"",
+        czmInputId:"",
+        szcInputValue:"",
+        czmInputValue:"",
         isTargetSign: true,
         isThirdSign: false,
         claimList:[],
@@ -499,8 +574,9 @@ export default {
 
   },
     created(){
+       this.id = localStorage.getItem("caseDetailDataId")
        this.caseDetailData =  JSON.parse(localStorage.getItem("caseDetailData"));
-       console.log(this.caseDetailData,"shuju")
+       console.log(this.caseDetailData.reportVehicleInfo.reporterName,"shuju")
        this.longitude = this.caseDetailData.accidentInfo.accidentAddrLongitude;
        this.latitude = this.caseDetailData.accidentInfo.accidentAddrLatitude;
        if(this.caseDetailData.sceneSurveyorInfo != null){
@@ -579,6 +655,145 @@ export default {
 //      caseOrder: string
     },
     methods: {
+      getData(){
+          // axios.get(this.ajaxUrl+'/web-surveyor/v1/list')
+          // .then(response => {
+          //   if(response.data.rescode == 200){
+          //     if(response.data.data.length != 0){
+          //       localStorage.setItem("signSeatData",JSON.stringify(response.data.data))
+              
+          //     }else{
+          //       this.open2("暂无数据")
+          //     }
+          //   }else{
+          //     this.open4(response.data.resdes)
+          //     if(response.data.rescode == 300){
+          //       this.$router.push({path:'/'})
+          //     }
+          //   }
+          // }, err => {
+          //   console.log(err);
+          // })
+          // .catch((error) => {
+          //   console.log(error)
+          // })
+      },
+       //xingming
+       czxm(e,id){
+          this.czmInputId = id;
+         $(".czm-wrap").removeClass("hide");
+       },
+       szcPhone(e,id,key){
+          this.szcInputIndex = key;
+          // alert(key)
+          this.szcInputId = id;
+         $(".szc-wrap").removeClass("hide");
+       },
+       szcInput(e){
+        if(e.target.value.length == 0){
+          this.szcInputValue = "";
+          this.$message({
+            showClose: true,
+            message: '请填写手机号',
+            type: 'error'
+          });
+        }else{
+          this.szcInputValue = e.target.value;
+        }
+       },
+       czmInput(e){
+        if(e.target.value.length == 0){
+          this.czmInputValue = "";
+          this.$message({
+            showClose: true,
+            message: '请填写姓名',
+            type: 'error'
+          });
+        }else{
+          this.czmInputValue = e.target.value;
+        }
+       },
+       goCaseDetail(id){
+        axios.get(this.ajaxUrl+"/survey/order/history/v1/details/"+id)
+          .then(response => {
+            if(response.data.rescode == 200){
+              // alert(333333)
+              // var data = JSON.stringify(response.data.data)
+              //localStorage.setItem("caseDetailData",data);
+              //this.$set(caseDetailData,response.data.data) ;
+              Vue.set( this.caseDetailData,response.data.data)
+            }
+          }, err => {
+            console.log(err);
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+       },
+       szcButton(){
+        // alert(this.id)
+          if(this.szcInputValue.length == 0){
+              this.$message({
+                showClose: true,
+                message: '请填写手机号',
+                type: 'error'
+              });
+          }else{
+            var data = [{
+                "surveyBaseInfoId":this.szcInputId,
+                "phone": this.szcInputValue
+            }]
+            console.log(this.ajaxUrl,3333333333333)
+            ///boot-pub-survey-manage//survey_base/v1/modify
+           axios.post(this.ajaxUrl+"/survey_base/v1/modify",data).then(response => {
+             if(response.status == 200){
+              //this.goCaseDetail(this.id);
+               $(".szc-wrap").addClass("hide");
+               // alert(this.szcInputIndex)
+               this.thirdCar[this.szcInputIndex].contactPhoneNo = this.szcInputValue
+               // $(".orderSelectDialog").addClass("hide");
+               this.open6();
+               // window.location.reload();
+             }
+          }, err => {
+            
+          })
+          .catch((error) => {
+          
+          })
+             //alert("jiekou")
+          }
+       },
+       czmButton(e){
+          if(this.czmInputValue.length == 0){
+              this.$message({
+                showClose: true,
+                message: '请填写姓名',
+                type: 'error'
+              });
+          }else{
+            var data = [{
+                "surveyBaseInfoId":this.czmInputId,
+                "personName": this.czmInputValue
+            }]
+            ///boot-pub-survey-manage//survey_base/v1/modify
+           axios.post(this.ajaxUrl+"/survey_base/v1/modify",data).then(response => {
+             if(response.status == 200){
+               // Bus.$emit('addBar',this.id)
+               // this.goCaseDetail(this.id);
+               this.caseDetailData.reportVehicleInfo.reporterName = this.czmInputValue
+               $(".czm-wrap").addClass("hide");
+               this.open6();
+             }
+          }, err => {
+            
+          })
+          .catch((error) => {
+          
+          })
+             //alert("jiekou")
+          }
+       },
        typeSelection(){
             var str = "1";
             if(this.selectStateTwo){
@@ -595,6 +810,36 @@ export default {
           message: '操作成功',
           type: 'success'
         });
+      },
+      setDetails(){
+
+         var type = this.caseDetailData.surveySingleStatus
+
+         if(type == null){
+            this.$message({
+              showClose: true,
+              message: '数据已经发送',
+              type: 'error'
+            });
+            return 
+          }
+          // alert(type)
+           var id = this.caseDetailData.surveySingleId
+           axios.get(this.ajaxUrl+"/survey_single/v1/view?surveySingleId="+ id)
+              .then(response => {
+                    window.location.href = "https://survey.zhongchebaolian.com" + this.ajaxUrl+"/survey_single/v1/view?surveySingleId="+ id;
+                    //console.log(response.data,6666666666666)
+                // if(response.data.rescode == 200){
+                //   this.open2(response.data.resdes)
+                // }else{
+                //   this.open4(response.data.resdes)
+                // }
+              }, err => {
+                console.log(err);
+              })
+              .catch((error) => {
+                console.log(error)
+              })
       },
       //发送订单
         setElectronic(){
@@ -766,6 +1011,12 @@ export default {
               $(e.target).addClass("checkoutGreen");
               $(e.target).removeClass("checkoutWhite");
             }
+        },
+        closeSzcDiolag(){
+            $(".szc-wrap").addClass("hide");
+        },
+        closeCzmDiolag(){
+           $(".czm-wrap").addClass("hide");
         },
         closeClaimDiolag(){
            $(".claim-wrap").addClass("hide");

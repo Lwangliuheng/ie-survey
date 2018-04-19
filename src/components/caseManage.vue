@@ -986,7 +986,7 @@
       </div>
     </div>
     <!-- 理赔信息弹框 -->
-    <div class="claim-wrap hide">
+    <!-- <div class="claim-wrap hide">
         <div class="claim-content">
           <div class="top-wrap">
               <h4>请完善理赔信息</h4>
@@ -1017,7 +1017,7 @@
           </div>
           <el-button type="primary" class="but-claim" @click="claimButton">确定</el-button>
         </div>
-    </div>
+    </div> -->
     <div class="orderSelectDialog hide">
       <div class="orderSelectDialogBox">
           <h4>请选择订单完成类型</h4>
@@ -1029,12 +1029,12 @@
                 <option value="0">异常办结</option>
               </select>
             </div>
-            <textarea data-m class="textareaBox" v-model="exceptionComment" placeholder="请输入异常办理描述"></textarea>
-             <div class="but_wrap">
+            <textarea data-m class="textareaBox" v-model="exceptionComment" placeholder="请输入办结描述"></textarea>
+             <!-- <div class="but_wrap">
                 <span class="setGreen">发送电子查勘单</span>
                 <span class="setWhite" @click="checkedOneEven">发送转账授权书</span>
                 <span class="setWhite" @click="checkedTwoEven">快赔协议书</span>
-             </div>
+             </div> -->
             <div class="openOrderEndBox">
               <span class="backColorGreen surebutton" @click="openOrderEndBox">确定</span>
             </div>
@@ -1445,6 +1445,7 @@
     },
     data() {
       return{
+        xsource:"",
         claimList:[],
         isTargetSign: false,
         isThirdSign: false,
@@ -2651,6 +2652,7 @@
   },
       //监听消息
         onMsgNotify(newMsgList) {
+
           console.info('监听新消息事件 =====> ' + newMsgList);
 //            console.warn('监听新消息事件 =====> ' + newMsgList);
           var sess, newMsg,selSess;
@@ -2663,6 +2665,7 @@
             selSess = newMsg.getSession();
             //在聊天窗体中新增一条消息
             this.dataString = convertMsgtoHtml(newMsg);
+            console.log(this.dataString,88888888888888888)
 
             this.dataString = this.dataString.replace(/&quot;/g, "'");
             this.DataInfo()
@@ -2829,6 +2832,8 @@
         }else if(this.photoType == ''){
           this.open4("请选择照片类型")
         }else{
+          //重新
+          //this.xsource = this.source;
           if(this.source == 'wechat'){
             var url = '/survey/order/v2/photo/choice';
           }else{
@@ -3070,6 +3075,10 @@
           that.leftData = that.dataString.orderData;
 //          that.leftData = that.dataString.surveyOrderInfo;
           that.videoroomID = that.dataString.videoRoomId;
+          if('source' in that.dataString){
+              that.xsource = that.dataString.source;
+              //小程序发送的IM
+            }
             console.log('房间id'+that.videoroomID)
             roomID = that.videoroomID;
             that.roomId = that.leftData.surveyNo;
@@ -3954,7 +3963,8 @@
           // "exceptionCode":this.exceptionCode,
           "exceptionComment": this.exceptionComment
         }
-        if(this.source == 'wechat'){
+        // alert(this.source)
+        if(this.xsource == 'wechat'){
             var url = '/survey/order/v1/weixin/complete';
           }else{
             var url = '/survey/order/v1/complete';
@@ -3976,7 +3986,7 @@
               this.processOnlineActive = false;
               this.OnlineActive  = false;
               this.doingActive = false;
-
+              this.xsource = "";
               $(".orderSelectDialog").addClass("hide");
                this.open6();
               //this.setElectronic();
@@ -3984,7 +3994,7 @@
                 //console.log(response.data.resdes,444444444)
 //              $(".loadingBox").addClass('hide')
               //this.open4(response.data.resdes.exceptionComment)
-              this.open4("请将信息填写完成！")
+              this.open4("请输入办结描述")
             }
           }, err => {
             console.log(err);
@@ -4001,7 +4011,8 @@
           //测试
          // this.setElectronic();
          // return
-          this.setElectronic();
+          //this.setElectronic();
+         this.surveyComplete();
       },
       closeopenOrderEndxDialog(){
         $(".openOrdercompleteDialog").addClass("hide");

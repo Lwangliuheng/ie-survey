@@ -292,12 +292,14 @@
 
 </template>
 <script>
+  import Bus from "../assets/js/bus.js"
   import axios from 'axios'
   import caseDetail from '../components/caseDetail'
   import signSeats from '../components/signSeats'
   export default {
     data() {
       return {
+        id:"",
         documentsState:"",
         insurecode: "",
         companeyActive: false,
@@ -576,7 +578,9 @@
           .then(response => {
             if(response.data.rescode == 200){
               var data = JSON.stringify(response.data.data)
+              console.log(response.data.data.reportVehicleInfo.reporterName,"xixixixixixixixix")
               localStorage.setItem("caseDetailData",data);
+              localStorage.setItem("caseDetailDataId",id);
               this.$store.commit('setCaseDetailActive', true);
               this.caseDetailActive = this.$store.state.caseDetailActive;
             }
