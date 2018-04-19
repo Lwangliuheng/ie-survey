@@ -22,6 +22,7 @@
     right: 15px;
     top: 0;
     cursor: pointer;
+    z-index: 10000;
   }
   .detailContent{
     overflow-y: scroll;

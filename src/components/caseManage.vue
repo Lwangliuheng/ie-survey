@@ -2688,6 +2688,7 @@
           }else if('imgurl' in this.dataString){//监听收到图片
             if('source' in this.dataString){
               this.source = this.dataString.source;
+
               //小程序发送的IM
             }
             console.log('2193'+this.dataString.imgurl)
@@ -3931,10 +3932,10 @@
           axios.post(this.ajaxUrl+"/survey_single/v1/send",data)
           .then(response => {
               console.log("测试接口失败")
-             if(response.rescode == 200){
-              console.log(response,"测试接口通过")
-               $(".orderSelectDialog").addClass("hide");
-               this.open6();
+             if(response.data.rescode == 200){
+              //console.log(response,"测试接口通过")
+               this.surveyComplete();
+               
              }
           }, err => {
             console.log(err);
@@ -3946,19 +3947,19 @@
           })
         console.log(data,5555555555)
       },
-    //查勘完成
-      openOrderEndBox(){
-//        $(".loadingBox").removeClass('hide')
-          //测试
-         this.setElectronic();
-         return
-        var data = {
+      surveyComplete(){
+         var data = {
           "surveyNo":this.roomId,
           "isExceptionComplete":this.isExceptionComplete,
           // "exceptionCode":this.exceptionCode,
           "exceptionComment": this.exceptionComment
         }
-        axios.post(this.ajaxUrl+"/survey/order/v1/weixin/complete",data)
+        if(this.source == 'wechat'){
+            var url = '/survey/order/v1/weixin/complete';
+          }else{
+            var url = '/survey/order/v1/complete';
+          }
+        axios.post(this.ajaxUrl+url,data)
           .then(response => {
 //            $(".loadingBox").addClass('hide')
             if(response.data.rescode == 200){
@@ -3975,10 +3976,15 @@
               this.processOnlineActive = false;
               this.OnlineActive  = false;
               this.doingActive = false;
-              this.setElectronic();
+
+              $(".orderSelectDialog").addClass("hide");
+               this.open6();
+              //this.setElectronic();
             }else{
+                //console.log(response.data.resdes,444444444)
 //              $(".loadingBox").addClass('hide')
-              this.open4(response.data.resdes)
+              //this.open4(response.data.resdes.exceptionComment)
+              this.open4("请将信息填写完成！")
             }
           }, err => {
             console.log(err);
@@ -3988,6 +3994,14 @@
             console.log(error)
             $(".loadingBox").addClass('hide')
           })
+      },
+    //查勘完成
+      openOrderEndBox(){
+//        $(".loadingBox").removeClass('hide')
+          //测试
+         // this.setElectronic();
+         // return
+          this.setElectronic();
       },
       closeopenOrderEndxDialog(){
         $(".openOrdercompleteDialog").addClass("hide");
