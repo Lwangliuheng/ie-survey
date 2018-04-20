@@ -197,7 +197,7 @@
     width:100%;
     position: fixed;
     overflow: scroll;
-    min-height: 100vh;
+    height: 100vh;
     top: 0;
     left: 0;
     z-index: 201;
@@ -236,6 +236,8 @@
     margin-left:50%;
     background: #fff;
     margin-top: 20vh;
+    height:500px;
+    overflow: scroll;
     position: relative;
   }
   .top-wrap{
@@ -326,6 +328,7 @@
              </div>
              <span class="sent-but" @click="setElectronic">发送单证</span>
              <span class="sent-but" @click="setDetails">查看</span>
+             <!-- <a :href="url" class="sent-but" @click="setDetails" target="_blank">查看</a> -->
             
          </div>
 
@@ -337,7 +340,7 @@
               <span @click="closeClaimDiolag" class="xmark">×</span>
           </div>
           
-          <div class="che-one" v-for="(item,index) in ImgInfo">
+          <div class="che-one " v-for="(item,index) in ImgInfo">
                <p class="plate">{{item.originalVehicleLicenseNo}}</p>
                <div class="part-wrap part-wrap-one" >
                   <div class="part" @click="part($event,item)" >正前部<span>1</span></div>
@@ -371,7 +374,7 @@
           </div>
           
           <div class="che-one">
-                <el-input placeholder="请输入姓名" clearable @blur="czmInput"></el-input>
+                <el-input placeholder="请输入姓名" clearable @blur="czmInput" maxlength="12"></el-input>
           </div>
     
           <el-button type="primary" class="but-czm" @click="czmButton">确定</el-button>
@@ -515,7 +518,6 @@
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -526,6 +528,7 @@ import axios from 'axios'
 export default {
   data() {
       return{
+        url:"",
         id:"",
         szcInputIndex:"",
         szcInputId:"",
@@ -576,7 +579,7 @@ export default {
     created(){
        this.id = localStorage.getItem("caseDetailDataId")
        this.caseDetailData =  JSON.parse(localStorage.getItem("caseDetailData"));
-       console.log(this.caseDetailData.reportVehicleInfo.reporterName,"shuju")
+       console.log(this.caseDetailData,"shuju")
        this.longitude = this.caseDetailData.accidentInfo.accidentAddrLongitude;
        this.latitude = this.caseDetailData.accidentInfo.accidentAddrLatitude;
        if(this.caseDetailData.sceneSurveyorInfo != null){
@@ -633,6 +636,7 @@ export default {
         this.getCasePhones(1,4,this.caseDetailData.reportVehicleInfo.vehicleLicenseNo,this.surveyNo,"")
        }
         this.accidentVehicleInfos = this.caseDetailData.accidentVehicleInfos;
+        this.getImgInfo();
        if(this.accidentVehicleInfos !== null){
 
          for(let i in this.accidentVehicleInfos){
@@ -642,7 +646,7 @@ export default {
        }
       //获取备注信息
       this.getBeizhu()
-      this.getImgInfo();
+      // this.getImgInfo();
     },
     mounted() {
       if(this.showOldActive){
@@ -690,6 +694,8 @@ export default {
          $(".szc-wrap").removeClass("hide");
        },
        szcInput(e){
+         var phone = e.target.value;
+         var r = /^((0\d{2,3}-\d{7,8})|(1([358][0-9]|4[579]|66|7[0135678]|9[89])[0-9]{8}))$/;
         if(e.target.value.length == 0){
           this.szcInputValue = "";
           this.$message({
@@ -698,10 +704,21 @@ export default {
             type: 'error'
           });
         }else{
-          this.szcInputValue = e.target.value;
+          if(!r.test(phone)){
+               this.szcInputValue = "";
+               this.$message({
+                showClose: true,
+                message: '请输入正确手机号',
+                type: 'error'
+              }); 
+          }else{
+            this.szcInputValue = e.target.value;
+          }
+          
         }
        },
        czmInput(e){
+
         if(e.target.value.length == 0){
           this.czmInputValue = "";
           this.$message({
@@ -731,7 +748,7 @@ export default {
           })
        },
        szcButton(){
-        // alert(this.id)
+          // alert(this.szcInputValue)
           if(this.szcInputValue.length == 0){
               this.$message({
                 showClose: true,
@@ -811,6 +828,15 @@ export default {
           type: 'success'
         });
       },
+      openWin(url){
+         var a = document.createElement("a");
+         a.setAttribute("href",url);
+         a.setAttribute("target","_blank");
+         a.setAttribute("id","camnpr");
+         document.body.appendChild(a);
+         a.click();
+         
+      },
       setDetails(){
 
          var type = this.caseDetailData.surveySingleStatus
@@ -818,28 +844,40 @@ export default {
          if(type == null){
             this.$message({
               showClose: true,
-              message: '数据已经发送',
+              message: '单证还未发送',
               type: 'error'
             });
             return 
           }
+          var id = this.caseDetailData.surveySingleId
+            localStorage.setItem("wIdData",id);
+            var url = window.location.href.substring(0,(window.location.href.indexOf("#")+2));
+            console.log(url,88888888888888888);
+            console.log(url+ "message");
+            window.open(url+ "message")
           // alert(type)
-           var id = this.caseDetailData.surveySingleId
-           axios.get(this.ajaxUrl+"/survey_single/v1/view?surveySingleId="+ id)
-              .then(response => {
-                    window.location.href = "https://survey.zhongchebaolian.com" + this.ajaxUrl+"/survey_single/v1/view?surveySingleId="+ id;
-                    //console.log(response.data,6666666666666)
-                // if(response.data.rescode == 200){
-                //   this.open2(response.data.resdes)
-                // }else{
-                //   this.open4(response.data.resdes)
-                // }
-              }, err => {
-                console.log(err);
-              })
-              .catch((error) => {
-                console.log(error)
-              })
+          //this.$router.push("message");
+            // var id = this.caseDetailData.surveySingleId
+            // var url = window.location.href.substring(0,(window.location.href.indexOf("#")+2));
+            // console.log(url,88888888888888888);
+            // console.log(url+ this.ajaxUrl+"survey_single/v1/view?surveySingleId="+ id);
+            // window.open(url+ this.ajaxUrl+"survey_single/v1/view?surveySingleId="+ id)
+            // var url = window.location.href.substring(0,(window.location.href.indexOf("#")+2));
+           // axios.get(this.ajaxUrl+"/survey_single/v1/view?surveySingleId="+ id)
+           //    .then(response => {
+           //          console.log(id,"跳转id")
+           //          // var url = "https://survey.zhongchebaolian.com" + this.ajaxUrl+"/survey_single/v1/view?surveySingleId="+ id
+           //          var url = window.location.href.substring(0,(window.location.href.indexOf("#")+2));
+           //          console.log(url,88888888888888888)
+           //          console.log(url+ this.ajaxUrl+"/survey_single/v1/view?surveySingleId="+ id)
+           //          //window.open(url)
+           //          this.openWin(url);
+           //    }, err => {
+           //      console.log(err);
+           //    })
+           //    .catch((error) => {
+           //      console.log(error)
+           //    })
       },
       //发送订单
         setElectronic(){
@@ -980,13 +1018,15 @@ export default {
          // console.log(claimList,6666666666)
          
       },
-        getImgInfo(){
+      getImgInfo(){
             var list = [];
             // console.log(this.caseDetailData.reportVehicleInfo.id,"我是id")
             list.push({originalVehicleLicenseNo:this.caseDetailData.reportVehicleInfo.vehicleLicenseNo,id:this.caseDetailData.reportVehicleInfo.id})
            if(this.thirdActive){
-             var obj = this.thirdCar
+             var obj = this.accidentVehicleInfos
+
             for(var i in obj){
+              //alert(11111)
                list.push({originalVehicleLicenseNo:obj[i].vehicleLicenseNo,id:obj[i].id})
             }
            };
@@ -1199,6 +1239,7 @@ export default {
                     this.$nextTick(() => {
                       this.thirdCar = ''
                       this.thirdCar = this.accidentVehicleInfos;
+                      // this.getImgInfo();
                       for (let i in this.thirdCar) {
                         this.$nextTick(() => {
                           new Viewer(document.getElementsByClassName('suibian')[i], {

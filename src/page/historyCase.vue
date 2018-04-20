@@ -574,11 +574,12 @@
         this.getCaseList()
       },
       goCaseDetail(id){
+
         axios.get(this.ajaxUrl+"/survey/order/history/v1/details/"+id)
           .then(response => {
             if(response.data.rescode == 200){
               var data = JSON.stringify(response.data.data)
-              console.log(response.data.data.reportVehicleInfo.reporterName,"xixixixixixixixix")
+              console.log(response.data.data,"xixixixixixixixix")
               localStorage.setItem("caseDetailData",data);
               localStorage.setItem("caseDetailDataId",id);
               this.$store.commit('setCaseDetailActive', true);
