@@ -322,7 +322,7 @@
                 <el-checkbox-group v-model="checkedTypes" @change="handleCheckedChange">
                    <!--  <el-checkbox v-for="city in cityOptions" :label="city" :key="city">{{city}}</el-checkbox> -->
                     <el-checkbox label="电子查勘单" disabled @click="getDetails"></el-checkbox>
-                    <el-checkbox label="专赔授权书" :disabled="selectStateOne"></el-checkbox>
+                    <el-checkbox label="转赔授权书" :disabled="selectStateOne"></el-checkbox>
                     <el-checkbox label="快赔协议" :disabled="selectStateTwo"></el-checkbox>
                 </el-checkbox-group>
              </div>
@@ -542,11 +542,11 @@ export default {
         claimMoneyOne:{},
         ImgInfo: [],
         checkedCities:[""],
-        cityOptions:["标的签字","三者的签字"],
+        cityOptions:["标的签字","三者签字"],
         checkedTypes:["电子查勘单"],
         selectStateOne:false,
         selectStateTwo:false,
-        // cityOptions:["电子查勘单","专赔授权书","快赔协议"],
+        // cityOptions:["电子查勘单","转赔授权书","快赔协议"],
         beizhuActive: false,
         showOldActive: false,
         currentPageNoAim: 1,//当前页码
@@ -946,7 +946,7 @@ export default {
                    this.isThirdSign = false;
                    
                 }
-              if(this.signatureList[1] == "三者的签字"){
+              if(this.signatureList[1] == "三者签字"){
                    this.isThirdSign = true;
                    this.isTargetSign = false;
                    
@@ -1062,13 +1062,18 @@ export default {
            $(".claim-wrap").addClass("hide");
         },
         handleCheckedChange(value) {
-          if(value[1] == "专赔授权书"){
+          if(value[1] == "转赔授权书"){
                this.selectStateTwo = true;
                return
           }
           if(value[1] == "快赔协议"){
                $('.claim-wrap').removeClass("hide");
                this.selectStateOne = true;
+                if(this.thirdActive){
+                    this.cityOptions = ["标的签字","三者签字"];
+                 }else{
+                   this.cityOptions = ["标的签字"];
+                 }
                return
           }
           this.selectStateTwo = false;
