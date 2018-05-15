@@ -4,6 +4,8 @@ import surveyContant from  '@/page/surveyContant'
 import login from '@/page/login'
 import historyCase from '@/page/historyCase'
 import message from '@/page/message'
+import takePicHelps from '@/components/takePicHelps'
+
 Vue.use(Router);
 
 export default new Router({
@@ -37,6 +39,10 @@ export default new Router({
     {
       path: '/message',
       component: message
+    },
+    {
+      path: '/takePicHelps',
+      component: takePicHelps
     }
   ]
 })

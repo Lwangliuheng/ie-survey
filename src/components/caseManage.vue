@@ -2970,13 +2970,43 @@
                 if (obj.paramlist[0].value == "0") {
                     //截图成功
                     //url = obj.paramlist[1].value; utf8编码,windows下需要转成unicode
-                var url = obj.paramlist[1].value
-                localStorage.setItem("SnapShotUrl",url);
-                 alert(localStorage.getItem("SnapShotUrl"))   
-                }
+                var url = obj.paramlist[1].value+'.binary';
+              
+                this.readFile(url);
             }
         }
-     },
+     }
+    },
+
+    // 读取截屏得到的文件
+    readFile(path){
+      try{
+        var fso = new ActiveXObject("Scripting.FileSystemObject"); //ActiveXObject对象
+        var ForWriting=1;
+        var f1 = fso.GetFile(path);
+        
+        var ts = f1.OpenAsTextStream(1, -2);
+        
+        var content =ts.ReadAll();
+        var src = "data:image/jpeg;base64,"+content;
+
+        alert(src);
+        axios.post(this.ajaxUrl+"/survey/order/v1/photo/upload",{
+          imageBase64: src
+        })
+        .then( res =>{
+          if(res.data.rescode == 200){
+            this.originalPhotoUrl = res.data.data.originalPhotoUrl;
+            $(".takePhonetypeBox").removeClass("hide");
+          }
+        })
+
+
+      }catch (e){
+        alert("exception:"+e);
+      }
+    },
+
       //点击拍照
       takePic(){
         //发送拍照片指令
