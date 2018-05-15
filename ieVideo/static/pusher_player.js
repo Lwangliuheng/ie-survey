@@ -215,17 +215,24 @@ function doUpdatePusherStatusInfo(paramJson) {
 //IPlayerPluginCtrl
 //////////////////////////////////////////////////////
 //player interface
-function doStartPlay(targetURL) {
-    if (targetURL == "" || isRtmpUrl(targetURL) == false) {
-        alert("请输入正确拉流url");
-    }
-    else {
-        player.setTXEPlayType(1);
-        player.setRenderWndSize(480, 360);
-        player.setPlayerEventCallBack(PlayerEventListener, 200);
-        player.startPlay(targetURL, 1);
+// function doStartPlay(targetURL) {
+//     if (targetURL == "" || isRtmpUrl(targetURL) == false) {
+//         alert("请输入正确拉流url");
+//     }
+//     else {
+//         player.setTXEPlayType(1);
+//         player.setRenderWndSize(480, 360);
+//         player.setPlayerEventCallBack(PlayerEventListener, 200);
+//         player.startPlay(targetURL, 1);
 
-    }
+//     }
+// }
+
+//注册事件
+function doStartPlay(player) {
+        
+        player.setPlayerEventCallBack(PlayerEventListener, 200);
+        
 }
 function doStopPlay() {
     player.stopPlay();
@@ -275,6 +282,7 @@ function doPlayerEventCallBack(eventId, paramJson) {
     }
 }
 
+//截图成功
 function doUpdatePlayerSnapShot(paramJson) {
     var obj = JSON.parse(paramJson);
     if (obj.paramCnt == 2) {
@@ -283,7 +291,9 @@ function doUpdatePlayerSnapShot(paramJson) {
             if (obj.paramlist[0].value == "0") {
                 //截图成功
                 //url = obj.paramlist[1].value; utf8编码,windows下需要转成unicode
-                alert(obj.paramlist[1].value)
+            var url = obj.paramlist[1].value
+            localStorage.setItem("SnapShotUrl",url);
+             //alert(localStorage.getItem("SnapShotUrl"))   
             }
         }
     }
@@ -322,17 +332,19 @@ var PusherEventListener = function (msg) {
         doUpdatePusherSnapShot(msg);
     }
 };
-
+//事件监听
 var PlayerEventListener = function (msg) {
     var obj = JSON.parse(msg);
     if (parseInt(obj.eventId) == 200002 && parseInt(obj.objectId) == 200) {
-        doUpdatePlayerStatusInfo(msg);
+        //doUpdatePlayerStatusInfo(msg);
     }
     else if (parseInt(obj.eventId) == 2010) {
+        //截图事件
         doUpdatePlayerSnapShot(msg);
     }
 };
 
 export default {
-    screenShotPlayer:screenShotPlayer
+    screenShotPlayer:screenShotPlayer,
+    doStartPlay:doStartPlay
 }

@@ -2920,6 +2920,7 @@
         this.sendMsg(this.fromAccount,openLight);
       },
       takeScreenshot(e){
+        pushPlayer.doStartPlay(Player);
         pushPlayer.screenShotPlayer(Player,this.roomId);
         console.log(Player,"ahafs");
         console.log(this.roomId,"surveyNo")
