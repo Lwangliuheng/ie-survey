@@ -231,9 +231,13 @@ function doStopPlay() {
     player.stopPlay();
 }
 
-function screenShotPlayer() {
-    var ret = player.captureVideoSnapShot("", "D:\\subTest");
-    //var ret = player.captureVideoSnapShot("C:\\123.jpg", "c:\\");
+//pc端截图调用方法，并改造
+function screenShotPlayer(player,surveyNo) {
+    // var ret = player.captureVideoSnapShot("", "D:\\subTest");
+    // 
+    var time = new Date().getTime();
+    var urlTop = surveyNo + '_' + time;
+    var ret = player.captureVideoSnapShot("C:\\"+urlTop+".jpg", "c:\\");
     if (ret == -1) {
         alert("截图失败");
     }
@@ -328,3 +332,7 @@ var PlayerEventListener = function (msg) {
         doUpdatePlayerSnapShot(msg);
     }
 };
+
+export default {
+    screenShotPlayer:screenShotPlayer
+}

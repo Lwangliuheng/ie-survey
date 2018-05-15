@@ -961,7 +961,7 @@
   }
 </style>
 <template>
-
+  
   <div class="caseManage">
     <div class="loadingBox hide">
       <div class="loadingBoxContent">
@@ -1290,6 +1290,10 @@
                     <div class="player-photo" id="photoButton" @click="takePic">
                       <img src="../images/video_ico_2.png">
                     </div>
+                    <!-- 截图按钮 -->
+                    <div class="player-photo" id="photoButton" @click="takeScreenshot">
+                      <img src="../images/video_ico_2.png">
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1442,7 +1446,8 @@
   import caseList from '@/components/caseList'
   import caseMonitor from '@/components/caseMonitor'
   import Viewer from 'viewerjs';
-  import axios from 'axios'
+  import axios from 'axios';
+  import pushPlayer from '../../ieVideo/static/pusher_player.js';
   export default {
     ready() {
       console.log('111');
@@ -2913,6 +2918,12 @@
       openLight(){
         var openLight = 'WEB$$openLight';
         this.sendMsg(this.fromAccount,openLight);
+      },
+      takeScreenshot(e){
+        pushPlayer.screenShotPlayer(Player,this.roomId);
+        console.log(Player,"ahafs");
+        console.log(this.roomId,"surveyNo")
+        //alert("截图")
       },
       //点击拍照
       takePic(){
