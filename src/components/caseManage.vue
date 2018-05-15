@@ -2237,6 +2237,8 @@
         doingActive: false,
         jianKongActive: true,
         allCaseActive: false,
+        newlongitude:"",//视频的经纬度
+        newlatitude:"",//视频的经纬度
         ImgInfo: [],
         imgIndex: '',
         imgType: "",
@@ -2537,7 +2539,7 @@
     //doLoadActiveXPlugin();
     RTCRoom.httpRequest({
       //url: "https://lvb.qcloud.com/weapp/double_room/get_im_login_info",
-      url: "https://160716803.shipinlipei.com/weapp/double_room/get_im_login_info",
+      url: "https://nweeyr0w.qcloud.la/weapp/double_room/get_im_login_info",
       data: {userIDPrefix: "IE(ActiveX)"},
       method: "POST",
       success: function (ret) {
@@ -2547,7 +2549,7 @@
         //gai
         //ret.data.serverDomain = "https://lvb.qcloud.com/weapp/double_room/";
         //https://160716803.shipinlipei.com
-        ret.data.serverDomain = "https://160716803.shipinlipei.com/weapp/double_room/";
+        ret.data.serverDomain = "https://nweeyr0w.qcloud.la/weapp/double_room/";
         userID = ret.data.userID;
         ret.data.divId = "PusherAreaID";
         ret.data.userName = myUserName;
@@ -2663,7 +2665,7 @@
       //监听消息
         onMsgNotify(newMsgList) {
 
-          console.info('监听新消息事件 =====> ' + newMsgList);
+          console.info('监听新消息事件 =====> ' ,newMsgList);
 //            console.warn('监听新消息事件 =====> ' + newMsgList);
           var sess, newMsg,selSess;
           //获取所有聊天会话
@@ -2671,12 +2673,13 @@
 
           for (var j in newMsgList) {//遍历新消息
             newMsg = newMsgList[j];
+            console.log(newMsg,"xioaxi")
             this.fromAccount = newMsg.fromAccount;
             selSess = newMsg.getSession();
             //在聊天窗体中新增一条消息
             this.dataString = convertMsgtoHtml(newMsg);
             console.log(this.dataString,88888888888888888)
-
+           
             this.dataString = this.dataString.replace(/&quot;/g, "'");
             this.DataInfo()
 
@@ -2694,7 +2697,9 @@
         console.log('dataString2067'+this.dataString)
         if(this.dataString){
           this.dataString = eval("("+this.dataString+")");
-
+            this.newlongitude = this.dataString.longitude;
+            this.newlatitude = this.dataString.latitude;
+            console.log(this.newlatitude,this.newlongitude,"weigu ");
           if(this.dataString.hangup == 'hangup'){//对方退出房间
             this.disconnect("1");
             return
@@ -2707,6 +2712,7 @@
             console.log('2193'+this.dataString.imgurl)
             this.longitude = this.dataString.longitude;
             this.latitude = this.dataString.latitude;
+
             this.watermarkPhotoUrl = this.dataString.watermarkPhotoUrl;
             this.originalPhotoUrl = this.dataString.originalPhotoUrl;
             console.log(this.originalPhotoUrl)
