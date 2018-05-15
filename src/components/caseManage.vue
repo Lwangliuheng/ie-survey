@@ -1447,7 +1447,6 @@
   import caseMonitor from '@/components/caseMonitor'
   import Viewer from 'viewerjs';
   import axios from 'axios';
-  import pushPlayer from '../../ieVideo/static/pusher_player.js';
   export default {
     ready() {
       console.log('111');
@@ -2325,6 +2324,7 @@
       this.getNodealCase()
       this.checkStateOne();
       this.getLeftData()
+      
     },
 
     watch:{
@@ -2920,17 +2920,68 @@
         this.sendMsg(this.fromAccount,openLight);
       },
       takeScreenshot(e){
-        pushPlayer.doStartPlay(Player);
-        pushPlayer.screenShotPlayer(Player,this.roomId);
-        console.log(Player,"ahafs");
-        console.log(this.roomId,"surveyNo")
+        // pushPlayer.doStartPlay(Player);
+        // pushPlayer.screenShotPlayer(Player,this.roomId);
+        // console.log(Player,"ahafs");
+        // console.log(this.roomId,"surveyNo")
         //alert("截图")
+        //添加截屏事件
+         Player.setPlayerEventCallBack(this.PlayerEventListener, 200);
+         this.screenShotPlayer(this.roomId);
+        
       },
+      //pc端截图调用方法，并改造
+      screenShotPlayer(surveyNo) {
+        // var ret = player.captureVideoSnapShot("", "D:\\subTest");
+        // 
+        var time = new Date().getTime();
+        var urlTop = surveyNo + '_' + time;
+        var ret = Player.captureVideoSnapShot("C:\\"+urlTop+".jpg", "c:\\");
+        if (ret == -1) {
+            alert("截图失败");
+        }
+        else if (ret == -2) {
+            alert("路径非法");
+        }
+        else if (ret == -3) {
+            alert("文件存在");
+        }
+        else if (ret == -4) {
+            alert("未拉流");
+        }
+    },
+      //事件监听
+    PlayerEventListener(msg) {
+        var obj = JSON.parse(msg);
+        if (parseInt(obj.eventId) == 200002 && parseInt(obj.objectId) == 200) {
+            //doUpdatePlayerStatusInfo(msg);
+        }
+        else if (parseInt(obj.eventId) == 2010) {
+            //截图事件
+            this.doUpdatePlayerSnapShot(msg);
+        }
+     },
+     //截图成功
+     doUpdatePlayerSnapShot(paramJson) {
+        var obj = JSON.parse(paramJson);
+        if (obj.paramCnt == 2) {
+            if (obj.paramlist[0].key == "EVT_PARAM1" && obj.paramlist[1].key == "EVT_PARAM2")
+            {
+                if (obj.paramlist[0].value == "0") {
+                    //截图成功
+                    //url = obj.paramlist[1].value; utf8编码,windows下需要转成unicode
+                var url = obj.paramlist[1].value
+                localStorage.setItem("SnapShotUrl",url);
+                 alert(localStorage.getItem("SnapShotUrl"))   
+                }
+            }
+        }
+     },
       //点击拍照
       takePic(){
         //发送拍照片指令
         var isPhone = 'WEB$$takePic';
-         this.sendMsg(this.fromAccount,isPhone);
+        this.sendMsg(this.fromAccount,isPhone);
       },
       pushErroCode(){
         if(this.errorCode == '41001'){
