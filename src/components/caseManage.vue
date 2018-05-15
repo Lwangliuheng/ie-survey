@@ -1263,12 +1263,12 @@
             <div v-show="steamActive" class="video-panel" style="height:500px;display:flex;">
               <div>
                 <div id="PusherAreaID" style=" width:0.1px; height:0.1px;position:relative;top:-10px;">
-                  <object ID='Pusher' CLASSID="CLSID:01502AEB-675D-4744-8C84-9363788ED6D6" codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,2,1,0"
+                  <object ID='Pusher' CLASSID="CLSID:01502AEB-675D-4744-8C84-9363788ED6D6" codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,3,2,1"
                   width="0.1" height='0.1' events="True"></object>
                 </div>
                 <div id="PlayerAreaID" style="width:100%; height:470px;">
                   <object ID='Player' CLASSID="CLSID:99DD15EF-B353-4E47-9BE7-7DB4BC13613C"
-                  codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,2,1,0"
+                  codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,3,2,1"
                           :style="{width: clientWidth}"
                            height='470' events="True"></object>
                 </div>
