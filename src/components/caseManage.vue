@@ -1291,10 +1291,10 @@
                       <img src="../images/video_ico_2.png">
                     </div>
                     <!-- 截图按钮 -->
-                    <div class="player-photo" id="photoButton" @click="takeScreenshot">
+                    <div class="player-photo" id="photoButton" @click="takeScreenshot" title="请点击问号">
                       <img src="../images/screenshot.png">
                     </div>
-                    <div class="player-photo">
+                    <div class="player-photo" title="截图设置说明">
                       <router-link to="/takePicHelps" target="_blank">
                         <img src="../images/help.png">
                       </router-link>
