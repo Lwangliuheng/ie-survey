@@ -1292,7 +1292,12 @@
                     </div>
                     <!-- 截图按钮 -->
                     <div class="player-photo" id="photoButton" @click="takeScreenshot">
-                      <img src="../images/video_ico_2.png">
+                      <img src="../images/screenshot.png">
+                    </div>
+                    <div class="player-photo">
+                      <router-link to="/takePicHelps" target="_blank">
+                        <img src="../images/help.png">
+                      </router-link>
                     </div>
                   </div>
                 </div>
@@ -2286,6 +2291,7 @@
         fromAccount: '',
         videoroomID: "",
         list:[],
+        isScreenShot: false,
         listeners: {
 //          "onConnNotify": webimhandler.onConnNotify, //选填
 //          "onBigGroupMsgNotify": function (msg) {
@@ -2848,6 +2854,8 @@
       },
       //保存照片
       sureTakeImg(){
+
+        // alert(this.newlongitude,this.newlatitude)
         if(this.savevehicleLicenseNo == ''){
           this.open4("请选择车牌号")
         }else if(this.photoType == ''){
@@ -2863,7 +2871,7 @@
           var data = {
             "originalPhotoUrl":this.originalPhotoUrl,
             'photoType':this.photoType,
-            "photoUrl":this.watermarkPhotoUrl,
+            // "photoUrl":this.watermarkPhotoUrl,
             "surveyNo": this.roomId,
             "vehicleLicenseNo": this.savevehicleLicenseNo,
             "longitude":this.longitude,
@@ -2920,6 +2928,7 @@
         this.sendMsg(this.fromAccount,openLight);
       },
       takeScreenshot(e){
+        this.isScreenShot = true;
         // pushPlayer.doStartPlay(Player);
         // pushPlayer.screenShotPlayer(Player,this.roomId);
         // console.log(Player,"ahafs");
@@ -2982,6 +2991,7 @@
     readFile(path){
       try{
         var fso = new ActiveXObject("Scripting.FileSystemObject"); //ActiveXObject对象
+
         var ForWriting=1;
         var f1 = fso.GetFile(path);
         
@@ -2989,15 +2999,17 @@
         
         var content =ts.ReadAll();
         var src = "data:image/jpeg;base64,"+content;
+            // this.originalPhotoUrl = src;
+            //  $(".takePhoneImgBox").removeClass('hide');
 
-        alert(src);
         axios.post(this.ajaxUrl+"/survey/order/v1/photo/upload",{
-          imageBase64: src
+          imageBase64: content
         })
         .then( res =>{
           if(res.data.rescode == 200){
             this.originalPhotoUrl = res.data.data.originalPhotoUrl;
-            $(".takePhonetypeBox").removeClass("hide");
+            alert(this.originalPhotoUrl);
+            $(".takePhoneImgBox").removeClass("hide");
           }
         })
 
@@ -3009,6 +3021,7 @@
 
       //点击拍照
       takePic(){
+        this.isScreenShot = false;
         //发送拍照片指令
         var isPhone = 'WEB$$takePic';
         this.sendMsg(this.fromAccount,isPhone);
@@ -4337,6 +4350,11 @@
       },
 
       openType(){
+        if(this.isScreenShot){
+          this.longitude = this.newlongitude;
+          this.latitude = this.newlatitude;
+          this.source = 'wechat';
+        }
         if(this.photoType != '' && this.savevehicleLicenseNo != '' && this.roomId != '' && this.longitude != '' && this.latitude != ''&&this.originalPhotoUrl !=''){//已经选择车辆信息
           this.sureTakeImg()
         }else{
