@@ -3008,7 +3008,7 @@
         .then( res =>{
           if(res.data.rescode == 200){
             this.originalPhotoUrl = res.data.data.originalPhotoUrl;
-            alert(this.originalPhotoUrl);
+            // alert(this.originalPhotoUrl);
             $(".takePhoneImgBox").removeClass("hide");
           }
         })
