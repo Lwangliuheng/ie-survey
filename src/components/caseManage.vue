@@ -2979,7 +2979,7 @@
                 if (obj.paramlist[0].value == "0") {
                     //截图成功
                     //url = obj.paramlist[1].value; utf8编码,windows下需要转成unicode
-                var url = obj.paramlist[1].value+'.binary';
+                var url = obj.paramlist[1].value;
               
                 this.readFile(url);
             }
@@ -2993,23 +2993,28 @@
         var fso = new ActiveXObject("Scripting.FileSystemObject"); //ActiveXObject对象
 
         var ForWriting=1;
-        var f1 = fso.GetFile(path);
-        
+        var f1 = fso.GetFile(path+'.binary');
+        var f2 = fso.GetFile(path);
+
         var ts = f1.OpenAsTextStream(1, -2);
         
         var content =ts.ReadAll();
-        var src = "data:image/jpeg;base64,"+content;
-            // this.originalPhotoUrl = src;
-            //  $(".takePhoneImgBox").removeClass('hide');
+        // var src = "data:image/jpeg;base64,"+content;
 
+        // 把照片发给后台
         axios.post(this.ajaxUrl+"/survey/order/v1/photo/upload",{
           imageBase64: content
         })
         .then( res =>{
           if(res.data.rescode == 200){
             this.originalPhotoUrl = res.data.data.originalPhotoUrl;
-            // alert(this.originalPhotoUrl);
+            // 显示图片弹窗
             $(".takePhoneImgBox").removeClass("hide");
+            // 删除本地文件
+            f1.Delete(); 
+            f2.Delete();             
+          }else{
+            this.open4(res.data.resdes)
           }
         })
 
