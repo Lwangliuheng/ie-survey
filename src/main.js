@@ -34,6 +34,9 @@ axios.interceptors.request.use(config => {
   if(config.url == '/boot-pub-survey-video/survey/order/v1/weixin/complete'){
     loadinginstace = ElementUI.Loading.service({ fullscreen: true })
   }
+  if(config.url == '/boot-pub-survey-video/survey_single/v1/send'){
+    loadinginstace = ElementUI.Loading.service({ fullscreen: true })
+  }
 
   return config
 }, error => {

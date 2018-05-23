@@ -903,7 +903,13 @@ export default {
              // console.log(response,11111111111111)
              if(response.status == 200){
                $(".orderSelectDialog").addClass("hide");
-               this.open6();
+               //this.open6();
+               this.$alert('发送完成！', '温馨提示', {
+                  confirmButtonText: '确定',
+                  callback: action => {
+                    
+                  }
+              });
              }
           }, err => {
             console.log(err);
