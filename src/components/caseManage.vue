@@ -1032,7 +1032,7 @@
                 <option value="0">异常办结</option>
               </select>
             </div>
-            <textarea data-m class="textareaBox" v-model="exceptionComment" placeholder="请输入事故经过"></textarea>
+           <!--  <textarea data-m class="textareaBox" v-model="exceptionComment" placeholder="请输入事故经过"></textarea> -->
              <!-- <div class="but_wrap">
                 <span class="setGreen">发送电子查勘单</span>
                 <span class="setWhite" @click="checkedOneEven">发送转账授权书</span>
@@ -1264,7 +1264,7 @@
               <div>
                 <div id="PusherAreaID" style=" width:0.1px; height:0.1px;position:relative;top:-10px;">
                   <object ID='Pusher' CLASSID="CLSID:01502AEB-675D-4744-8C84-9363788ED6D6" codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,3,2,1"
-                  width="470" height='470' events="True"></object>
+                  width="0" height='0' events="True"></object>
                 </div>
                 <div id="PlayerAreaID" style="width:100%; height:470px;">
                   <object ID='Player' CLASSID="CLSID:99DD15EF-B353-4E47-9BE7-7DB4BC13613C"
@@ -2559,7 +2559,7 @@
         }
         //gai
         //ret.data.serverDomain = "https://lvb.qcloud.com/weapp/double_room/";
-        //https://160716803.shipinlipei.com
+        //https://nweeyr0w.qcloud.la
         ret.data.serverDomain = "https://nweeyr0w.qcloud.la/weapp/double_room/";
         userID = ret.data.userID;
         ret.data.divId = "PusherAreaID";
@@ -4103,7 +4103,7 @@
           "surveyNo":this.roomId,
           "isExceptionComplete":this.isExceptionComplete,
           // "exceptionCode":this.exceptionCode,
-          "exceptionComment": this.exceptionComment
+          //"exceptionComment": this.exceptionComment
         }
         // alert(this.source)
         if(this.xsource == 'wechat'){
@@ -4136,7 +4136,8 @@
                 //console.log(response.data.resdes,444444444)
 //              $(".loadingBox").addClass('hide')
               //this.open4(response.data.resdes.exceptionComment)
-              this.open4("请输入事故经过");
+              //this.open4("请输入事故经过");
+              this.open4("请发送电子查勘单");
             }
           }, err => {
             console.log(err);
