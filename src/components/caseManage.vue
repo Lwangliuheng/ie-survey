@@ -1,964 +1,5 @@
 <style scoped>
-  .caseManage{
-    margin: 15px auto;
-    width:90%;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    height: 82vh;
-    padding-bottom: 20px;
-  }
-  .caseContent{
-    display: flex;
-    padding-bottom:15px;
-  }
-  .caseLeft,.caseRight{
-    background:#fff;
-    margin-top: 5px;
-    width: 100%;
-    height:100px;
-  }
-  .caseCenter{
-    width: 100%;
-  }
-  .caseManage .video-player{
-    width: 100%;
-    background: #fff;
-    color: #fff;
-    height: 488px;
-  }
-  .caseLeft .tit, .caseRight .tit {
-    padding: 15px 0 5px;
-  }
-  .caseLeft .tit h4, .caseRight .tit h4{
-    font-size: 20px;
-    display: inline-block;
-    border-left: 4px solid #35aa42;
-    padding-left: 18px;
-    font-weight: 600;
-  }
-  .editorCarInfo h4{
-    font-size: 20px;
-    font-weight: 600;
-    margin-top:20px;
-  }
-  .caseLeft .cont, .caseRight .cont{
-    padding: 0 20px 5px;
-    overflow-x: scroll;
-  }
- .m-noContent-mod {
-    text-align: center;
-  }
-   .m-noContent-mod .mnm-icon {
-    margin-bottom: 20px;
-  }
-    .m-noContent-mod p {
-      color: #999;
-      font-size: 15px;
-  }
-  .casePhotos .g-content-row {
-    margin-bottom: 20px;
-  }
-  .casePhotos .g-content-row .gcr-mod{
-    background: #fff;
-  }
-  .casePhotos .m-carNo-imgInfo .gcr-tit {
-    padding: 16px 0 5px;
-    position: relative;
-    overflow: hidden;
-    display: flex;
-  }
-  .casePhotos .m-carNo-imgInfo .gcr-tit h4, .typeContent h4{
-    margin-top: 5px;
-    font-size: 20px;
-    display: inline-block;
-    border-left: 4px solid #35aa42;
-    padding-left: 18px;
-    font-weight: 600;
-  }
-  .typeContent h4{
-    border-left: none;
-  }
-  .gcr-tit .m-carNo-list {
-    height: 40px;
-    margin-left: 30px;
-  }
-  .gcr-tit .u-edit-icon {
-    width: 16px;
-    height: 14px;
-    display: inline-block;
-    background: url(../images/icon_edit_0.png) center center no-repeat;
-    margin-left: 10px;
-  }
-  .gcr-tit .u-edit-iconGreay{
-    width: 16px;
-    height: 14px;
-    display: inline-block;
-    background: url(../images/icon_edit_1.png) center center no-repeat;
-    margin-left: 10px;
-  }
- .gcr-tit .m-carNo-add {
-    cursor: pointer;
-    width: 24px;
-    height: 40px;
-    display: inline-block;
-    background: url(../images/icon_add_0.png) center center no-repeat;
-    margin-left: 10px;
-    -webkit-transition: all .2s ease-in 0s;
-    transition: all .2s ease-in 0s;
-  }
-  .gcr-tit .m-carNo-list dd {
-    font-size: 16px;
-    padding: 10px;
-    border: 1px solid #dcdcdc;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-  .gcr-tit .m-carNo-list dd:hover{
-    border: 1px solid #35aa42;
-  }
-  .casePhotos .g-content-row .gcr-cont {
-    padding: 10px 0;
-    min-height: 300px;
-  }
-  .footer{
-    /*margin-top:10px;*/
-    height: 60px;
-    width: 100%;
-    background: #2EAB3B;
-  }
-  .footer-inner{
-    text-align: center;
-    /*position: absolute;*/
-    /*z-index: auto;*/
-    /*left: 0;*/
-    /*right: 0;*/
-    /*bottom: 0;*/
-  }
-  .footer-inner p{
-    line-height: 64px;
-    font-size: 14px;
-    color: #fff;
-    margin: 0;
-  }
-
-  #picListZone .suibian{
-    /*display: -webkit-box;*/
-    margin-left: 15px;
-    position:absolute;
-    left:0;
-  }
-  #picListZone .suibian .suibianList{
-    margin-bottom: 8px;
-    float:left;
-  }
-  #picListZone .suibian img {
-    width: 140px;
-    height: 125px;
-    display: block;
-  }
-  #picListZone .suibian  .liImgbox{
-    background: #dcdcdc;
-    position: relative;
-    width: 140px;
-    left: 0;
-    top: 20px;
-    height: 125px;
-    margin: 0 8px;
-  }
-  #picListZone{
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    height: 200px;
-    justify-content: center;
-  }
-  #picListZone .ulBox{
-    position:relative;
-    width: 100%;
-    /*overflow: hidden ;*/
-  }
-  #picListZone .suibian  .title {
-    text-align: center;
-    position: absolute;
-    left: 0;
-    bottom: 0px;
-    height: 30px;
-    line-height: 30px;
-    width: 100%;
-    background: rgba(255,255,255,.5);
-    z-index: 99;
-  }
-  .scalImgBox,.editorCarInfo,.takePhoneImgBox,.takePhonetypeBox,.beizhuDiolag, .loadingBox{
-    background: rgba(0,0,0,0.8);
-    width:100%;
-    position: fixed;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    z-index: 1020;
-  }
-  .loadingBox{
-    background: rgba(0,0,0,0.3);
-  }
-  .loadingBox  .loadingBoxContent{
-    width: 760px;
-    margin:20vh auto;
-    text-align: center;
-    padding: 20px;
-    min-height: 450px;
-    position: relative;
-  }
-  .editorCarInfo,.beizhuDiolag{
-    background: rgba(0,0,0,0.2);
-     }
-  .takePhonetypeBox{
-    z-index: 1031;
-  }
-  .scalImgBox .bigImgContent,.takePhoneImgBox .takebigImgContent {
-    width: 45%;
-    margin:15vh 20vh;
-    margin-left:51%;
-    background: #fff;
-    padding: 20px;
-    min-height: 450px;
-    position: relative;
-  }
-  .takePhoneImgBox .takebigImgContent{
-    min-height: 550px;
-  }
-  .takePhonetypeBox .typeContent{
-    width: 45%;
-    margin: 15vh;
-    background: #fff;
-    margin-left: 51%;
-    padding: 20px;
-    height: 600px;
-    position: relative;
-  }
-  .editorCarInfo .editorContent,.beizhuDiolag .editorContent{
-    width: 350px;
-    margin-top: 16vh;
-    margin-left: 72%;
-    background: #fff;
-    padding: 20px;
-    height: 280px;
-    position: relative;
-  }
-  .beizhuDiolag .editorContent{
-    height: 325px;
-  }
-  .closeCaleImgBox,.closeEditorCar,.closeCityDiolag,.closetypeBox{
-    font-size: 42px;
-    right: 15px;
-    top: 0;
-    position: absolute;
-    cursor: pointer;
-  }
-  .cityDialogBox .cityNameBox{
-    width: 85%;
-    text-align: center;
-    clear: both;
-    margin-left: 30px;
-  }
-  .cityDialogBox .cityNameBox .citySimpleName{
-    width: 10%;
-    height: 35px;
-    line-height: 35px;
-    border: 1px solid #bbb;
-    color: #232323;
-    border-radius: 5px;
-    text-align: center;
-    margin-right: 10px;
-    float: left;
-    margin-top: 20px;
-    cursor: pointer;
-  }
-  .closeEditorCar{
-    top: 5px;
-  }
-  .imgSize{
-    width: 100%;
-    height: 400px;
-    margin:15px auto;
-    vertical-align: middle;
-  }
-  .imgSize img{
-    max-width:100%;
-    height: 100%;
-  }
-  .prebutton{
-    position: absolute;
-    top: 35vh;
-    left:10px;
-    color:#2EAB3B;
-    font-size:30px;
-    cursor: pointer;
-  }
-  .nextbutton{
-    cursor: pointer;
-    position: absolute;
-    right: 10px;
-    top: 35vh;
-    color:#2EAB3B;
-    font-size:30px;
-  }
-
-  .deletImg,.saveImg,.takedeletImg,.takesaveImg{
-    color: #fff;
-    width: 70px;
-    height: 35px;
-    margin-right:20px;
-    line-height: 35px;
-    text-align: center;
-    cursor: pointer;
-  }
-  .deletImg, .takedeletImg{
-    background: #e75b5f;
-    cursor: pointer;
-  }
-  #doing .item-txt-list {
-    line-height: 25px;
-    font-size: 14px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  .infoDiv{
-    margin: 6px 18px;
-  }
-
-   #online{
-    background: #efeff4;
-    color: #999;
-    border: 1px solid #dcdcdc;
-    padding:8px;
-    width: 110px;
-    text-align: center;
-  }
-  .item-btn-box{
-    padding:15px 0;
-  }
-  #onlineLoding{
-    background: #efeff4;
-    color: #999;
-    border: 1px solid #dcdcdc;
-    padding: 8px;
-    width: 110px;
-    text-align: center;
-  }
-  #onLinking {
-    padding: 8px;
-    border: 1px solid #35aa42;
-    min-width: 65px;
-    text-align: center;
-    font-size: 16px;
-    width: 110px;
-    color: #35aa42;
-  }
-  #onOff{
-    color: #e30920;
-    border: 1px solid #e30920;
-    padding: 8px 16px;
-    text-align: center;
-    width: 85px;
-  }
-  #hangUp{
-    padding: 8px 16px;
-    border: 1px solid #35aa42;
-    min-width: 65px;
-    text-align: center;
-    font-size: 16px;
-    color: #35aa42;
-    margin-left: 6px;
-  }
-  #nohangUp{
-    color: rgb(153, 153, 153);
-    background: rgb(239, 239, 244);
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgb(220, 220, 220);
-    border-image: initial;
-    padding: 8px 16px;
-    text-align: center;
-    min-width: 85px;
-    margin-left:8px;
-  }
-
-  .item-btn-max{
-    width:195px;
-  }
-    #finishOrder, #beizhu {
-    background: #35aa42;
-    color: #fff;
-    text-align: center;
-    font-size: 16px;
-     padding: 8px 16px;
-     min-width:85px;
-  }
-  #beizhu{
-    margin-left: 6px;
-  }
-  #nofinishOrder{
-    background: rgb(239, 239, 244);
-    color: rgb(153, 153, 153);
-    text-align: center;
-    font-size: 16px;
-    padding: 10px 16px;
-    min-width:85px;
-  }
-
-  .wait-law-case {
-    border: 1px dashed #dcdcdc;
-    padding: 10px;
-    margin-left: 25px;
-    cursor: pointer;
-    font-size:15px;
-    margin-top:10px;
-  }
-  .wait-law-case ul li {
-    font-size: 14px;
-    line-height: 24px;
-  }
-
-  .inputBox{
-    margin: 30px 20px;
-  }
-  .beizhuDiolag .inputBox{
-    margin: 12px 20px;
-  }
-  .inputBox input{
-    border:1px solid #bbb;
-    border-radius:6px;
-    height:35px;
-    padding-left: 6px;
-    width:180px;
-   }
-  .editorContent .inputBox span{
-    padding-right: 6px;
-  }
-  .saveCarInfo{
-    color: #fff;
-    border-radius:5px;
-    height: 35px;
-    display: inline-block;
-    width:80px;
-    line-height:35px;
-    cursor: pointer;
-  }
-
-.inputBox .creatInputNo {
-  height: 35px;
-  line-height: 35px;
-  border: 1px solid #bbb;
-  border-radius: 4px;
-  width: 35px;
-  background: #fff;
-  border-right: none;
-  text-align: center;
-  margin-right: -6px;
-}
-  .cityDialog,.orderSelectDialog,.openOrdercompleteDialog{
-    background: rgba(0,0,0,0.3);
-    width:100%;
-    position: fixed;
-    min-height: 100vh;
-    top: 0;
-    left: 0;
-    z-index: 200;
-  }
-  .openOrdercompleteDialog{
-    z-index: 201;
-  }
-  .cityDialog{
-    z-index: 1201;
-  }
-  .orderSelectDialog .selectBox select{
-    border: 1px solid #bbb;
-    height: 30px;
-    width: 120px;
-    border-radius: 5px;
-    padding-left: 6px;
-  }
-  .orderSelectDialog .selectBox textarea{
-    border: 1px solid #bbb;
-    height: 120px;
-    width: 320px;
-    border-radius: 5px;
-    margin-top: 15px;
-    padding-top: 6px;
-    text-indent: 15px;
-  }
-  .orderSelectDialog h4{
-    font-weight: 600;
-  }
- .openOrdercompleteDialog .completeImg{
-    text-align: center;
-  }
- .openOrdercompleteDialog .completeText{
-   color: #2EAB3B;
-   padding-top: 10px;
-   font-weight: 600;
-   font-size:20px;
- }
- .orderSelectDialog .selectBox{
-    margin: 20px 25px;
-  }
-
-  .cityDialogBox,.orderSelectDialogBox,.openOrdercompleteDialogBox{
-    width: 470px;
-    margin: 6vh;
-    margin-left:51%;
-    background: #fff;
-    padding: 20px;
-    margin-top: 20vh;
-    position: relative;
-  }
-  .openOrdercompleteDialogBox{
-    width: 560px;
-  }
-  .prev {
-    background: url(../images/icon_ctrl_1.png) center center no-repeat;
-     height:32px;
-     width: 32px;
-    margin-top:70px;
-  }
-   .next {
-    background: url(../images/icon_ctrl_0.png) center center no-repeat;
-     height:32px;
-     width: 32px;
-     margin-top:70px;
-  }
-   .m-selectImgType-tit{
-     margin-top: 20px;
-   }
-   .m-selectImgType-tit ul li {
-    border: 1px solid #dcdcdc;
-    position: relative;
-    text-align: center;
-    margin-right: 15px;
-    font-size: 16px;
-  }
-  .m-selectImgType-tit ul li a{
-     height: 48px;
-     line-height: 48px;
-     width: 169px;
-     text-align: center;
-     display: inline-block
-   }
-  .m-selectImgType-cont dl dd a{
-    height: 40px;
-    min-width: 140px;
-    display: inline-block;
-    padding: 0 6px;
-    line-height: 40px;
-  }
-   .m-selectImgType-tit ul li.showTag,  .m-selectImgType-tit ul li:hover, #selectImgTypeCont .showTag{
-    border: 1px solid #35aa42;
-  }
-  .m-selectImgType-tit ul li .tag{
-    position: absolute;
-    right: -1px;
-    top: 0;
-    width: 30px;
-    height: 28px;
-    background: url(../images/icon_tag_0.png) center center no-repeat;
-    background-size: contain;
-  }
-  .m-selectImgType-cont {
-    margin-top: 20px;
-  }
-  .m-selectImgType-cont dl dd {
-    border: 1px solid #dcdcdc;
-    position: relative;
-    text-align: center;
-    margin-right: 15px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    float: left;
-  }
-
-  .m-selectImgType-cont dl dd .tag {
-    position: absolute;
-    right: -1px;
-    top: 0;
-    width: 30px;
-    height: 28px;
-    background: url(../images/icon_tag_0.png) center center no-repeat;
-    background-size: contain;
-  }
-  .m-selectImgType-cont dl dd:hover{
-    border: 1px solid #35aa42;
-  }
-  .hoverBox{
-    position: absolute;
-    background: rgba(0,0,0,0.3);
-    height:125px;
-    width: 140px;
-    z-index: 100;
-    margin-left: 8px;
-    margin-top:20px;
-  }
- .hoverBox .openscalImgBox{
-   position: relative;
-   top: 50px;
-   color: #fff;
-   width: 50px;
-   margin: 0 auto;
-   height: 30px;
-   text-align: center;
-   line-height: 30px;
-   border-radius: 4px;
-   cursor: pointer;
- }
- .suibian li .tag {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 48px;
-    height: 46px;
-    background: url(../images/icon_tag_0.png) center center no-repeat;
-  }
-  .bigImgContent .imgSize{
-    position:relative;
-    overflow: hidden;
-  }
-  .bigImgContent .imgSize ul{
-    display: -webkit-box;
-    margin: 0;
-    position: absolute;
-    left: 0;
-  }
-  .bigImgContent .imgSize ul li{
-    height: 66vh;
-    text-align: center;
-    line-height:680px;
-    display:inline-block;
-    overflow: hidden;
-    overflow-y: scroll;
-  }
-.openOrderEndBox{
-  text-align: center;
-  margin: 25px auto;
-
-}
-  .openOrderEndBox .surebutton{
-    color: #fff;
-    padding: 10px 30px;
-    cursor: pointer;
-
-  }
-  .dealCaseButton{
-    text-align: center;
-    padding: 25px 0 60px;
-  }
-  .dealCaseButton .dealCase{
-    padding: 10px 20px;
-    border: 1px solid #2EAB3B;
-
-  }
-  .dealCaseButton .dealNewCase{
-    color: #232323;
-    margin-right: 30px;
-  }
-  .dealCaseButton .dealOldCase{
-    color: #fff;
-    margin-left:20px;
-  }
-  .dealText{
-    margin: 25px 0;
-  }
-  .creatCase{
-    position:fixed;
-    top: 10px;
-    right: 15%;
-    color: #fff;
-    padding: 9px 16px;
-    cursor: pointer;
-  }
-  .videoBox{
-    /*position: relative;*/
-  }
-  .video-player .player-control {
-    width: 100%;
-    overflow: hidden;
-    height: 40px;
-    padding: 10px 0;
-    background: #000;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0px;
-    z-index: 1010;
-  }
-  .video-player .player-control-box {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-    display: flex;
-  }
-  .video-player .player-control-box .player-recording, .video-player .player-control-box .player-recording.disabled {
-    cursor: pointer;
-    margin-left: 20px;
-    width: 18px;
-    height: 26px;
-  }
-  .video-player .player-control-box .player-sound {
-    cursor: pointer;
-    width: 120px;
-    margin-left: 40px;
-  }
-  .video-player .player-control-box .player-sound-box {
-    overflow: hidden;
-    width: 120px;
-    position: relative;
-    top: 3px;
-    display: flex;
-  }
-  .video-player .player-control-box .player-sound-box .player-sound-min {
-    width: 15px;
-    height: 22px;
-  }
-  .video-player .player-control-box .player-sound-box .player-sound-ctrl {
-    width: 73px;
-    height: 22px;
-    margin: 0 5px;
-    position: relative;
-  }
-  .noUi-target {
-    direction: ltr;
-    position: relative;
-    top: 10px;
-    background: #FAFAFA;
-    border-radius: 4px;
-    border: 1px solid #D3D3D3;
-    box-shadow: inset 0 1px 1px #F0F0F0, 0 3px 6px -5px #BBB;
-  }
-  .noUi-base {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    z-index: 1;
-  }
-  .noUi-connect {
-    background: #fff;
-  }
-  .noUi-origin {
-    position: absolute;
-    height: 0;
-    width: 0;
-  }
-  .noUi-horizontal .noUi-handle {
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-radius: 100%;
-    left: -5px;
-    top: -5px;
-  }
-  .video-player .player-control-box .player-sound-box .player-sound-max {
-    width: 22px;
-    height: 22px;
-  }
-  .noUi-handle {
-    position: relative;
-    z-index: 1;
-    border: 1px solid #D9D9D9;
-    border-radius: 3px;
-    background: #FFF;
-    cursor: default;
-  }
-  .noUi-connect {
-    position: absolute;
-    right: 0;
-    top: 0;
-    left: 0;
-    bottom: 0;
-  }
-  .noUi-horizontal {
-    height: 2px;
-    width:70px;
-  }
-  .video-player .player-control-box .player-auto-flash {
-    cursor: pointer;
-    width: 19px;
-    height: 25px;
-    margin-left: 140px;
-  }
-  .video-player .player-control-box .player-photo {
-    cursor: pointer;
-    width: 26px;
-    height: 40px;
-    margin-left: 40px;
-  }
-  .saveTakeImg{
-    padding: 10px 30px;
-    color: #fff;
-    margin-top: 30px;
-    cursor: pointer;
-  }
-  .suibian li .circle {
-    position: absolute;
-    right: -12px;
-    top: -12px;
-    width: 25px;
-    height: 25px;
-    line-height: 25px;
-    text-align: center;
-    background: #fff;
-    border-radius: 100%;
-    border: 1px solid #35aa42;
-    color: #35aa42;
-  }
-  .contentTop{
-    background:#fff;
-    margin-bottom:10px;
-  }
-  .topLeft{
-    margin-top: 6px;
-    position: relative;
-  }
-  .smallbutton{
-    position: absolute;
-    top: 11px;
-    left: 110px;
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-left: 13px solid #35aa42;
-    border-bottom: 10px solid transparent;
-  }
-  .twosmallbutton{
-    position: absolute;
-    top: 48px;
-    left: 110px;
-    width: 0;
-    height: 0;
-    border-top: 10px solid transparent;
-    border-left: 13px solid #35aa42;
-    border-bottom: 10px solid transparent;
-  }
-  .caseButton{
-    color: #AEDDB3;
-    padding:10px;
-    margin: 0 0 1px;
-  }
-  .selectButton{
-    color:#fff;
-  }
-  .backColorGreenButton{
-    color: #fff;
-    font-size: 15px;
-    display: inline-block;
-    width: 85px;
-    height: 38px;
-    line-height: 38px;
-    text-align: center;
-    margin-right: 8px;
-  }
-  .but_wrap{
-    margin-top:20px;
-  }
-  .setGreen{
-    background-color:green; 
-    color:#fff;
-    border-radius: 5px;
-  }
-  .setWhite{
-    background-color:#fff; 
-    color:#000;
-    border-radius: 5px;
-    border:1px solid #b6b6b6; 
-  }
-  .but_wrap span{
-      text-align: center;
-      line-height: 40px;
-      display: inline-block;
-      width:120px;
-      height:40px;  
-  }
-  .lp-top{
-    border:1px solid #b6b6b6;
-  }
-  .claim-wrap{
-    background: rgba(0,0,0,0.3);
-    width:100%;
-    position: fixed;
-    overflow: scroll;
-    min-height: 100vh;
-    top: 0;
-    left: 0;
-    z-index: 201;
-  }
-  .claim-content{
-    width: 650px;
-    margin: 6vh;
-    margin-left:50%;
-    background: #fff;
-    margin-top: 20vh;
-    position: relative;
-  }
-  .top-wrap{
-    overflow: hidden;
-    border-bottom:1px solid #b6b6b6;
-  }
-  .top-wrap h4{
-    float:left;
-    font-size: 18px;
-    line-height: 70px;
-    padding-left:20px;
-  }
-  .xmark{
-   float:right;
-    font-size: 42px;
-  }
-  .che-one{
-    padding:20px 0px 20px 80px;
-  }
-  .part-wrap{
-    overflow: hidden;
-  }
-  .part{
-    width:100px;
-    height:40px;
-    line-height: 40px;
-    text-align:center;
-    border:1px solid #b6b6b6;
-    float:left;
-    margin-right:30px;
-    margin-bottom:20px;
-  }
-  .part span{
-    display:none;
-  }
-  .input-box input{
-    width:200px;
-    height:30px;
-    border:1px solid #b6b6b6;
-    background-color:#fff; 
-  }
-  .plate{
-     padding-bottom:20px;
-  }
-  .checkbox-wrap{
-    padding-left:30px;
-    padding-bottom:30px;
-  }
-  .but-claim{
-    width:300px;
-    margin-left:180px;
-    margin-bottom:20px;
-  }
-  .checkoutGreen{
-    color:#fff;
-    background-color:green;
-  }
-  .checkoutWhite{
-     color:#000;
-    background-color:#fff;
-  }
-  .ts-word{
-    color:red;
-  }
+@import '../style/caseManage.css';
 </style>
 <template>
   
@@ -1170,7 +211,35 @@
       </div>
       <div v-show='showDealCase' class="caseLeft">
         <div id="doing" class="cont" >
-          <div class="item-txt-list" style="display:flex;justify-content: space-between;" v-if="doingActive">
+
+
+
+
+        <!-- web-rtc -->
+          <div class="boxbox" v-show="showBox">
+              <span class="box-close" @click='closeBox'>x</span>
+                <!-- 自己的视频 -->
+              <div class="main-window" style="background-color: black;display: none;">
+                  <video id="localVideo" style=" margin: 0 auto; width: 100%; height: 200px;" muted autoplay playinline></video>
+              </div> 
+              
+              <!-- 加入的房间视频 -->
+              <div class="main-window" v-for="(item, index) in members" :key="index">                                                                                                               
+                  <div class="edu-member-img" :id="'video_'+(item.id)" style="background-color: black;">
+                      <video :id="'v_'+(item.id)" style=" margin: 0 auto; width: 100%; height: calc(80vh - 75px);" autoplay playsinline></video>
+                  </div>
+              </div>
+          </div>
+
+          <div class="demo" v-if="doingActive">
+            <p v-for=" (room,index) in rooms" :key='index'>
+              <span>{{room.roomID? room.roomID : '暂无房间'}}</span>
+             <button @click='onjoinButtonClick(index)'>加入房间</button>
+            </p>
+          </div>
+
+          <!-- 如果有案件推送 -->
+          <!-- <div class="item-txt-list" style="display:flex;justify-content: space-between;" v-if="doingActive">
             <div style="display:flex;">
               <div class="infoDiv">
                 <p>车牌号：<span id="bdno">{{leftData.reportVehicleLicenseNo}}</span></p>
@@ -1213,9 +282,8 @@
                 <p href="javascript:;"  style="margin-top: 5px;"  id="beizhu" @click="openBeizhu">备注</p>
               </div>
             </div>
-
-
-          </div>
+          </div> -->
+          <!-- 如果没有案件推送 -->
           <div class="m-noContent-mod" v-else>
             <div class="mnm-icon">
               <img  src="../images/bookIco_0.png">
@@ -1262,7 +330,7 @@
           <div id="video" class="video" style="width:100%;height: 488px;">
             <div v-show="steamActive" class="video-panel" style="height:500px;display:flex;">
               <div>
-                <div id="PusherAreaID" style=" width:0.1px; height:0.1px;position:relative;top:-10px;">
+                <!-- <div id="PusherAreaID" style=" width:0.1px; height:0.1px;position:relative;top:-10px;">
                   <object ID='Pusher' CLASSID="CLSID:01502AEB-675D-4744-8C84-9363788ED6D6" codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,3,2,1"
                   width="470" height='470' events="True"></object>
                 </div>
@@ -1271,7 +339,8 @@
                   codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,3,2,1"
                           :style="{width: clientWidth}"
                            height='470' events="True"></object>
-                </div>
+                </div> -->
+                
               </div>
               <div>
                 <img style="width:100%;height:500px;" src="../../ieVideo/static/videoDefoult.png"/>
@@ -1310,33 +379,6 @@
           </div>
         </div>
       </div>
-      <!--<div class="caseRight">-->
-        <!--<div class="tit">-->
-          <!--<h4>待处理案件</h4>-->
-        <!--</div>-->
-        <!--<div id="wait" class="cont">-->
-          <!--<div class="wait-law-case-mod" id="waitLawCase" v-if="waitActive" >-->
-            <!--<div @dblclick ="goleftLine(item.surveyNo,item)" title="双击进行处理" class="wait-law-case" v-for="item in noDealCase">-->
-              <!--<ul>-->
-                <!--<li>车牌号：{{item.reportVehicleLicenseNo}}</li>-->
-                <!--<li>报案人电话：{{item.reporterPhone}}</li>-->
-                <!--<li>查勘员姓名：{{item.liveSurveyorName}}</li>-->
-                <!--<li>查勘员电话：{{item.liveSurveyorPhone}}</li>-->
-                <!--<li v-if = "item.orderStatus == '06'">订单状态：待查勘</li>-->
-                <!--<li v-if = "item.orderStatus == '07'">订单状态：查勘中</li>-->
-                <!--<li v-if = "item.orderStatus == '08'">订单状态：已查勘</li>-->
-                <!--<li v-if = "item.orderStatus == '11'">订单状态：已取消</li>-->
-              <!--</ul>-->
-            <!--</div>-->
-          <!--</div>-->
-          <!--<div class="m-noContent-mod" v-else>-->
-            <!--<div class="mnm-icon">-->
-              <!--<img src="../images/bookIco_0.png">-->
-            <!--</div>-->
-            <!--<p>暂无待处理的案件...</p>-->
-          <!--</div>-->
-        <!--</div>-->
-      <!--</div>-->
     </div>
     <div class="casePhotos">
       <div class="g-content-row"><!-- 69a49132-13fd-4705-b769-3f9ac3161fc2 -->
@@ -1447,7 +489,8 @@
   </div>
 </template>
 <script>
-
+  // import WebRTCRoom from '../rtc_utils/WebRTCRoom.js'
+  // import im from '../rtc_utils/im.js'
   import caseList from '@/components/caseList'
   import caseMonitor from '@/components/caseMonitor'
   import Viewer from 'viewerjs';
@@ -2215,33 +1258,14 @@
             ]
           }
         ],
-
         carTypecarType: [],
         takephotoUrl:'',
         cityData: ['京','津','冀','晋','蒙','辽','吉','黑','沪','苏','浙','皖','闽','赣','鲁','豫','鄂','湘','粤','贵','云','藏','陕','甘','青','宁','新','琼','渝','川','桂'],
-//        //倒计时
-//        twoButton: true,
-//        toOnlineActive: false,
-//        processOnlineActive: true,
-//        OnlineActive: false,
-//
-        //接通过程中
-//        twoButton: false,
-//        toOnlineActive: true,
-//        processOnlineActive: false,
-//        OnlineActive: false,
-        //视频通话时
-//        twoButton: false,
-//        toOnlineActive: false,
-//        processOnlineActive: false,
-//        OnlineActive: true,
-//未连接是
         surveyActive: false,
         twoButton: true,
         toOnlineActive: false,
         processOnlineActive: false,
         OnlineActive: false,
-
         waitActive: false,
         doingActive: false,
         jianKongActive: true,
@@ -2293,17 +1317,27 @@
         list:[],
         isScreenShot: false,
         listeners: {
-//          "onConnNotify": webimhandler.onConnNotify, //选填
-//          "onBigGroupMsgNotify": function (msg) {
-//            webimhandler.onBigGroupMsgNotify(msg, function (msgs) {
-//              receiveMsg(msgs);
-//            })
-//          }, //监听新消息(大群)事件，必填
-//          "onMsgNotify": this.onMsgNotify(), //监听新消息(私聊(包括普通消息和全员推送消息)，普通群(非直播聊天室)消息)事件，必填
-//          "onGroupSystemNotifys": RTCRoom.onGroupSystemNotifys, //监听（多终端同步）群系统消息事件，必填
-          "onGroupInfoChangeNotify": webimhandler.onGroupInfoChangeNotify,
-          // 'onKickedEventCall': self.onKickedEventCall // 踢人操作
-        }
+          "onGroupInfoChangeNotify": webimhandler.onGroupInfoChangeNotify
+        },
+
+
+
+        courseName: null, //房间名
+        courseId: null, //房间id
+        selfName: null,
+        selfRole: '主播',
+        userID: null, //用户id
+        rooms: [], /// 房间
+        room: '',
+        showBox: '', // 视频弹窗
+        getMemberListSto: null,
+        nameMap: {
+          "@TIM#SYSTEM": ''
+        }, // userId : nickName
+        member_list: [],
+        members: [
+          // { name: "李明", id: "2343", reqeust: true, ts: new Date()-30*60*1000},
+        ],
       }
     },
     created(){
@@ -2334,9 +1368,26 @@
     },
 
     watch:{
-
+      members: {
+        handler: function (newData, oldData) {
+          var self = this;
+          console.warn("members:", newData);
+          self.$nextTick(function () {
+            for (var index in newData) {
+              var videoElement = document.getElementById("v_" + newData[index].id);
+              if (videoElement) {
+                videoElement.srcObject = newData[index].stream;
+              }
+            }
+          });
+        },
+        deep: true
+      },
     },
     mounted () {
+
+      this.updateCourseList();
+
       var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;//浏览器宽度　
 
       this.clientWidth = w*(0.45)+'px';
@@ -2355,6 +1406,242 @@
 //      }, 1000)
     },
     methods: {
+
+      // webrtc
+      updateCourseList: function () {
+      console.log('updateCourseList() called');
+      var self = this;
+        WebRTCRoom.getRoomList(0, 20,
+        function (res) {
+          self.rooms = []
+          if (res.data && res.data.rooms) {
+            var rooms = res.data.rooms;
+            rooms.forEach(function (room) {
+              self.rooms.push(room)
+            });
+
+            // console.log('rooms: ', JSON.stringify(self.rooms));
+            if(rooms.length > 0){
+              self.doingActive = true;
+            }else {
+              self.doingActive = false;
+            }
+
+            clearTimeout(self.courseListSto)
+            self.courseListSto = setTimeout(function () {
+              self.updateCourseList();
+            }, 2000);
+          }
+        },
+        function (res) {
+          self.rooms = []
+          console.warn('获取房间列表失败', JSON.stringify(res))
+        });
+      },
+      // 点击按钮加入房间
+      onjoinButtonClick (idx){
+        this.room = this.rooms[idx];
+        console.log(this.room);
+        this.showBox = true;
+        this.enterRoom();
+      },
+      // 关闭弹窗并断开连接
+      closeBox(){
+        this.showBox = false;
+        this.goHomeRouter();
+      },
+      enterRoom(){
+        var self = this;
+        WebRTCRoom.getLoginInfo(
+          // self.userID,
+          self.room.userID,
+          function (res) {
+            console.log('WebRTCRoom.getLoginInfo',res)
+            self.userAuthData = res.data;
+            self.userID = res.data.userID;
+            self.userSig = res.data.userSig;
+            self.accountType = res.data.accType;
+            self.sdkAppID = res.data.sdkAppID;
+            // localStorage.setItem("userID", self.userID)
+            self.initRTC();
+          },
+          function (res) {}
+        );
+      },
+
+      initRTC(){
+        var self = this;
+        // var query = this.$route.query;
+        var RTC = this.RTC = new WebRTCAPI({
+          sdkAppId: self.sdkAppID,
+          openid: self.userID,
+          userSig: self.userSig,
+          accountType: self.accountType
+        }, function () {
+            self.actionEnterRoom();
+        }, function (error) {
+          console.error(error)
+        });
+
+        RTC.on("onLocalStreamAdd", function (info) {
+          console.log("本地流添加");
+          var videoElement = document.getElementById("localVideo");
+          videoElement.srcObject = info.stream;
+          videoElement.muted = true;
+        });
+
+        RTC.on("onRemoteStreamUpdate", function (info) {
+          console.log('啥。。。。');
+          var videoElement = document.getElementById("v_" + info.videoId);
+          if (videoElement) {
+            videoElement.srcObject = null;
+          }
+          if (info.stream) {
+            var temp = []
+            for (var i = 0; i < self.members.length; i++) {
+              if (self.members[i].openId != info.openId) {
+                temp.push(self.members[i])
+              }
+            }
+            var member = {
+              id: info.videoId,
+              name: info.openId,
+              request: false,
+              role: '主播',
+              roleText: '连麦',
+              ts: Date.now(),
+              stream: info.stream,
+              openId: info.openId
+            };
+            temp.push(member);
+            self.members = temp;
+
+          } else {
+            console.info(info.openId + "进入了房间");
+          }
+        });
+
+
+        RTC.on("onRemoteStreamRemove", function (info) {
+          var videoElement = document.getElementById("v_" + info.videoId);
+          if (videoElement) {
+            videoElement.srcObject = null;
+          }
+          var temp = []
+          for (var i = 0; i < self.members.length; i++) {
+            if (self.members[i].id != info.videoId) {
+              temp.push(self.members[i])
+            }
+          }
+          self.members = temp;
+        });
+
+        RTC.on("onKickOut", function () {
+          console.warn("其他地方登录，被踢下线");
+          self.goHomeRouter();
+        });
+
+        RTC.on("onWebSocketClose", function () {
+          console.warn("websocket断开");
+          self.goHomeRouter();
+        });
+
+
+        RTC.on("onRelayTimeout", function () {
+          console.warn("服务器超时断开");
+          self.goHomeRouter();
+        });
+      },
+
+      actionEnterRoom: function (query) {
+        var self = this;
+        self.courseId = self.room.roomID;
+        self.courseName = self.room.roomInfo;
+        self.selfName = self.room.userName;
+        WebRTCRoom.enterRoom(self.userID, self.room.userName, self.courseId, function (res) {
+
+          // 发送心跳包
+          WebRTCRoom.startHeartBeat(self.userID, res.data.roomID, function() {}, function() {
+            self.$toast.center('心跳包超时，请重试~');
+            self.goHomeRouter();
+          });
+
+          //进房间
+          self.RTC.createRoom({
+            roomid: parseInt(self.courseId),
+            role: 'miniwhite'
+          }, function (result) {
+
+          }, function () {
+            if (result) {
+              console.error("webrtc建房失败");
+              self.goHomeRouter();
+            }
+          });
+          // self.initIM();
+          self.renderMemberList();
+        }, function (res) {
+          // error, 返回
+          self.goHomeRouter();
+        });
+      },
+      // 退出房间
+      goHomeRouter: function () {
+        var self = this;
+        // WebRTCAPI.init({}, {});
+        localStorage.removeItem('course_info');
+        this.RTC && this.RTC.quit();
+        this.stopRenderMemberList();
+        WebRTCRoom && WebRTCRoom.quitRoom(self.userID, self.courseId, function (res) {
+        //   self.$router.push({
+        //     path: '/'
+        //   });
+        // }, function (res) {
+        //   self.$router.push({
+        //     path: '/'
+        //   });
+        });
+      },
+      renderMemberList: function () {
+        var self = this
+        this.stopRenderMemberList();
+        self.getMemberList();
+        this.getMemberListSto = setTimeout(function () {
+          self.renderMemberList();
+        }, 3000);
+      },
+
+      stopRenderMemberList: function () {
+        clearTimeout(this.getMemberListSto)
+      },
+      // 获取房间其他人
+      getMemberList: function () {
+        var self = this;
+        WebRTCRoom.get_room_members(self.courseId, function (data) {
+          console.debug(data)
+          if (data.data.code === 0) {
+            data.data.pushers.forEach(function (item) {
+              self.nameMap[item.userID] = item.userName
+            })
+            self.member_list = data.data.pushers;
+          }
+        }, function (err) {
+          if (err && err.errCode === 3) {
+            self.goHomeRouter();
+          }
+        })
+      },
+
+
+
+
+
+
+
+
+
+
+
       handleCheckedCitiesChange(value) {
         this.signatureList = value;
           //alert(value)
@@ -2546,7 +1833,7 @@
       },
       onDoubleRoomPageLoad() {
       var that = this;
-      doCheckIE();
+      // doCheckIE();
     //doLoadActiveXPlugin();
     RTCRoom.httpRequest({
       //url: "https://lvb.qcloud.com/weapp/double_room/get_im_login_info",
