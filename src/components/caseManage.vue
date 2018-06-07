@@ -2,7 +2,6 @@
 @import '../style/caseManage.css';
 </style>
 <template>
-  
   <div class="caseManage">
     <div class="loadingBox hide">
       <div class="loadingBoxContent">
@@ -216,14 +215,11 @@
 
 
         <!-- web-rtc -->
-          <div class="boxbox" v-show="showBox">
+          <!-- <div class="boxbox" v-show="showBox">
               <span class="box-close" @click='closeBox'>x</span>
-                <!-- 自己的视频 -->
               <div class="main-window" style="background-color: black;display: none;">
                   <video id="localVideo" style=" margin: 0 auto; width: 100%; height: 200px;" muted autoplay playinline></video>
               </div> 
-              
-              <!-- 加入的房间视频 -->
               <div class="main-window" v-for="(item, index) in members" :key="index">                                                                                                               
                   <div class="edu-member-img" :id="'video_'+(item.id)" style="background-color: black;">
                       <video :id="'v_'+(item.id)" style=" margin: 0 auto; width: 100%; height: calc(80vh - 75px);" autoplay playsinline></video>
@@ -236,10 +232,10 @@
               <span>{{room.roomID? room.roomID : '暂无房间'}}</span>
              <button @click='onjoinButtonClick(index)'>加入房间</button>
             </p>
-          </div>
+          </div> -->
 
           <!-- 如果有案件推送 -->
-          <!-- <div class="item-txt-list" style="display:flex;justify-content: space-between;" v-if="doingActive">
+          <div class="item-txt-list" style="display:flex;justify-content: space-between;" v-if="doingActive">
             <div style="display:flex;">
               <div class="infoDiv">
                 <p>车牌号：<span id="bdno">{{leftData.reportVehicleLicenseNo}}</span></p>
@@ -282,7 +278,7 @@
                 <p href="javascript:;"  style="margin-top: 5px;"  id="beizhu" @click="openBeizhu">备注</p>
               </div>
             </div>
-          </div> -->
+          </div>
           <!-- 如果没有案件推送 -->
           <div class="m-noContent-mod" v-else>
             <div class="mnm-icon">
@@ -330,7 +326,7 @@
           <div id="video" class="video" style="width:100%;height: 488px;">
             <div v-show="steamActive" class="video-panel" style="height:500px;display:flex;">
               <div>
-                <!-- <div id="PusherAreaID" style=" width:0.1px; height:0.1px;position:relative;top:-10px;">
+                <div id="PusherAreaID" style=" width:0.1px; height:0.1px;position:relative;top:-10px;">
                   <object ID='Pusher' CLASSID="CLSID:01502AEB-675D-4744-8C84-9363788ED6D6" codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,3,2,1"
                   width="470" height='470' events="True"></object>
                 </div>
@@ -339,7 +335,7 @@
                   codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,3,2,1"
                           :style="{width: clientWidth}"
                            height='470' events="True"></object>
-                </div> -->
+                </div>
                 
               </div>
               <div>
@@ -1319,9 +1315,6 @@
         listeners: {
           "onGroupInfoChangeNotify": webimhandler.onGroupInfoChangeNotify
         },
-
-
-
         courseName: null, //房间名
         courseId: null, //房间id
         selfName: null,
@@ -1386,7 +1379,7 @@
     },
     mounted () {
 
-      this.updateCourseList();
+      // this.updateCourseList();
 
       var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;//浏览器宽度　
 
@@ -1409,7 +1402,7 @@
 
       // webrtc
       updateCourseList: function () {
-      console.log('updateCourseList() called');
+      // console.log('updateCourseList() called');
       var self = this;
         WebRTCRoom.getRoomList(0, 20,
         function (res) {
@@ -1442,7 +1435,7 @@
       onjoinButtonClick (idx){
         this.room = this.rooms[idx];
         console.log(this.room);
-        this.showBox = true;
+        // this.showBox = true;
         this.enterRoom();
       },
       // 关闭弹窗并断开连接
@@ -1561,10 +1554,10 @@
         WebRTCRoom.enterRoom(self.userID, self.room.userName, self.courseId, function (res) {
 
           // 发送心跳包
-          WebRTCRoom.startHeartBeat(self.userID, res.data.roomID, function() {}, function() {
-            self.$toast.center('心跳包超时，请重试~');
-            self.goHomeRouter();
-          });
+          // WebRTCRoom.startHeartBeat(self.userID, res.data.roomID, function() {}, function() {
+          //   self.$toast.center('心跳包超时，请重试~');
+          //   self.goHomeRouter();
+          // });
 
           //进房间
           self.RTC.createRoom({
@@ -1642,197 +1635,197 @@
 
 
 
-      handleCheckedCitiesChange(value) {
-        this.signatureList = value;
-          //alert(value)
-      },
-      //理赔金额
-      one_part(e,key){
-         this.claimMoneyOne[key] = e.target.value;
-      },
-      //处理数据
-      modifyData(arr){
-        for(var i = 0; i < arr .length; i++){
-            arr[i] =  arr[i].substr(0,arr[i].length-1)
-        }
-        return arr
-      },
-      disposalData(arr){
-        // console.log(arr,55555555)
-           var claimList = [];
-           for(var i = 0; i < this.ImgInfo.length; i++){
-              var obj = {};
-              obj.licenseNo = this.ImgInfo[i].originalVehicleLicenseNo;
-              //cs
-              //obj.surveyBaseInfoId = 1997;
-              obj.surveyBaseInfoId = this.ImgInfo[i].id;
-              obj.damagedPart = arr[i];
-              obj.claimAmount = this.claimMoneyOne[i];
-              claimList.push(obj)
-             
-           }
-           return claimList;
-      },
-      //签字数据
-       signatureData(){
-             if(this.signatureList.length == 3){
-              this.isTargetSign = true;
-              this.isThirdSign = true;
-              
-            }else{
-                if(this.signatureList[1] == "标的签字"){
-                   this.isTargetSign = true;
-                   this.isThirdSign = false;
-                   
-                }
-              if(this.signatureList[1] == "三者的签字"){
-                   this.isThirdSign = true;
-                   this.isTargetSign = false;
-                   
-              }
-              if(!this.signatureList[1]){
-                  this.isThirdSign = false;
-                  this.isTargetSign = false;
-              }
-            }
-       },
-      //理赔确定按钮
-      claimButton(){
-         var arr = $(".part");
-         var claimInformationOne = "";
-         var noList = [];
-         var num = 0;
-         var str = "";
-         var monber = 0;
-         for(var i = 0;i < arr.length;i++){
-              num ++ ;
-              if($(arr[i]).hasClass("checkoutGreen")){
-                 str = $(arr[i]).children("span").html() + "-";
-              }else{
-                 str = "";
-              };
-              claimInformationOne += str
-              if(num%8 == 0 && claimInformationOne != ""){
-                noList.push(claimInformationOne);
-                str = "";
-                claimInformationOne = "";
-              }
-
-          };
-          //理赔部位表
-         var list =  this.modifyData(noList);
-         if(list.length != this.ImgInfo.length){
-              this.$message.error("请将信息填写完成！");
-              return
-         }
-         for(var i  in this.claimMoneyOne){
-            monber ++;
-         }
-         if(monber != this.ImgInfo.length){
-            this.$message.error("请将信息填写完成！");
-            return
-         }
-          //理赔信息
-           var claimList = this.disposalData(list);
-           this.claimList = claimList;
-           this.signatureData();
-            $(".claim-wrap").addClass("hide");
-        
-         // console.log(this.ImgInfo,222222)
-         // console.log(claimList,6666666666)
-         
-      },
-      part(e){
-          if($(e.target).hasClass("checkoutGreen")){
-              $(e.target).removeClass("checkoutGreen");
-              $(e.target).addClass("checkoutWhite");
-            }else{
-              $(e.target).addClass("checkoutGreen");
-              $(e.target).removeClass("checkoutWhite");
-            }
-      },
-      closeClaimDiolag(){
-        $(".claim-wrap").addClass("hide");
-      },
-      checkedOneEven(e){
-          if(!this.checkedTwoState){
-             if($(e.target).hasClass("setGreen")){
-              $(e.target).removeClass("setGreen");
-              $(e.target).addClass("setWhite");
-              this.checkedValue = "";
-              this.checkedOneState = false;
-            }else{
-              $(e.target).addClass("setGreen");
-              $(e.target).removeClass("setWhite");
-              this.checkedValue = 2;
-              this.checkedOneState = true;
-            }
-          }
-             
+  handleCheckedCitiesChange(value) {
+    this.signatureList = value;
+      //alert(value)
+  },
+  //理赔金额
+  one_part(e,key){
+      this.claimMoneyOne[key] = e.target.value;
+  },
+  //处理数据
+  modifyData(arr){
+    for(var i = 0; i < arr .length; i++){
+        arr[i] =  arr[i].substr(0,arr[i].length-1)
+    }
+    return arr
+  },
+  disposalData(arr){
+    // console.log(arr,55555555)
+        var claimList = [];
+        for(var i = 0; i < this.ImgInfo.length; i++){
+          var obj = {};
+          obj.licenseNo = this.ImgInfo[i].originalVehicleLicenseNo;
+          //cs
+          //obj.surveyBaseInfoId = 1997;
+          obj.surveyBaseInfoId = this.ImgInfo[i].id;
+          obj.damagedPart = arr[i];
+          obj.claimAmount = this.claimMoneyOne[i];
+          claimList.push(obj)
           
-      },
-      checkedTwoEven(e){
-        if(!this.checkedOneState){
-          if($(e.target).hasClass("setGreen")){
-            $(e.target).removeClass("setGreen");
-            $(e.target).addClass("setWhite");
-            this.checkedValue = "";
-            this.checkedTwoState = false;
-            $('.claim-wrap').addClass("hide");
-          }else{
-            $(e.target).addClass("setGreen");
-            $(e.target).removeClass("setWhite");
-            this.checkedValue = 3;
-            this.checkedTwoState = true;
-            $('.claim-wrap').removeClass("hide");
+        }
+        return claimList;
+  },
+  //签字数据
+    signatureData(){
+          if(this.signatureList.length == 3){
+          this.isTargetSign = true;
+          this.isThirdSign = true;
+          
+        }else{
+            if(this.signatureList[1] == "标的签字"){
+                this.isTargetSign = true;
+                this.isThirdSign = false;
+                
+            }
+          if(this.signatureList[1] == "三者的签字"){
+                this.isThirdSign = true;
+                this.isTargetSign = false;
+                
+          }
+          if(!this.signatureList[1]){
+              this.isThirdSign = false;
+              this.isTargetSign = false;
           }
         }
-      },
+    },
+  //理赔确定按钮
+  claimButton(){
+      var arr = $(".part");
+      var claimInformationOne = "";
+      var noList = [];
+      var num = 0;
+      var str = "";
+      var monber = 0;
+      for(var i = 0;i < arr.length;i++){
+          num ++ ;
+          if($(arr[i]).hasClass("checkoutGreen")){
+              str = $(arr[i]).children("span").html() + "-";
+          }else{
+              str = "";
+          };
+          claimInformationOne += str
+          if(num%8 == 0 && claimInformationOne != ""){
+            noList.push(claimInformationOne);
+            str = "";
+            claimInformationOne = "";
+          }
 
+      };
+      //理赔部位表
+      var list =  this.modifyData(noList);
+      if(list.length != this.ImgInfo.length){
+          this.$message.error("请将信息填写完成！");
+          return
+      }
+      for(var i  in this.claimMoneyOne){
+        monber ++;
+      }
+      if(monber != this.ImgInfo.length){
+        this.$message.error("请将信息填写完成！");
+        return
+      }
+      //理赔信息
+        var claimList = this.disposalData(list);
+        this.claimList = claimList;
+        this.signatureData();
+        $(".claim-wrap").addClass("hide");
+    
+      // console.log(this.ImgInfo,222222)
+      // console.log(claimList,6666666666)
       
-      onConnNotify (resp) {
-        switch (resp.ErrorCode) {
-          case webim.CONNECTION_STATUS.ON:
-            console.log('建立连接成功: ' + resp.ErrorInfo)
-            webim.Log.warn('建立连接成功: ' + resp.ErrorInfo);
-            break;
-          case webim.CONNECTION_STATUS.OFF:
-            console.log('连接已断开，无法收到新消息，请检查下你的网络是否正常: ' + resp.ErrorInfo);
-           this.open4('请检查下你的网络是否正常')
-            break;
-          case webim.CONNECTION_STATUS.RECONNECT:
-            console.log('连接状态恢复正常: ' + resp.ErrorInfo)
-            break;
-          default:
-            console.log('未知连接状态: =' + resp.ErrorInfo);
-            break;
+  },
+  part(e){
+      if($(e.target).hasClass("checkoutGreen")){
+          $(e.target).removeClass("checkoutGreen");
+          $(e.target).addClass("checkoutWhite");
+        }else{
+          $(e.target).addClass("checkoutGreen");
+          $(e.target).removeClass("checkoutWhite");
         }
-       },
-      //3个照片类型
-      takephoneType(type){
+  },
+  closeClaimDiolag(){
+    $(".claim-wrap").addClass("hide");
+  },
+  checkedOneEven(e){
+      if(!this.checkedTwoState){
+          if($(e.target).hasClass("setGreen")){
+          $(e.target).removeClass("setGreen");
+          $(e.target).addClass("setWhite");
+          this.checkedValue = "";
+          this.checkedOneState = false;
+        }else{
+          $(e.target).addClass("setGreen");
+          $(e.target).removeClass("setWhite");
+          this.checkedValue = 2;
+          this.checkedOneState = true;
+        }
+      }
+          
+      
+  },
+  checkedTwoEven(e){
+    if(!this.checkedOneState){
+      if($(e.target).hasClass("setGreen")){
+        $(e.target).removeClass("setGreen");
+        $(e.target).addClass("setWhite");
+        this.checkedValue = "";
+        this.checkedTwoState = false;
+        $('.claim-wrap').addClass("hide");
+      }else{
+        $(e.target).addClass("setGreen");
+        $(e.target).removeClass("setWhite");
+        this.checkedValue = 3;
+        this.checkedTwoState = true;
+        $('.claim-wrap').removeClass("hide");
+      }
+    }
+  },
 
-        var photoType = 'WEB$$takePic'+ type;
-        console.log(photoType)
-        this.sendMsg(this.fromAccount,photoType)
-      },
-      paizhao(){
+  
+  onConnNotify (resp) {
+    switch (resp.ErrorCode) {
+      case webim.CONNECTION_STATUS.ON:
+        console.log('建立连接成功: ' + resp.ErrorInfo)
+        webim.Log.warn('建立连接成功: ' + resp.ErrorInfo);
+        break;
+      case webim.CONNECTION_STATUS.OFF:
+        console.log('连接已断开，无法收到新消息，请检查下你的网络是否正常: ' + resp.ErrorInfo);
+        this.open4('请检查下你的网络是否正常')
+        break;
+      case webim.CONNECTION_STATUS.RECONNECT:
+        console.log('连接状态恢复正常: ' + resp.ErrorInfo)
+        break;
+      default:
+        console.log('未知连接状态: =' + resp.ErrorInfo);
+        break;
+    }
+    },
+  //3个照片类型
+  takephoneType(type){
 
-      },
-      changeCaseStatius(type){
-        if(type == 1){
+    var photoType = 'WEB$$takePic'+ type;
+    console.log(photoType)
+    this.sendMsg(this.fromAccount,photoType)
+  },
+  paizhao(){
+
+  },
+  changeCaseStatius(type){
+    if(type == 1){
 //          this.getLeftData()
-          this.showDealCase = true;
-          $(".doingCase").addClass("selectButton")
-          $(".waitCase").removeClass("selectButton")
-        }else if(type == 2){
-          this.getNodealCase()
-          $(".waitCase").addClass("selectButton");
-          $(".doingCase").removeClass("selectButton")
-          this.showDealCase = false;
-        }
-      },
-      onDoubleRoomPageLoad() {
-      var that = this;
+      this.showDealCase = true;
+      $(".doingCase").addClass("selectButton")
+      $(".waitCase").removeClass("selectButton")
+    }else if(type == 2){
+      this.getNodealCase()
+      $(".waitCase").addClass("selectButton");
+      $(".doingCase").removeClass("selectButton")
+      this.showDealCase = false;
+    }
+  },
+  onDoubleRoomPageLoad() {
+    var that = this;
       // doCheckIE();
     //doLoadActiveXPlugin();
     RTCRoom.httpRequest({
@@ -1855,8 +1848,8 @@
         RTCRoom.init({
           data: ret.data,
           success: function (ret) {
-            console.log('ret'+JSON.stringify(ret))
-            console.log("2082"+JSON.stringify(loginInfo))
+            // console.log('ret'+JSON.stringify(ret))
+            // console.log("2082"+JSON.stringify(loginInfo))
             webim.login(
               loginInfo, that.listeners, options,
               function (resp) {
@@ -1894,37 +1887,37 @@
       }
     });
   },
-      saveWebimaccount(webAccount){
-        console.log(webAccount)
-        var data = {
-          "imAccount":webAccount,
-          'userId':this.userId,
+  saveWebimaccount(webAccount){
+    console.log(webAccount)
+    var data = {
+      "imAccount":webAccount,
+      'userId':this.userId,
+    }
+    axios.post(this.ajaxUrl+"/web/surveyor/v1/im/account",data)
+      .then(response => {
+        if(response.data.rescode == 200){
+          this.open2(response.data.resdes)
+        }else{
+          this.open4(response.data.resdes)
         }
-        axios.post(this.ajaxUrl+"/web/surveyor/v1/im/account",data)
-          .then(response => {
-            if(response.data.rescode == 200){
-              this.open2(response.data.resdes)
-            }else{
-              this.open4(response.data.resdes)
-            }
-          }, err => {
-            console.log(err);
-          })
-          .catch((error) => {
-            console.log(error)
-          })
-      },
-      onRoomClose(ret){
-        var type = '1'
-        this.disconnect(type)
-      },
-      onRecvRoomTextMsg(ret){
-        console.log("收到消息:" + ret.textMsg);
-      },
-      //发送消息
-   sendMsg (selToID,isReceive) {
-     console.log('selToID'+selToID)
-     console.log('isReceive'+isReceive)
+      }, err => {
+        console.log(err);
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
+  onRoomClose(ret){
+    var type = '1'
+    this.disconnect(type)
+  },
+  onRecvRoomTextMsg(ret){
+    console.log("收到消息:" + ret.textMsg);
+  },
+  //发送消息
+  sendMsg (selToID,isReceive) {
+    console.log('selToID'+selToID)
+    console.log('isReceive'+isReceive)
     var selType = webim.SESSION_TYPE.C2C;//一对一
     var selSessHeadUrl;
     var selSess = new webim.Session(selType, selToID, selToID, selSessHeadUrl, Math.round(new Date().getTime() / 1000));
