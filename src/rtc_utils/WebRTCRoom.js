@@ -156,9 +156,7 @@ function formatParams(data) {
       data: {
         userID: userID,
         roomID: roomID,
-        nickName: nickName,
-        userAvatar: "789456",
-        pushURL: "webc"
+        nickName: '1625'
       },
       success: function (res) {
         success && success(res);
@@ -177,6 +175,7 @@ function formatParams(data) {
       success: success,
       fail: fail
     });
+    // alert('123213')
     stopHeartBeat();
   }
 
@@ -217,7 +216,7 @@ function formatParams(data) {
       },
       success: function (res) {
         heartBeatFailCount = 0;
-        console.log("心跳成功", {
+        console.log("WEBRTC心跳成功", {
           userID: userID,
           roomID: roomID
         });

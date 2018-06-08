@@ -227,7 +227,7 @@
               </div>
           </div>
 
-          <div class="demo" v-if="doingActive">
+          <div class="demo">
             <p v-for=" (room,index) in rooms" :key='index'>
               <span>{{room.roomID? room.roomID : '暂无房间'}}</span>
              <button @click='onjoinButtonClick(index)'>加入房间</button>
@@ -325,8 +325,11 @@
         <div class="video-player">
           <div id="video" class="video" style="width:100%;height: 488px;">
             <div v-show="steamActive" class="video-panel" style="height:500px;display:flex;">
-              <div>
-                <div id="PusherAreaID" style=" width:0.1px; height:0.1px;position:relative;top:-10px;">
+              <div :style="{width: clientWidth,height: '470'}">
+                <video id="remoteVideo" :style="{width: clientWidth,height: '470'}" autoplay playsinline></video>
+                <video id="localVideo" v-show="false" :style="{width: clientWidth,height: '470'}" muted autoplay playinline></video>
+                <canvas id="mycanvas" width="1280" height="720" style="width:100%;height:470px;display:none;"></canvas>
+                <!-- <div id="PusherAreaID" style=" width:0.1px; height:0.1px;position:relative;top:-10px;">
                   <object ID='Pusher' CLASSID="CLSID:01502AEB-675D-4744-8C84-9363788ED6D6" codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,3,2,1"
                   width="470" height='470' events="True"></object>
                 </div>
@@ -335,10 +338,10 @@
                   codebase="../../ieVideo/static/sdk/LiteAVAX.cab#version=2,3,2,1"
                           :style="{width: clientWidth}"
                            height='470' events="True"></object>
-                </div>
+                </div> -->
                 
               </div>
-              <div>
+              <div :style="{width: clientWidth,height: '470'}">
                 <img style="width:100%;height:500px;" src="../../ieVideo/static/videoDefoult.png"/>
               </div>
             </div>
@@ -359,11 +362,11 @@
                     <div class="player-photo" id="photoButton" @click="takeScreenshot" title="请点击问号">
                       <img src="../images/screenshot.png">
                     </div>
-                    <div class="player-photo" title="截图设置说明">
+                    <!-- <div class="player-photo" title="截图设置说明">
                       <router-link to="/takePicHelps" target="_blank">
                         <img src="../images/help.png">
                       </router-link>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -1322,7 +1325,7 @@
         userID: null, //用户id
         rooms: [], /// 房间
         room: '',
-        showBox: '', // 视频弹窗
+        showBox: false, // 视频弹窗
         getMemberListSto: null,
         nameMap: {
           "@TIM#SYSTEM": ''
@@ -1379,8 +1382,6 @@
     },
     mounted () {
 
-      // this.updateCourseList();
-
       var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;//浏览器宽度　
 
       this.clientWidth = w*(0.45)+'px';
@@ -1399,241 +1400,6 @@
 //      }, 1000)
     },
     methods: {
-
-      // webrtc
-      updateCourseList: function () {
-      // console.log('updateCourseList() called');
-      var self = this;
-        WebRTCRoom.getRoomList(0, 20,
-        function (res) {
-          self.rooms = []
-          if (res.data && res.data.rooms) {
-            var rooms = res.data.rooms;
-            rooms.forEach(function (room) {
-              self.rooms.push(room)
-            });
-
-            // console.log('rooms: ', JSON.stringify(self.rooms));
-            if(rooms.length > 0){
-              self.doingActive = true;
-            }else {
-              self.doingActive = false;
-            }
-
-            clearTimeout(self.courseListSto)
-            self.courseListSto = setTimeout(function () {
-              self.updateCourseList();
-            }, 2000);
-          }
-        },
-        function (res) {
-          self.rooms = []
-          console.warn('获取房间列表失败', JSON.stringify(res))
-        });
-      },
-      // 点击按钮加入房间
-      onjoinButtonClick (idx){
-        this.room = this.rooms[idx];
-        console.log(this.room);
-        // this.showBox = true;
-        this.enterRoom();
-      },
-      // 关闭弹窗并断开连接
-      closeBox(){
-        this.showBox = false;
-        this.goHomeRouter();
-      },
-      enterRoom(){
-        var self = this;
-        WebRTCRoom.getLoginInfo(
-          // self.userID,
-          self.room.userID,
-          function (res) {
-            console.log('WebRTCRoom.getLoginInfo',res)
-            self.userAuthData = res.data;
-            self.userID = res.data.userID;
-            self.userSig = res.data.userSig;
-            self.accountType = res.data.accType;
-            self.sdkAppID = res.data.sdkAppID;
-            // localStorage.setItem("userID", self.userID)
-            self.initRTC();
-          },
-          function (res) {}
-        );
-      },
-
-      initRTC(){
-        var self = this;
-        // var query = this.$route.query;
-        var RTC = this.RTC = new WebRTCAPI({
-          sdkAppId: self.sdkAppID,
-          openid: self.userID,
-          userSig: self.userSig,
-          accountType: self.accountType
-        }, function () {
-            self.actionEnterRoom();
-        }, function (error) {
-          console.error(error)
-        });
-
-        RTC.on("onLocalStreamAdd", function (info) {
-          console.log("本地流添加");
-          var videoElement = document.getElementById("localVideo");
-          videoElement.srcObject = info.stream;
-          videoElement.muted = true;
-        });
-
-        RTC.on("onRemoteStreamUpdate", function (info) {
-          console.log('啥。。。。');
-          var videoElement = document.getElementById("v_" + info.videoId);
-          if (videoElement) {
-            videoElement.srcObject = null;
-          }
-          if (info.stream) {
-            var temp = []
-            for (var i = 0; i < self.members.length; i++) {
-              if (self.members[i].openId != info.openId) {
-                temp.push(self.members[i])
-              }
-            }
-            var member = {
-              id: info.videoId,
-              name: info.openId,
-              request: false,
-              role: '主播',
-              roleText: '连麦',
-              ts: Date.now(),
-              stream: info.stream,
-              openId: info.openId
-            };
-            temp.push(member);
-            self.members = temp;
-
-          } else {
-            console.info(info.openId + "进入了房间");
-          }
-        });
-
-
-        RTC.on("onRemoteStreamRemove", function (info) {
-          var videoElement = document.getElementById("v_" + info.videoId);
-          if (videoElement) {
-            videoElement.srcObject = null;
-          }
-          var temp = []
-          for (var i = 0; i < self.members.length; i++) {
-            if (self.members[i].id != info.videoId) {
-              temp.push(self.members[i])
-            }
-          }
-          self.members = temp;
-        });
-
-        RTC.on("onKickOut", function () {
-          console.warn("其他地方登录，被踢下线");
-          self.goHomeRouter();
-        });
-
-        RTC.on("onWebSocketClose", function () {
-          console.warn("websocket断开");
-          self.goHomeRouter();
-        });
-
-
-        RTC.on("onRelayTimeout", function () {
-          console.warn("服务器超时断开");
-          self.goHomeRouter();
-        });
-      },
-
-      actionEnterRoom: function (query) {
-        var self = this;
-        self.courseId = self.room.roomID;
-        self.courseName = self.room.roomInfo;
-        self.selfName = self.room.userName;
-        WebRTCRoom.enterRoom(self.userID, self.room.userName, self.courseId, function (res) {
-
-          // 发送心跳包
-          // WebRTCRoom.startHeartBeat(self.userID, res.data.roomID, function() {}, function() {
-          //   self.$toast.center('心跳包超时，请重试~');
-          //   self.goHomeRouter();
-          // });
-
-          //进房间
-          self.RTC.createRoom({
-            roomid: parseInt(self.courseId),
-            role: 'miniwhite'
-          }, function (result) {
-
-          }, function () {
-            if (result) {
-              console.error("webrtc建房失败");
-              self.goHomeRouter();
-            }
-          });
-          // self.initIM();
-          self.renderMemberList();
-        }, function (res) {
-          // error, 返回
-          self.goHomeRouter();
-        });
-      },
-      // 退出房间
-      goHomeRouter: function () {
-        var self = this;
-        // WebRTCAPI.init({}, {});
-        localStorage.removeItem('course_info');
-        this.RTC && this.RTC.quit();
-        this.stopRenderMemberList();
-        WebRTCRoom && WebRTCRoom.quitRoom(self.userID, self.courseId, function (res) {
-        //   self.$router.push({
-        //     path: '/'
-        //   });
-        // }, function (res) {
-        //   self.$router.push({
-        //     path: '/'
-        //   });
-        });
-      },
-      renderMemberList: function () {
-        var self = this
-        this.stopRenderMemberList();
-        self.getMemberList();
-        this.getMemberListSto = setTimeout(function () {
-          self.renderMemberList();
-        }, 3000);
-      },
-
-      stopRenderMemberList: function () {
-        clearTimeout(this.getMemberListSto)
-      },
-      // 获取房间其他人
-      getMemberList: function () {
-        var self = this;
-        WebRTCRoom.get_room_members(self.courseId, function (data) {
-          console.debug(data)
-          if (data.data.code === 0) {
-            data.data.pushers.forEach(function (item) {
-              self.nameMap[item.userID] = item.userName
-            })
-            self.member_list = data.data.pushers;
-          }
-        }, function (err) {
-          if (err && err.errCode === 3) {
-            self.goHomeRouter();
-          }
-        })
-      },
-
-
-
-
-
-
-
-
-
-
 
   handleCheckedCitiesChange(value) {
     this.signatureList = value;
@@ -1860,10 +1626,10 @@
                 that.saveWebimaccount(loginInfo.identifier)
               },
               function (err) {
-                //console.log(err.ErrorInfo);
+                console.log(err.ErrorInfo);
               }
             );
-            console.log("登录初始化成功");
+            // console.log("登录初始化成功");
             // refreshRoomList(3000);
             // var nameview = document.getElementById("my-username");
             // nameview.innerText = myUserName;
@@ -2037,31 +1803,17 @@
           var text = 'hangup';
           this.sendMsg(this.fromAccount,text);
         }
-          RTCRoom.exitRoom();
-          inRoom = false;
-          RTCRoom.setMute(false);
-          this.$nextTick(()=>{
-            this.steamActive = false;
-            this.twoButton =  true;
-            this.toOnlineActive = false;
-            this.processOnlineActive = false;
-            this.OnlineActive  = false;
-            this.listeners.onMsgNotify = this.onMsgNotify;
-//            webim.login(
-//              loginInfo, this.listeners, options,
-//              function (resp) {
-//                console.log('webim登陆成功');
-//                console.log('userID'+userID);
-//                loginInfo.identifierNick = resp.identifierNick;//设置当前用户昵称;
-//                //保存imaccount
-//                console.log('0000'+loginInfo.identifier)
-//              },
-//              function (err) {
-//                alert(err.ErrorInfo);
-//              }
-//            );
-//            this.onDoubleRoomPageLoad();
-          })
+        RTCRoom.exitRoom();
+        inRoom = false;
+        // RTCRoom.setMute(false);
+        this.$nextTick(()=>{
+          this.steamActive = false;
+          this.twoButton =  true;
+          this.toOnlineActive = false;
+          this.processOnlineActive = false;
+          this.OnlineActive  = false;
+          this.listeners.onMsgNotify = this.onMsgNotify;
+        })
       },
       getroomList(){//获取房间id
         var that = this;
@@ -2207,102 +1959,38 @@
         var openLight = 'WEB$$openLight';
         this.sendMsg(this.fromAccount,openLight);
       },
-      takeScreenshot(e){
+
+      takeScreenshot(e) {
         this.isScreenShot = true;
-        // pushPlayer.doStartPlay(Player);
-        // pushPlayer.screenShotPlayer(Player,this.roomId);
-        // console.log(Player,"ahafs");
-        // console.log(this.roomId,"surveyNo")
-        //alert("截图")
-        //添加截屏事件
-         Player.setPlayerEventCallBack(this.PlayerEventListener, 200);
-         this.screenShotPlayer(this.roomId);
-        
-      },
-      //pc端截图调用方法，并改造
-      screenShotPlayer(surveyNo) {
-        // var ret = player.captureVideoSnapShot("", "D:\\subTest");
-        // 
-        var time = new Date().getTime();
-        var urlTop = surveyNo + '_' + time;
-        var ret = Player.captureVideoSnapShot("C:\\"+urlTop+".jpg", "c:\\");
-        if (ret == -1) {
-            alert("截图失败");
-        }
-        else if (ret == -2) {
-            alert("路径非法");
-        }
-        else if (ret == -3) {
-            alert("文件存在");
-        }
-        else if (ret == -4) {
-            alert("未拉流");
-        }
-    },
-      //事件监听
-    PlayerEventListener(msg) {
-        var obj = JSON.parse(msg);
-        if (parseInt(obj.eventId) == 200002 && parseInt(obj.objectId) == 200) {
-            //doUpdatePlayerStatusInfo(msg);
-        }
-        else if (parseInt(obj.eventId) == 2010) {
-            //截图事件
-            this.doUpdatePlayerSnapShot(msg);
-        }
-     },
-     //截图成功
-     doUpdatePlayerSnapShot(paramJson) {
-        var obj = JSON.parse(paramJson);
-        if (obj.paramCnt == 2) {
-            if (obj.paramlist[0].key == "EVT_PARAM1" && obj.paramlist[1].key == "EVT_PARAM2")
-            {
-                if (obj.paramlist[0].value == "0") {
-                    //截图成功
-                    //url = obj.paramlist[1].value; utf8编码,windows下需要转成unicode
-                var url = obj.paramlist[1].value;
-              
-                this.readFile(url);
-            }
-        }
-     }
-    },
+        var canvas = document.getElementById("mycanvas");
+        var video = document.getElementById("remoteVideo");
+        var context = canvas.getContext("2d");
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        var image = new Image();
+        // canvas.toDataURL 返回的是一串Base64编码的URL，当然,浏览器自己肯定支持
+        // 指定格式 PNG
+        var src = canvas.toDataURL("image/jpeg");
 
-    // 读取截屏得到的文件
-    readFile(path){
-      try{
-        var fso = new ActiveXObject("Scripting.FileSystemObject"); //ActiveXObject对象
-
-        var ForWriting=1;
-        var f1 = fso.GetFile(path+'.binary');
-        var f2 = fso.GetFile(path);
-
-        var ts = f1.OpenAsTextStream(1, -2);
-        
-        var content =ts.ReadAll();
-        // var src = "data:image/jpeg;base64,"+content;
+        // this.originalPhotoUrl = src;
+        // 显示图片弹窗
+        // $(".takePhoneImgBox").removeClass("hide");
 
         // 把照片发给后台
-        axios.post(this.ajaxUrl+"/survey/order/v1/photo/upload",{
-          imageBase64: content
-        })
-        .then( res =>{
-          if(res.data.rescode == 200){
-            this.originalPhotoUrl = res.data.data.originalPhotoUrl;
-            // 显示图片弹窗
-            $(".takePhoneImgBox").removeClass("hide");
-            // 删除本地文件
-            f1.Delete(); 
-            f2.Delete();             
-          }else{
-            this.open4(res.data.resdes)
-          }
-        })
+        axios
+          .post(this.ajaxUrl + "/survey/order/v1/photo/upload", {
+            imageBase64: src.replace("data:image/jpeg;base64,", "")
+          })
+          .then(res => {
+            if (res.data.rescode == 200) {
+              this.originalPhotoUrl = res.data.data.originalPhotoUrl;
+              // 显示图片弹窗
+              $(".takePhoneImgBox").removeClass("hide");
+            } else {
+              this.open4('上传失败');
+            }
+          });
+      },
 
-
-      }catch (e){
-        alert("exception:"+e);
-      }
-    },
 
       //点击拍照
       takePic(){
@@ -2427,6 +2115,8 @@
           })
       },
       join(){
+
+
         this.haveVideoActive = false;
         this.handleSurvey = '';
         this.acceptStatus(this.roomId);
@@ -2442,17 +2132,18 @@
         var isReceive = 'WEB$$goToConnection';
         that.steamActive = true;
         this.$nextTick(() => {
-          var cameras = RTCRoom.getCameras();
-          if (cameras.camera_cnt <= 0) {
-            alert("进入房间失败，没有可用的摄像头");
-            this.steamActive = false;
-            this.twoButton =  true;
-            this.toOnlineActive = false;
-            this.processOnlineActive = false;
-            this.OnlineActive  = false;
-            this.listeners.onMsgNotify = this.onMsgNotify;
-            return;
-          }
+
+          // var cameras = RTCRoom.getCameras();
+          // if (cameras.camera_cnt <= 0) {
+          //   alert("进入房间失败，没有可用的摄像头");
+          //   this.steamActive = false;
+          //   this.twoButton =  true;
+          //   this.toOnlineActive = false;
+          //   this.processOnlineActive = false;
+          //   this.OnlineActive  = false;
+          //   this.listeners.onMsgNotify = this.onMsgNotify;
+          //   return;
+          // }
           inRoom = true;
           RTCRoom.enterRoom({
             data: {
@@ -2477,10 +2168,10 @@
         var that = this;
         if(this.dataString){
           that.haveVideoActive = true;
-          console.log('2693'+that.dataString);
+          console.log('推送过来的房间信息',that.dataString);
           that.getNodealCase();
           that.leftData = that.dataString.orderData;
-//          that.leftData = that.dataString.surveyOrderInfo;
+
           that.videoroomID = that.dataString.videoRoomId;
           if('source' in that.dataString){
               that.xsource = that.dataString.source;
