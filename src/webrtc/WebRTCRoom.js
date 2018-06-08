@@ -139,8 +139,8 @@ function formatParams(data) {
         userID: userID,
         userName: nickName,
         roomName: roomInfo,
-        userAvatar: '123',
-        roomid: 4444
+        // userAvatar: '123',
+        // roomid: 4444
       },
       success: function (res) {
         console.warn("创建房间成功:", res);

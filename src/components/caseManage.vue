@@ -299,14 +299,14 @@
         <div class="video-player">
           <div id="video" class="video" style="width:100%;height: 488px;">
             <div v-show="steamActive" class="video-panel" style="height:500px;display:flex;">
-              <div :style="{width: clientWidth,height: '470'}">
+              <div :style="{width: clientWidth}">
                 
-                <video id="remoteVideo" :style="{width: clientWidth,height: '470'}" autoplay playsinline></video>
-                <video id="localVideo" v-show="false" :style="{width: clientWidth,height: '470'}" muted autoplay playinline></video>
+                <video id="remoteVideo" :style="{width: clientWidth,height: '470px'}" autoplay playsinline></video>
+                <video id="localVideo" v-show="false" :style="{width: clientWidth,height: '470px'}" muted autoplay playinline></video>
                 <canvas id="mycanvas" width="1280" height="720" style="width:100%;height:470px;display:none;"></canvas>
 
               </div>
-              <div>
+              <div :style="{width: clientWidth}">
                 <img style="width:100%;height:500px;" src="../../ieVideo/static/videoDefoult.png"/>
               </div>
             </div>
@@ -327,11 +327,11 @@
                     <div class="player-photo" id="photoButton" @click="takeScreenshot" title="请点击问号">
                       <img src="../images/screenshot.png">
                     </div>
-                    <div class="player-photo" title="截图设置说明">
+                    <!-- <div class="player-photo" title="截图设置说明">
                       <router-link to="/takePicHelps" target="_blank">
                         <img src="../images/help.png">
                       </router-link>
-                    </div>
+                    </div> -->
                   </div>
                 </div>
               </div>
@@ -1789,31 +1789,18 @@
           var text = 'hangup';
           this.sendMsg(this.fromAccount,text);
         }
-          RTCRoom.exitRoom();
-          inRoom = false;
-          RTCRoom.setMute(false);
-          this.$nextTick(()=>{
-            this.steamActive = false;
-            this.twoButton =  true;
-            this.toOnlineActive = false;
-            this.processOnlineActive = false;
-            this.OnlineActive  = false;
-            this.listeners.onMsgNotify = this.onMsgNotify;
-//            webim.login(
-//              loginInfo, this.listeners, options,
-//              function (resp) {
-//                console.log('webim登陆成功');
-//                console.log('userID'+userID);
-//                loginInfo.identifierNick = resp.identifierNick;//设置当前用户昵称;
-//                //保存imaccount
-//                console.log('0000'+loginInfo.identifier)
-//              },
-//              function (err) {
-//                alert(err.ErrorInfo);
-//              }
-//            );
-//            this.onDoubleRoomPageLoad();
-          })
+        RTCRoom.exitRoom();
+        inRoom = false;
+        // RTCRoom.setMute(false);
+        this.$nextTick(()=>{
+          this.steamActive = false;
+          this.twoButton =  true;
+          this.toOnlineActive = false;
+          this.processOnlineActive = false;
+          this.OnlineActive  = false;
+          this.listeners.onMsgNotify = this.onMsgNotify;
+
+        })
       },
       getroomList(){//获取房间id
         var that = this;
