@@ -314,12 +314,15 @@
               <div id="bar_46122248740144030"  :style="{width: clientWidth}" style=" height: 100%; position: relative; bottom: 0; right: 0;">
                 <div class="player-control">
                   <div class="player-control-box">
+                    <!-- 静音 -->
                     <div id="closeRecording" class="player-recording">
                     <img src="../images/video_ico_0.png">
                     </div>
+                    <!-- 打开闪光灯 -->
                     <div class="player-auto-flash" id="flashButton" @click="openLight">
                       <img src="../images/video_ico_1.png">
                     </div>
+                    <!-- 手机拍照 -->
                     <div class="player-photo" id="photoButton" @click="takePic">
                       <img src="../images/video_ico_2.png">
                     </div>
@@ -1791,7 +1794,7 @@
         }
         RTCRoom.exitRoom();
         inRoom = false;
-        // RTCRoom.setMute(false);
+        RTCRoom.setMute(true);
         this.$nextTick(()=>{
           this.steamActive = false;
           this.twoButton =  true;

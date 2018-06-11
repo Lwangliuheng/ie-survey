@@ -1031,10 +1031,10 @@ RTCRoom = (function () {
         WebRTCRoom.enterRoom(data.userID, roomInfo.roomName, roomInfo.roomID, function (res) {
             // 发送心跳包
             // console.log('roomID的点点滴滴多多多多多', res)
-            WebRTCRoom.startHeartBeat(data.userID, roomInfo.roomID, function () { }, function () {
-                console.warn("心跳包超时，请重试~");
-                goHomeRouter(data.userID, roomInfo.roomID);
-            });
+            // WebRTCRoom.startHeartBeat(data.userID, roomInfo.roomID, function () { }, function () {
+            //     console.warn("心跳包超时，请重试~");
+            //     goHomeRouter(data.userID, roomInfo.roomID);
+            // });
 
             //进房间
             RTC.createRoom({ roomid: parseInt(roomInfo.roomID), role: "miniwhite" }, function (result) {
@@ -1054,8 +1054,10 @@ RTCRoom = (function () {
     }
 
     function goHomeRouter(userID, roomID, cb) {
+        if (!userID || !roomID) return;
         localStorage.removeItem("course_info");
-        RTC.quitRoom(
+        // alert('1111111')
+        RTC && RTC.quitRoom(
             userID,
             roomID,
             function (res) {
@@ -1128,9 +1130,14 @@ RTCRoom = (function () {
      */
     function exitRoom(options) {
         // var roomid = '', userId = '';
-
-
         console.log('我退出房间加啊啊啊啊啊啊啊啊啊exitRoom')
+
+        // if (accountInfo.roomID == "")
+        //     return;
+ 
+
+
+        if (roomInfo.isDestory) return;
         // roomid = localStorage.getItem('accoutRoomID');
         // userId = localStorage.getItem('accoutUserID');
         stopPusherHeartBeat();
@@ -1138,18 +1145,13 @@ RTCRoom = (function () {
         // webimhandler.logout();
         // var livePusher = document.getElementById('Pusher');
         // options = options || {};
-        if (roomInfo.isDestory)
-            return;
-        if (accountInfo.roomID == "")
-            return;
 
-        goHomeRouter(loginInfo1.userID, roomInfo.roomID, function () {
-            // alert('清空')
-            roomInfo.roomID = '';
-            roomInfo.pushers = {}
-            roomInfo.isDestory = true;
-            roomInfo.roomName = "";
-            accountInfo.isCreator = false;
+        goHomeRouter(loginInfo1.userID, roomInfo.roomID, function() {
+          roomInfo.roomID = "";
+          roomInfo.pushers = {};
+          roomInfo.isDestory = true;
+          roomInfo.roomName = "";
+          accountInfo.isCreator = false;
         });
         // request({
         //     url: 'delete_pusher',
@@ -1377,8 +1379,11 @@ RTCRoom = (function () {
      * @param isMute  是否静音
      */
     function setMute(isMute) {
-        var livePusher = getLivePusher();
-        livePusher.setMute(isMute);
+        // var livePusher = getLivePusher();
+        // livePusher.setMute(isMute);
+        var remoteVideo =document.getElementById('remoteVideo');
+        remoteVideo.muted = isMute;
+
     }
 
 
