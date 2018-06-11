@@ -958,3 +958,11 @@
   .ts-word{
     color:red;
   }
+  #localVideo{
+    width:300px;
+    height: 180px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+  }

@@ -299,10 +299,10 @@
         <div class="video-player">
           <div id="video" class="video" style="width:100%;height: 488px;">
             <div v-show="steamActive" class="video-panel" style="height:500px;display:flex;">
-              <div :style="{width: clientWidth}">
+              <div :style="{width: clientWidth}" style="position:relative;">
                 
                 <video id="remoteVideo" :style="{width: clientWidth,height: '470px'}" autoplay playsinline></video>
-                <video id="localVideo" v-show="false" :style="{width: clientWidth,height: '470px'}" muted autoplay playinline></video>
+                <video id="localVideo" muted autoplay playinline></video>
                 <canvas id="mycanvas" width="1280" height="720" style="width:100%;height:470px;display:none;"></canvas>
 
               </div>

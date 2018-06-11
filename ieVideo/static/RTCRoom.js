@@ -1130,14 +1130,22 @@ RTCRoom = (function () {
      */
     function exitRoom(options) {
         // var roomid = '', userId = '';
-        console.log('我退出房间加啊啊啊啊啊啊啊啊啊exitRoom')
+        console.log('我退出房间exitRoom11111111')
 
-        // if (accountInfo.roomID == "")
-        //     return;
- 
-
-
+            RTC = "";
+        // goHomeRouter(loginInfo1.userID, roomInfo.roomID, function () {
+            roomInfo.roomID = "";
+            roomInfo.pushers = {};
+            roomInfo.isDestory = true;
+            roomInfo.roomName = "";
+            accountInfo.isCreator = false;
+        // });
+        console.log("我退出房间exitRoom22222222");
+        
         if (roomInfo.isDestory) return;
+        if (accountInfo.roomID == "") return;
+
+        
         // roomid = localStorage.getItem('accoutRoomID');
         // userId = localStorage.getItem('accoutUserID');
         stopPusherHeartBeat();
@@ -1146,13 +1154,7 @@ RTCRoom = (function () {
         // var livePusher = document.getElementById('Pusher');
         // options = options || {};
 
-        goHomeRouter(loginInfo1.userID, roomInfo.roomID, function() {
-          roomInfo.roomID = "";
-          roomInfo.pushers = {};
-          roomInfo.isDestory = true;
-          roomInfo.roomName = "";
-          accountInfo.isCreator = false;
-        });
+
         // request({
         //     url: 'delete_pusher',
         //     data: {
