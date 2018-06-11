@@ -230,6 +230,7 @@
       },
       loginIn() {
         var paramData = {
+          sdkType: '0',
           "username": this.username,
           "userpwd": this.userpwd,
           "valicode": this.valicode
