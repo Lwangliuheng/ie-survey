@@ -1145,7 +1145,7 @@ RTCRoom = (function () {
             success: function (ret) {
                 exitRoomStatus = true;
                 // alert("退出房间："+JSON.stringify(ret));
-                console.log(ret,"退出推流失败:data")
+                // console.log(ret,"退出推流失败:data")ƒ
                 if (ret.data.code) {
                     console.log('退出推流失败:');
                     // options.fail && options.fail({
