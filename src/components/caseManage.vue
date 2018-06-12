@@ -302,7 +302,7 @@
               <div :style="{width: clientWidth}" style="position:relative;">
                 
                 <video id="remoteVideo" style="width:100%;height:470px;" autoplay playsinline></video>
-                <video id="localVideo" muted autoplay playinline></video>
+                <video id="localVideo" muted autoplay playinline v-show="showLocal"></video>
                 <canvas id="mycanvas" width="1280" height="720" style="width:100%;height:470px;display:none;"></canvas>
 
               </div>
@@ -327,7 +327,11 @@
                       <img src="../images/video_ico_2.png">
                     </div>
                     <!-- 截图按钮 -->
-                    <div class="player-photo" id="photoButton" @click="takeScreenshot" title="请点击问号">
+                    <div class="player-photo" id="photoButton" @click="takeScreenshot" title="截图">
+                      <img src="../images/screenshot.png">
+                    </div>
+                    <!-- 双向按钮 -->
+                    <div class="player-photo" id="photoButton" @click="triggerBox" title="双向">
                       <img src="../images/screenshot.png">
                     </div>
                     <!-- <div class="player-photo" title="截图设置说明">
@@ -1326,6 +1330,7 @@
         fromAccount: '',
         videoroomID: "",
         list:[],
+        showLocal: false,
         wlhData:"",
         isScreenShot: false,
         listeners: {
@@ -1782,6 +1787,15 @@
           }
         }
 
+      },
+      // 双向视频
+      triggerBox (){
+          this.showLocal = ! this.showLocal;
+          if(this.showLocal){
+            this.sendMsg(this.fromAccount,'WEB$$openRemoteWindow');
+          }else {
+            this.sendMsg(this.fromAccount,'WEB$$closeRemoteWindow');            
+          }
       },
       //退出房间(挂断)
       disconnect(type){
