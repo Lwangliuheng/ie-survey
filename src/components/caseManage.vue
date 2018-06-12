@@ -307,7 +307,7 @@
 
               </div>
               <div :style="{width: clientWidth}">
-                <img style="width:100%;height:500px;" src="../../ieVideo/static/videoDefoult.png"/>
+                <img style="width:100%;height:500px;" src="../../rtcv/static/videoDefoult.png"/>
               </div>
             </div>
             <div v-show="steamActive" style="width:800px;height:100px;margin-top:-100px;"  class="videoBox ">
@@ -340,8 +340,8 @@
               </div>
             </div>
             <div v-show="!steamActive" class="videoBox" style="display:flex;justify-content:center;">
-              <img style="width:100%;height:500px;" id="video-background" src="../../ieVideo/static/video-default.png"/>
-              <img style="width:100%;height:500px;" id="video-background1" src="../../ieVideo/static/videoDefoult.png"/>
+              <img style="width:100%;height:500px;" id="video-background" src="../../rtcv/static/video-default.png"/>
+              <img style="width:100%;height:500px;" id="video-background1" src="../../rtcv/static/videoDefoult.png"/>
             </div>
           </div>
         </div>
@@ -560,7 +560,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_1.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_1.jpg"
               }
             ]
           },{
@@ -571,7 +571,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_2.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_2.jpg"
               }
             ]
           },
@@ -583,7 +583,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_3.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_3.jpg"
               }
             ]
           },{
@@ -594,7 +594,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                "watermarkPhotoUrl": "../../rtcv/static/1.png"
               }
             ]
           },
@@ -606,7 +606,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                "watermarkPhotoUrl": "../../rtcv/static/1.png"
               }
             ]
           },{
@@ -617,7 +617,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_4.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_4.jpg"
               }
             ]
           },
@@ -629,7 +629,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_5.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_5.jpg"
               }
             ]
           },{
@@ -640,7 +640,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_6.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_6.jpg"
               }
             ]
           },
@@ -652,7 +652,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_7.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_7.jpg"
               }
             ]
           },{
@@ -663,7 +663,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_8.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_8.jpg"
               }
             ]
           },
@@ -675,7 +675,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_9.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_9.jpg"
               }
             ]
           },{
@@ -686,7 +686,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/2.png"
+                "watermarkPhotoUrl": "../../rtcv/static/2.png"
               }
             ]
           },
@@ -698,7 +698,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_10.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_10.jpg"
               }
             ]
           },{
@@ -709,7 +709,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_11.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_11.jpg"
               }
             ]
           },
@@ -721,7 +721,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/3.png"
+                "watermarkPhotoUrl": "../../rtcv/static/3.png"
               }
             ]
           }
@@ -735,7 +735,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_1.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_1.jpg"
               }
             ]
           },{
@@ -746,7 +746,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_2.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_2.jpg"
               }
             ]
           },
@@ -758,7 +758,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_3.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_3.jpg"
               }
             ]
           },{
@@ -769,7 +769,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                "watermarkPhotoUrl": "../../rtcv/static/1.png"
               }
             ]
           },
@@ -781,7 +781,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                "watermarkPhotoUrl": "../../rtcv/static/1.png"
               }
             ]
           },{
@@ -792,7 +792,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_4.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_4.jpg"
               }
             ]
           },
@@ -804,7 +804,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_5.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_5.jpg"
               }
             ]
           },{
@@ -815,7 +815,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_6.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_6.jpg"
               }
             ]
           },
@@ -827,7 +827,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_7.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_7.jpg"
               }
             ]
           },{
@@ -838,7 +838,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_8.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_8.jpg"
               }
             ]
           },
@@ -850,7 +850,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_9.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_9.jpg"
               }
             ]
           },{
@@ -861,7 +861,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/2.png"
+                "watermarkPhotoUrl": "../../rtcv/static/2.png"
               }
             ]
           },
@@ -873,7 +873,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_10.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_10.jpg"
               }
             ]
           },{
@@ -884,7 +884,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_11.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_11.jpg"
               }
             ]
           },
@@ -896,7 +896,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/3.png"
+                "watermarkPhotoUrl": "../../rtcv/static/3.png"
               }
             ]
           }
@@ -910,7 +910,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_1.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_1.jpg"
               }
             ]
           },{
@@ -921,7 +921,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_2.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_2.jpg"
               }
             ]
           },
@@ -933,7 +933,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_3.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_3.jpg"
               }
             ]
           },{
@@ -944,7 +944,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                "watermarkPhotoUrl": "../../rtcv/static/1.png"
               }
             ]
           },
@@ -956,7 +956,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                "watermarkPhotoUrl": "../../rtcv/static/1.png"
               }
             ]
           },{
@@ -967,7 +967,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_4.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_4.jpg"
               }
             ]
           },
@@ -979,7 +979,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_5.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_5.jpg"
               }
             ]
           },{
@@ -990,7 +990,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_6.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_6.jpg"
               }
             ]
           },
@@ -1002,7 +1002,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_7.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_7.jpg"
               }
             ]
           },{
@@ -1013,7 +1013,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_8.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_8.jpg"
               }
             ]
           },
@@ -1025,7 +1025,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_9.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_9.jpg"
               }
             ]
           },{
@@ -1036,7 +1036,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/2.png"
+                "watermarkPhotoUrl": "../../rtcv/static/2.png"
               }
             ]
           },
@@ -1048,7 +1048,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_10.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_10.jpg"
               }
             ]
           },{
@@ -1059,7 +1059,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_11.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_11.jpg"
               }
             ]
           },
@@ -1071,7 +1071,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/3.png"
+                "watermarkPhotoUrl": "../../rtcv/static/3.png"
               }
             ]
           }
@@ -1085,7 +1085,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_1.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_1.jpg"
               }
             ]
           },{
@@ -1096,7 +1096,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_2.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_2.jpg"
               }
             ]
           },
@@ -1108,7 +1108,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_3.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_3.jpg"
               }
             ]
           },{
@@ -1119,7 +1119,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                "watermarkPhotoUrl": "../../rtcv/static/1.png"
               }
             ]
           },
@@ -1131,7 +1131,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                "watermarkPhotoUrl": "../../rtcv/static/1.png"
               }
             ]
           },{
@@ -1142,7 +1142,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_4.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_4.jpg"
               }
             ]
           },
@@ -1154,7 +1154,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_5.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_5.jpg"
               }
             ]
           },{
@@ -1165,7 +1165,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_6.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_6.jpg"
               }
             ]
           },
@@ -1177,7 +1177,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_7.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_7.jpg"
               }
             ]
           },{
@@ -1188,7 +1188,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_8.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_8.jpg"
               }
             ]
           },
@@ -1200,7 +1200,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_9.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_9.jpg"
               }
             ]
           },{
@@ -1211,7 +1211,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/2.png"
+                "watermarkPhotoUrl": "../../rtcv/static/2.png"
               }
             ]
           },
@@ -1223,7 +1223,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_10.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_10.jpg"
               }
             ]
           },{
@@ -1234,7 +1234,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_11.jpg"
+                "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_11.jpg"
               }
             ]
           },
@@ -1246,7 +1246,7 @@
             "surveyPhotos": [
               {
                 "photoId": "",
-                "watermarkPhotoUrl": "../../ieVideo/static/3.png"
+                "watermarkPhotoUrl": "../../rtcv/static/3.png"
               }
             ]
           }
@@ -2407,7 +2407,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_1.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_1.jpg"
                     }
                   ]
                 },{
@@ -2418,7 +2418,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_2.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_2.jpg"
                     }
                   ]
                 },
@@ -2430,7 +2430,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_3.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_3.jpg"
                     }
                   ]
                 },{
@@ -2441,7 +2441,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/1.png"
                     }
                   ]
                 },
@@ -2453,7 +2453,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/1.png"
                     }
                   ]
                 },{
@@ -2464,7 +2464,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_4.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_4.jpg"
                     }
                   ]
                 },
@@ -2476,7 +2476,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_5.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_5.jpg"
                     }
                   ]
                 },{
@@ -2487,7 +2487,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_6.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_6.jpg"
                     }
                   ]
                 },
@@ -2499,7 +2499,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_7.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_7.jpg"
                     }
                   ]
                 },{
@@ -2510,7 +2510,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_8.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_8.jpg"
                     }
                   ]
                 },
@@ -2522,7 +2522,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_9.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_9.jpg"
                     }
                   ]
                 },{
@@ -2533,7 +2533,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/2.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/2.png"
                     }
                   ]
                 },
@@ -2545,7 +2545,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_10.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_10.jpg"
                     }
                   ]
                 },{
@@ -2556,7 +2556,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_11.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_11.jpg"
                     }
                   ]
                 },
@@ -2568,7 +2568,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/3.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/3.png"
                     }
                   ]
                 }
@@ -2582,7 +2582,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_1.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_1.jpg"
                     }
                   ]
                 },{
@@ -2593,7 +2593,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_2.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_2.jpg"
                     }
                   ]
                 },
@@ -2605,7 +2605,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_3.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_3.jpg"
                     }
                   ]
                 },{
@@ -2616,7 +2616,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/1.png"
                     }
                   ]
                 },
@@ -2628,7 +2628,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/1.png"
                     }
                   ]
                 },{
@@ -2639,7 +2639,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_4.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_4.jpg"
                     }
                   ]
                 },
@@ -2651,7 +2651,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_5.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_5.jpg"
                     }
                   ]
                 },{
@@ -2662,7 +2662,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_6.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_6.jpg"
                     }
                   ]
                 },
@@ -2674,7 +2674,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_7.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_7.jpg"
                     }
                   ]
                 },{
@@ -2685,7 +2685,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_8.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_8.jpg"
                     }
                   ]
                 },
@@ -2697,7 +2697,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_9.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_9.jpg"
                     }
                   ]
                 },{
@@ -2708,7 +2708,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/2.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/2.png"
                     }
                   ]
                 },
@@ -2720,7 +2720,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_10.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_10.jpg"
                     }
                   ]
                 },{
@@ -2731,7 +2731,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_11.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_11.jpg"
                     }
                   ]
                 },
@@ -2743,7 +2743,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/3.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/3.png"
                     }
                   ]
                 }
@@ -2757,7 +2757,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_1.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_1.jpg"
                     }
                   ]
                 },{
@@ -2768,7 +2768,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_2.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_2.jpg"
                     }
                   ]
                 },
@@ -2780,7 +2780,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_3.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_3.jpg"
                     }
                   ]
                 },{
@@ -2791,7 +2791,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/1.png"
                     }
                   ]
                 },
@@ -2803,7 +2803,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/1.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/1.png"
                     }
                   ]
                 },{
@@ -2814,7 +2814,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_4.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_4.jpg"
                     }
                   ]
                 },
@@ -2826,7 +2826,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_5.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_5.jpg"
                     }
                   ]
                 },{
@@ -2837,7 +2837,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_6.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_6.jpg"
                     }
                   ]
                 },
@@ -2849,7 +2849,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_7.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_7.jpg"
                     }
                   ]
                 },{
@@ -2860,7 +2860,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_8.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_8.jpg"
                     }
                   ]
                 },
@@ -2872,7 +2872,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_9.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_9.jpg"
                     }
                   ]
                 },{
@@ -2883,7 +2883,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/2.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/2.png"
                     }
                   ]
                 },
@@ -2895,7 +2895,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_10.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_10.jpg"
                     }
                   ]
                 },{
@@ -2906,7 +2906,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/icon_noImg_11.jpg"
+                      "watermarkPhotoUrl": "../../rtcv/static/icon_noImg_11.jpg"
                     }
                   ]
                 },
@@ -2918,7 +2918,7 @@
                   "surveyPhotos": [
                     {
                       "photoId": "",
-                      "watermarkPhotoUrl": "../../ieVideo/static/3.png"
+                      "watermarkPhotoUrl": "../../rtcv/static/3.png"
                     }
                   ]
                 }

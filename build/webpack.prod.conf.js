@@ -112,7 +112,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     // copy custom ieVideo images
     new CopyWebpackPlugin([
       {
-        from: path.resolve(__dirname, '../ieVideo'),
+        from: path.resolve(__dirname, '../rtcv'),
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
