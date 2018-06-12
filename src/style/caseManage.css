@@ -959,10 +959,11 @@
     color:red;
   }
   #localVideo{
-    width:300px;
+    width:250px;
     height: 180px;
     position: absolute;
     top: 0;
     left: 0;
     z-index: 99;
+    object-fit:fill;
   }

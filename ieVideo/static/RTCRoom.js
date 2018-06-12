@@ -1076,14 +1076,6 @@ RTCRoom = (function () {
         );
     }
 
-
-
-
-
-
-
-
-
     function proto_enterRoom(options) {
         console.log('accountInfo.userID' + accountInfo.userID)
         request({
@@ -1386,13 +1378,12 @@ RTCRoom = (function () {
     function setMute(isMute) {
         // var livePusher = getLivePusher();
         // livePusher.setMute(isMute);
-        // var remoteVideo =document.getElementById('remoteVideo');
-        // remoteVideo.muted = isMute;
-        if(isMute) {
-            RTC.closeAudio();
-        }else {
-            RTC.openAudio();
-        }
+
+        // if(isMute) {
+        //     RTC.closeAudio();
+        // }else {
+        //     RTC.openAudio();
+        // }
     }
 
 

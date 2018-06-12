@@ -156,7 +156,7 @@ function formatParams(data) {
       data: {
         userID: userID,
         roomID: roomID,
-        nickName: nickName,
+        userName: nickName,
         userAvatar: "789456",
         pushURL: "webc"
       },
