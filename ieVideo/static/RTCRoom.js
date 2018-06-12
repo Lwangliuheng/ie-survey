@@ -207,7 +207,7 @@ RTCRoom = (function () {
     },
         // 房间信息
         roomInfo = {
-            roomID: '',			// 视频位房间ID
+            roomID: 0,			// 视频位房间ID
             roomName: '',		// 房间名称
             mixedPlayURL: '', 	// 混流地址
             pushers: [],		// 当前用户信息accelerateURL userAvatar, userID, userName
@@ -321,12 +321,14 @@ RTCRoom = (function () {
             object.fail();
             return;
         }
-        localStorage.setItem('accoutUserID', object.data.userID + 'webId11');
+        // localStorage.setItem('accoutUserID', object.data.userID + 'webId11');
+        localStorage.setItem('accoutUserID', object.data.userID);
 
 
         console.log('323' + JSON.stringify(object.data))
         serverDomain = object.data.serverDomain;
-        accountInfo.userID = object.data.userID + 'webId11';
+        // accountInfo.userID = object.data.userID + 'webId11';
+        accountInfo.userID = object.data.userID;
         accountInfo.imuserID = object.data.userID;
         accountInfo.userSig = object.data.userSig;
         accountInfo.sdkAppID = object.data.sdkAppID;
@@ -920,26 +922,30 @@ RTCRoom = (function () {
         roomInfo.roomID = object.data.roomID;
         // roomInfo.roomID = 44441;
         // console.log('我我哦我我我我我我我我哦我', roomInfo.roomID)
+       initRTC(loginInfo, function () {
+            object.success && object.success();
+        }, function () {
+            object.fail && object.fail("拉取主播信息失败");
+        });
+        // WebRTCRoom.getLoginInfo(
+        //     object.data.roomID,
+        //     function (res) {
+        //         // console.log("少时诵诗书所所所所所所所所所", res.data);
+        //         loginInfo1.userID = res.data.userID;
+        //         loginInfo1.userSig = res.data.userSig;
+        //         loginInfo1.accountType = res.data.accType;
+        //         loginInfo1.sdkAppID = res.data.sdkAppID;
 
-        WebRTCRoom.getLoginInfo(
-            object.data.roomID,
-            function (res) {
-                // console.log("少时诵诗书所所所所所所所所所", res.data);
-                loginInfo1.userID = res.data.userID;
-                loginInfo1.userSig = res.data.userSig;
-                loginInfo1.accountType = res.data.accType;
-                loginInfo1.sdkAppID = res.data.sdkAppID;
+        //         console.log('WEBRTC获取到的数据', loginInfo1);
+        //         initRTC(loginInfo1, function () {
+        //             object.success && object.success();
+        //         }, function () {
+        //             object.fail && object.fail("拉取主播信息失败");
+        //         });
 
-                console.log('WEBRTC获取到的数据', loginInfo1);
-                initRTC(loginInfo1, function () {
-                    object.success && object.success();
-                }, function () {
-                    object.fail && object.fail("拉取主播信息失败");
-                });
-
-            },
-            function (res) { }
-        );
+        //     },
+        //     function (res) { }
+        // );
 
 
         // getPushURL({
@@ -974,10 +980,10 @@ RTCRoom = (function () {
     }
 
     function initRTC(data, success, err) {
-
+         console.log(data,"987798987987987987")
         RTC = new WebRTCAPI({
             sdkAppId: data.sdkAppID,
-            openid: data.userID,
+            openid: data.identifier,
             userSig: data.userSig,
             accountType: data.accountType
         }, function () {
@@ -1032,27 +1038,29 @@ RTCRoom = (function () {
 
     function actionEnterRoom(data) {
 
-        WebRTCRoom.enterRoom(data.userID, roomInfo.roomName, roomInfo.roomID, function (res) {
+        WebRTCRoom.enterRoom(data.identifier, roomInfo.roomName, roomInfo.roomID, function (res) {
             // 发送心跳包
             // WebRTCRoom.startHeartBeat(data.userID, roomInfo.roomID, function () { }, function () {
             //     console.warn("心跳包超时，请重试~");
             //     goHomeRouter(data.userID, roomInfo.roomID);
             // });
-
+            // 开始心跳
+                heart = true;
+                pusherHeartBeat(1);
             //进房间
             RTC.createRoom({ roomid: parseInt(roomInfo.roomID), role: "miniwhite" }, function (result) {
                 console.log("webrtc创建房间成功");
             }, function () {
                 if (result) {
                     console.error("webrtc建房失败");
-                    goHomeRouter(data.userID, roomInfo.roomID);
+                    goHomeRouter(data.identifier, roomInfo.roomID);
                 }
             });
             // self.initIM();
             // renderMemberList();
         }, function (res) {
             // error, 返回
-            goHomeRouter(data.userID, roomInfo.roomID);
+            goHomeRouter(data.identifier, roomInfo.roomID);
         });
     }
 
@@ -1132,8 +1140,9 @@ RTCRoom = (function () {
      * object.fail      失败回调
      */
     function exitRoom(options) {
-        // var roomid = '', userId = '';
-
+    
+        if (roomInfo.roomID == 0) return;
+         RTC && RTC.quit();
         console.log('我退出房间exitRoom11111111')
         request({
             url: 'delete_pusher',
@@ -1142,6 +1151,9 @@ RTCRoom = (function () {
                 userID: accountInfo.userID
             },
             success: function (ret) {
+                exitRoomStatus = true;
+                // alert("退出房间："+JSON.stringify(ret));
+                console.log(ret,"退出推流失败:data")
                 if (ret.data.code) {
                     console.log('退出推流失败:');
                     // options.fail && options.fail({
@@ -1150,8 +1162,10 @@ RTCRoom = (function () {
                     // });
                     return;
                 }
+                stopPusherHeartBeat();
+
                 console.log('退出推流成功');
-                roomInfo.roomID = '';
+                roomInfo.roomID = 0;
                 roomInfo.pushers = {}
                 roomInfo.isDestory = true;
                 roomInfo.mixedPlayURL = "";
@@ -1169,7 +1183,7 @@ RTCRoom = (function () {
             }
         });
 
-        RTC && RTC.quit();
+        
         // goHomeRouter(loginInfo1.userID, roomInfo.roomID, function () {
         //     roomInfo.roomID = "";
         //     roomInfo.pushers = {};
@@ -1184,7 +1198,7 @@ RTCRoom = (function () {
         
         // roomid = localStorage.getItem('accoutRoomID');
         // userId = localStorage.getItem('accoutUserID');
-        stopPusherHeartBeat();
+        
         // webimhandler.quitBigGroup();
         // webimhandler.logout();
         // var livePusher = document.getElementById('Pusher');

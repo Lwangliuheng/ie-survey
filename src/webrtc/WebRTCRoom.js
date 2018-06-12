@@ -155,10 +155,10 @@ function formatParams(data) {
       url: '/add_pusher',
       data: {
         userID: userID,
-        roomID: roomID,
-        nickName: nickName,
+        roomID: parseInt(roomID),
+        userName: nickName ? nickName:'546546456',
         userAvatar: "789456",
-        pushURL: "webc"
+        pushURL: "no rtmp url"
       },
       success: function (res) {
         success && success(res);

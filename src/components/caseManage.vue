@@ -1326,6 +1326,7 @@
         fromAccount: '',
         videoroomID: "",
         list:[],
+        wlhData:"",
         isScreenShot: false,
         listeners: {
 //          "onConnNotify": webimhandler.onConnNotify, //选填
@@ -1600,6 +1601,8 @@
         ret.data.divId = "PusherAreaID";
         ret.data.userName = myUserName;
         console.log(that.listeners)
+        that.wlhData = ret.data;
+        console.log(that.wlhData,"that.wlhData")
         RTCRoom.init({
           data: ret.data,
           success: function (ret) {
@@ -1794,7 +1797,7 @@
         }
         RTCRoom.exitRoom();
         inRoom = false;
-        RTCRoom.setMute(true);
+        // RTCRoom.setMute(true);
         this.$nextTick(()=>{
           this.steamActive = false;
           this.twoButton =  true;
@@ -2129,10 +2132,10 @@
           //   return;
           // }
           inRoom = true;
+          var data = that.wlhData;
+          data.roomID = that.videoroomID;
           RTCRoom.enterRoom({
-            data: {
-              roomID: that.videoroomID
-            },
+            data: data,
             success: function () {
               that.sendMsg(that.fromAccount,isReceive);
               that.twoButton = false;
