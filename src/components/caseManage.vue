@@ -315,9 +315,9 @@
                 <div class="player-control">
                   <div class="player-control-box">
                     <!-- 静音 -->
-                    <div id="closeRecording" class="player-recording">
+                    <!-- <div id="closeRecording" class="player-recording">
                     <img src="../images/video_ico_0.png">
-                    </div>
+                    </div> -->
                     <!-- 打开闪光灯 -->
                     <div class="player-auto-flash" id="flashButton" @click="openLight">
                       <img src="../images/video_ico_1.png">
@@ -331,8 +331,9 @@
                       <img src="../images/screenshot.png">
                     </div>
                     <!-- 双向按钮 -->
-                    <div class="player-photo" id="photoButton" @click="triggerBox" title="双向">
-                      <img src="../images/screenshot.png">
+                    <div class="player-photo" id="photoButton">
+                      <img src="../images/doubleBoxOpen.png" title="打开双向视频" v-if="!showLocal" @click="triggerBox">
+                      <img src="../images/doubleBoxClose.png" title="关闭双向视频" v-else @click="triggerBox">
                     </div>
                     <!-- <div class="player-photo" title="截图设置说明">
                       <router-link to="/takePicHelps" target="_blank">
@@ -1799,6 +1800,7 @@
       },
       //退出房间(挂断)
       disconnect(type){
+        this.showLocal = false;
         this.source = ''
 //        console.log('accountInfo.roomID'+accountInfo.roomID)
         clearInterval(this.t);
