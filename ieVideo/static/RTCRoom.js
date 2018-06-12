@@ -916,7 +916,7 @@ RTCRoom = (function () {
             console.log('enterRoom参数错误', object);
             object && object.fail && object.fail({ errCode: -1, errMsg: "参数错误" });
             return;
-        }
+        }        
         roomInfo.roomID = object.data.roomID;
         // roomInfo.roomID = 44441;
         // console.log('我我哦我我我我我我我我哦我', roomInfo.roomID)
@@ -986,6 +986,13 @@ RTCRoom = (function () {
         }, function (error) {
             if (err) err();
         });
+        
+        // 调起音视频设备采集音视频流。
+        // RTC.getUserMedia({ audio: true, video: true }, function (stream) {
+        //     console.log('获取音视频成功！！！')
+        // }, function (error) {
+        //     console.log("获取音视频失败！！！",error)
+        // });
 
         RTC.on("onLocalStreamAdd", function (info) {
             console.log("本地流添加");
@@ -1025,12 +1032,8 @@ RTCRoom = (function () {
 
     function actionEnterRoom(data) {
 
-        //   self.courseId = self.room.roomID;
-        //   self.courseName = self.room.roomInfo;
-        //   self.selfName = self.room.userName;
         WebRTCRoom.enterRoom(data.userID, roomInfo.roomName, roomInfo.roomID, function (res) {
             // 发送心跳包
-            // console.log('roomID的点点滴滴多多多多多', res)
             // WebRTCRoom.startHeartBeat(data.userID, roomInfo.roomID, function () { }, function () {
             //     console.warn("心跳包超时，请重试~");
             //     goHomeRouter(data.userID, roomInfo.roomID);
@@ -1130,20 +1133,53 @@ RTCRoom = (function () {
      */
     function exitRoom(options) {
         // var roomid = '', userId = '';
-        console.log('我退出房间exitRoom11111111')
 
-            RTC = "";
+        console.log('我退出房间exitRoom11111111')
+        request({
+            url: 'delete_pusher',
+            data: {
+                roomID: roomInfo.roomID,
+                userID: accountInfo.userID
+            },
+            success: function (ret) {
+                if (ret.data.code) {
+                    console.log('退出推流失败:');
+                    // options.fail && options.fail({
+                    //     errCode: ret.data.code,
+                    //     errMsg: ret.data.message + '[' + ret.data.code + ']'
+                    // });
+                    return;
+                }
+                console.log('退出推流成功');
+                roomInfo.roomID = '';
+                roomInfo.pushers = {}
+                roomInfo.isDestory = true;
+                roomInfo.mixedPlayURL = "";
+                roomInfo.roomName = "";
+                accountInfo.pushURL = "";
+                accountInfo.isCreator = false;
+                // options.success && options.success({});
+            },
+            fail: function (ret) {
+                console.log('退出推流失败:');
+                // options.fail && options.fail({
+                //     errCode: ret.errCode || -1,
+                //     errMsg: ret.errMsg || '退出推流失败'
+                // });
+            }
+        });
+
+        RTC && RTC.quit();
         // goHomeRouter(loginInfo1.userID, roomInfo.roomID, function () {
-            roomInfo.roomID = "";
-            roomInfo.pushers = {};
-            roomInfo.isDestory = true;
-            roomInfo.roomName = "";
-            accountInfo.isCreator = false;
+        //     roomInfo.roomID = "";
+        //     roomInfo.pushers = {};
+        //     roomInfo.isDestory = true;
+        //     roomInfo.roomName = "";
+        //     accountInfo.isCreator = false;
         // });
-        console.log("我退出房间exitRoom22222222");
         
-        if (roomInfo.isDestory) return;
-        if (accountInfo.roomID == "") return;
+        // if (roomInfo.isDestory) return;
+        // if (accountInfo.roomID == "") return;
 
         
         // roomid = localStorage.getItem('accoutRoomID');
@@ -1155,39 +1191,6 @@ RTCRoom = (function () {
         // options = options || {};
 
 
-        // request({
-        //     url: 'delete_pusher',
-        //     data: {
-        //         roomID: roomInfo.roomID,
-        //         userID: accountInfo.userID
-        //     },
-        //     success: function (ret) {
-        //         if (ret.data.code) {
-        //             console.log('退出推流失败:');
-        //             options.fail && options.fail({
-        //                 errCode: ret.data.code,
-        //                 errMsg: ret.data.message + '[' + ret.data.code + ']'
-        //             });
-        //             return;
-        //         }
-        //         console.log('退出推流成功');
-        // roomInfo.roomID = '';
-        // roomInfo.pushers = {}
-        // roomInfo.isDestory = true;
-        // roomInfo.mixedPlayURL = "";
-        // roomInfo.roomName = "";
-        // accountInfo.pushURL = "";
-        // accountInfo.isCreator = false;
-        //         options.success && options.success({});
-        //     },
-        //     fail: function (ret) {
-        //         console.log('退出推流失败:');
-        //         options.fail && options.fail({
-        //             errCode: ret.errCode || -1,
-        //             errMsg: ret.errMsg || '退出推流失败'
-        //         });
-        //     }
-        // });
     }
 
     /**
@@ -1383,9 +1386,13 @@ RTCRoom = (function () {
     function setMute(isMute) {
         // var livePusher = getLivePusher();
         // livePusher.setMute(isMute);
-        var remoteVideo =document.getElementById('remoteVideo');
-        remoteVideo.muted = isMute;
-
+        // var remoteVideo =document.getElementById('remoteVideo');
+        // remoteVideo.muted = isMute;
+        if(isMute) {
+            RTC.closeAudio();
+        }else {
+            RTC.openAudio();
+        }
     }
 
 
