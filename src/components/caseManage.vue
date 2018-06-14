@@ -72,7 +72,7 @@
                 <option value="0">异常办结</option>
               </select>
             </div>
-            <textarea data-m class="textareaBox" v-model="exceptionComment" placeholder="请输入事故经过"></textarea>
+           <!--  <textarea data-m class="textareaBox" v-model="exceptionComment" placeholder="请输入事故经过"></textarea> -->
              <!-- <div class="but_wrap">
                 <span class="setGreen">发送电子查勘单</span>
                 <span class="setWhite" @click="checkedOneEven">发送转账授权书</span>
@@ -304,6 +304,7 @@
                 <video id="remoteVideo" style="width:100%;height:470px;" autoplay playsinline></video>
                 <video id="localVideo" muted autoplay playinline v-show="showLocal"></video>
                 <canvas id="mycanvas" width="1280" height="720" style="width:100%;height:470px;display:none;"></canvas>
+
 
               </div>
               <div :style="{width: clientWidth}">
@@ -1592,7 +1593,7 @@
     //doLoadActiveXPlugin();
     RTCRoom.httpRequest({
       //url: "https://lvb.qcloud.com/weapp/double_room/get_im_login_info",
-      url: "https://nweeyr0w.qcloud.la/weapp/double_room/get_im_login_info",
+      url: "https://160716803.shipinlipei.com/weapp/double_room/get_im_login_info",
       data: {userIDPrefix: "IE(ActiveX)"},
       method: "POST",
       success: function (ret) {
@@ -1602,7 +1603,7 @@
         //gai
         //ret.data.serverDomain = "https://lvb.qcloud.com/weapp/double_room/";
         //https://160716803.shipinlipei.com
-        ret.data.serverDomain = "https://nweeyr0w.qcloud.la/weapp/double_room/";
+        ret.data.serverDomain = "https://160716803.shipinlipei.com/weapp/double_room/";
         userID = ret.data.userID;
         ret.data.divId = "PusherAreaID";
         ret.data.userName = myUserName;
@@ -3077,7 +3078,7 @@
           "surveyNo":this.roomId,
           "isExceptionComplete":this.isExceptionComplete,
           // "exceptionCode":this.exceptionCode,
-          "exceptionComment": this.exceptionComment
+          //"exceptionComment": this.exceptionComment
         }
         // alert(this.source)
         if(this.xsource == 'wechat'){
@@ -3110,7 +3111,8 @@
                 //console.log(response.data.resdes,444444444)
 //              $(".loadingBox").addClass('hide')
               //this.open4(response.data.resdes.exceptionComment)
-              this.open4("请输入事故经过");
+              //this.open4("请输入事故经过");
+              this.open4("请发送电子查勘单");
             }
           }, err => {
             console.log(err);

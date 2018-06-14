@@ -309,6 +309,35 @@
     margin-left:10px;
     color:#2fab3b;
   }
+
+
+   .che-one-wrap{
+    height:400px;
+    overflow: scroll;
+  }
+  .underlying-wrap{
+    background: rgba(0,0,0,0.3);
+    width:100%;
+    position: fixed;
+    overflow: scroll;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 201;
+  }
+   .claim-content-underiy{
+     width: 600px;
+     margin:0 auto;
+     margin-left:50%;
+     background: #fff;
+     margin-top: 20vh;
+     height:300px;
+     overflow: scroll;
+     position: relative;
+  }
+  .beizhuInfoIncidentGra{
+    color:#c8c8c8;
+  }
 </style>
 <template>
   <div class="caseDetail">
@@ -323,11 +352,16 @@
                    <!--  <el-checkbox v-for="city in cityOptions" :label="city" :key="city">{{city}}</el-checkbox> -->
                     <el-checkbox label="电子查勘单" disabled @click="getDetails"></el-checkbox>
                     <el-checkbox label="转赔授权书" :disabled="selectStateOne"></el-checkbox>
-                    <el-checkbox label="快赔协议" :disabled="selectStateTwo"></el-checkbox>
+                    <el-checkbox label="快赔协议" :disabled="selectStateTwo" class="triggerCheckout"></el-checkbox>
                 </el-checkbox-group>
              </div>
-             <span class="sent-but" @click="setElectronic">发送单证</span>
-             <span class="sent-but" @click="setDetails">查看</span>
+
+              <!-- 修改5.22 -->
+                  <span class="sent-but" @click="underlyingThreeCar">发送单证</span>
+                  <span class="sent-but" @click="setDetails">查看</span>
+                 
+            <!--  <span class="sent-but" @click="setElectronic">发送单证</span>
+             <span class="sent-but" @click="setDetails">查看</span> -->
              <!-- <a :href="url" class="sent-but" @click="setDetails" target="_blank">查看</a> -->
             
          </div>
@@ -339,32 +373,50 @@
               <h4>请完善理赔信息</h4>
               <span @click="closeClaimDiolag" class="xmark">×</span>
           </div>
-          
-          <div class="che-one " v-for="(item,index) in ImgInfo">
-               <p class="plate">{{item.originalVehicleLicenseNo}}</p>
-               <div class="part-wrap part-wrap-one" >
-                  <div class="part" @click="part($event,item)" >正前部<span>1</span></div>
-                  <div class="part" @click="part($event,item)" >左前部<span>2</span></div>
-                  <div class="part" @click="part($event,item)" >右前部<span>3</span></div>
-                  <div class="part" @click="part($event,item)" >左中部<span>4</span></div>
-                  <div class="part" @click="part($event,item)" >正后部<span>5</span></div>
-                  <div class="part" @click="part($event,item)" >左后部<span>6</span></div>
-                  <div class="part" @click="part($event,item)" >右后部<span>7</span></div>
-                  <div class="part" @click="part($event,item)" >右中部<span>8</span></div>
-               </div>
-               <div class="input-box">
-                     <span>赔付金额</span>
-                     <input type="text" name="" @blur="one_part($event,index)">
-                </div>
+          <div class="che-one-wrap"> 
+              <div class="che-one" v-for="(item,index) in ImgInfo">
+                   <p class="plate">{{item.originalVehicleLicenseNo}}</p>
+                   <div class="part-wrap part-wrap-one" >
+                      <div class="part" @click="part($event,item)" >正前部<span>1</span></div>
+                      <div class="part" @click="part($event,item)" >左前部<span>2</span></div>
+                      <div class="part" @click="part($event,item)" >右前部<span>3</span></div>
+                      <div class="part" @click="part($event,item)" >左中部<span>4</span></div>
+                      <div class="part" @click="part($event,item)" >正后部<span>5</span></div>
+                      <div class="part" @click="part($event,item)" >左后部<span>6</span></div>
+                      <div class="part" @click="part($event,item)" >右后部<span>7</span></div>
+                      <div class="part" @click="part($event,item)" >右中部<span>8</span></div>
+                   </div>
+                   <div class="input-box">
+                         <span>赔付金额</span>
+                         <input type="text" name="" @blur="one_part($event,index)">
+                    </div>
+              </div>
+             <!--  <div class="checkbox-wrap">
+              <el-checkbox-group v-model="checkedCities"  @change="handleCheckedCitiesChange">
+                    <el-checkbox v-for="city in cityOptions" :label="city" :key="city">{{city}}</el-checkbox>
+              </el-checkbox-group>
+              </div> -->
+              <el-button type="primary" class="but-claim" @click="claimButton">确定</el-button>
           </div>
-          <div class="checkbox-wrap">
-          <el-checkbox-group v-model="checkedCities"  @change="handleCheckedCitiesChange">
-                <el-checkbox v-for="city in cityOptions" :label="city" :key="city">{{city}}</el-checkbox>
-          </el-checkbox-group>
-          </div>
-          <el-button type="primary" class="but-claim" @click="claimButton">确定</el-button>
+         
         </div>
     </div>
+      <!-- 标车三者车选择的弹框//修改5.22 -->
+         <div class="underlying-wrap hide">
+             <div class="claim-content-underiy">
+               <div class="top-wrap">
+                   <h4>请完善理赔信息</h4>
+                   <span class="xmark" @click="closeUnderlying">×</span>
+               </div>
+               <div class="checkbox-wrap">
+               <el-checkbox-group v-model="checkedCities"  @change="handleCheckedCitiesChange">
+                     <el-checkbox v-for="city in cityOptions" :label="city" :key="city">{{city}}</el-checkbox>
+               </el-checkbox-group>
+               </div>
+               <!-- 发送电子查勘单 -->
+               <el-button type="primary" class="but-claim" @click="setElectronic">确定</el-button>
+             </div>
+         </div>
         <!-- 标车姓名弹框 -->
     <div class="czm-wrap hide">
         <div class="czm-content">
@@ -418,8 +470,22 @@
                 </div>
               </div>
 
-              <div class="caseInfoBox" v-if="caseDetailData.accidentInfo.exceptionReason != null"><span>事故经过：</span><i>{{caseDetailData.accidentInfo.exceptionReason}}</i></div>
+             <!--  <div class="caseInfoBox" v-if="caseDetailData.accidentInfo.exceptionReason != null"><span>事故经过：</span><i>{{caseDetailData.accidentInfo.exceptionReason}}</i></div> -->
           </div>
+
+          <div class="AimCar">
+            <div  class="aimheader clear">
+                <span style="color:#fff;">事故经过</span>
+                <span style="color:#fff;padding-right:10px;cursor: pointer;" v-if="editorIncidentStatue" @click="saveIncident" class="right">保存</span>
+                <span style="color:#fff;padding-right:10px;cursor: pointer;" v-if="!editorIncidentStatue"  @click="editorIncident" class="right">编辑</span>
+            </div>
+            <div class="aimInfo">
+              <textarea placeholder="请输入事故经过" class="beizhuInfo" v-model="IncidentContent" v-if="editorIncidentStatue">
+              </textarea>
+              <div class="beizhuInfoIncident beizhuInfo" v-bind:class="{beizhuInfoIncidentGra: isbeizhuInfoIncidentGra}" v-if="!editorIncidentStatue">{{IncidentContent}}</div>
+            </div>
+          </div>
+
           <div class="AimCar">
             <div  class="aimheader clear"><span style="color:#fff;">备注信息</span><span style="color:#fff;padding-right:10px;cursor: pointer;" @click="saveBeizhu" class="right">保存</span></div>
             <div class="aimInfo">
@@ -528,6 +594,9 @@ import axios from 'axios'
 export default {
   data() {
       return{
+        isbeizhuInfoIncidentGra:true,
+        IncidentContent:"",//事故经过内容
+        editorIncidentStatue:false,//编辑事故经过状态
         url:"",
         id:"",
         szcInputIndex:"",
@@ -653,12 +722,94 @@ export default {
         this.$nextTick(() => {
           this.getvedio()
         })
-      }
+      };
+      //获取事故经过
+      this.getIncidentInfo();
     },
     props: {
 //      caseOrder: string
     },
     methods: {
+      // open4(resdes) {
+      //     this.$message({
+      //           showClose: true,
+      //           message: resdes,
+      //           type: 'error'
+      //         });
+      //   },
+      //   open2(resdes){
+      //      this.$message({
+      //           showClose: true,
+      //           message: resdes,
+      //           type: 'success'
+      //         });
+      //   },
+        //获取事故经过
+        getIncidentInfo(){
+            var orderNo = this.caseDetailData.accidentInfo.surveyNo;
+            var vehicleLicenseNo = this.caseDetailData.reportVehicleInfo.vehicleLicenseNo;//标的车车牌
+            axios.get(this.ajaxUrl+"/survey/order/v1/accident/desc/"+orderNo).then(response => {
+               if(response.data.rescode == 200){
+                 
+                 if(response.data.data){
+                    this.isbeizhuInfoIncidentGra = false;
+                    this.IncidentContent = response.data.data;
+                 }else{
+                     //存在三者车
+                     if(this.thirdActive){
+                       var thirdVehicleLicenseNo = "";
+                        for(var i = 0;i < this.accidentVehicleInfos.length;i++){
+                               thirdVehicleLicenseNo += this.accidentVehicleInfos[i].vehicleLicenseNo + ",";
+                        };
+                         this.IncidentContent = '经现场查勘核实，标的车（'+vehicleLicenseNo+'）因 变道、转弯、追尾原因与三者车（'+thirdVehicleLicenseNo+'）发生碰撞，经交警处理/双方协商，标的车无责、次责、同责、主责、全责、（责任划分），三者车无责、次责、同责、主责、全责、（责任划分）；双方无争议，标的车受损部位为正前部、左前部、左后部；三者车受损部位正后部、左后部、右后部；现场查验事故真实性无异议，标的车双证及支付单证已现场采集，三者双证也已采集。';
+                         // this.IncidentContent = '经现场查勘核实，标的车（'+vehicleLicenseNo+'）因 变道、转弯、追尾原因 与三者车（'+thirdVehicleLicenseNo+'）发生碰撞，经交警处理/双方协商，标的车承担无责、次责、同责、主责、全责、（责任划分），三者车承担无责、次责、同责、主责、全责、（责任划分）；现场查验事故真实性无异议，标的车双证及支付单证已现场采集，三者双证也已采集，事故双方无异议。';
+                     }else{
+                      this.IncidentContent = '经现场查勘核实，标的车（'+vehicleLicenseNo+'）因 变道、转弯、追尾原因发生碰撞，经交警处理，标的车承担全责，标的车受损部位为正前部、左前部、左后部；现场查验事故真实性无异议，标的车双证及支付单证已现场采集，事故无异议。';
+                         // this.IncidentContent = ' 经现场查勘核实，标的车（'+vehicleLicenseNo+'）因 变道、转弯、追尾原因发生碰撞，经交警处理，标的车承担全责；现场查验事故真实性无异议，标的车双证及支付单证已现场采集，事故无异议。';
+                     }
+                 }
+                  
+                  console.log(response,"事故经过")
+               }
+            }, err => {
+              
+            })
+            .catch((error) => {
+            
+            })
+        },
+        //保存事故经过
+        saveIncident(e){
+          if(this.IncidentContent.length == 0){
+            this.open4("请填写事故经过");
+            return 
+          };
+           var data = {
+               orderNo : this.caseDetailData.accidentInfo.surveyNo,
+               accidentDescription : this.IncidentContent
+            };
+            axios.post(this.ajaxUrl+"/survey/order/v1/accident/desc",data).then(response => {
+                if(response.data.rescode == 200){
+                    this.open2("保存成功！");
+                    this.isbeizhuInfoIncidentGra = false;
+                    this.editorIncidentStatue = false;
+                }else{
+                    this.open4("保存失败！");
+                }
+                  
+           }, err => {
+
+           })
+           .catch((error) => {
+                this.open4("保存失败！");
+           })
+      
+           
+        },
+        //编辑事故经过
+        editorIncident(e){
+               this.editorIncidentStatue = true;
+        },
       getData(){
           // axios.get(this.ajaxUrl+'/web-surveyor/v1/list')
           // .then(response => {
@@ -879,15 +1030,44 @@ export default {
            //      console.log(error)
            //    })
       },
+       //标的车和三者车状态//修改5.22
+        underlyingThreeCarStatus(){
+          if(this.thirdActive){
+             this.cityOptions = ["标的签字","三者签字"];
+          }else{
+            this.cityOptions = ["标的签字"];
+          }
+        },
+        //修改5.22
+          closeUnderlying(e){
+           $('.underlying-wrap').addClass("hide");
+          },
+          //发送订单按钮//修改5.22
+          underlyingThreeCar(e){
+            this.underlyingThreeCarStatus();
+            $('.underlying-wrap').removeClass("hide");
+           
+          },
       //发送订单
-        setElectronic(){
-          console.log(this.caseDetailData,"我是case数据")
+        setElectronic(e){
+          console.log(this.caseDetailData,"我是case数据");
+
+           //确定标车和三者车勾选状态
+           this.signatureData();
+           if(!this.isTargetSign && !this.isThirdSign){
+             this.$message.error("请进行勾选！")
+             return
+           }
+         
          var type =  this.typeSelection();
          var data = {};
            data.type =  this.typeSelection();
            //cs
            //data.surveyNo = "9e9d5480311b4b3496b16c9664fd84e3"
            data.surveyNo = this.caseDetailData.accidentInfo.surveyNo;
+           //修改5.22
+             data.isTargetSign = this.isTargetSign;
+             data.isThirdSign = this.isThirdSign;
           if(this.selectStateOne){
             data.type =  this.typeSelection();
             //cs
@@ -897,12 +1077,16 @@ export default {
             data.isThirdSign = this.isThirdSign;
             data.claimList = this.claimList;
           }
-         console.log(data,747474747747474)
+         console.log(data,747474747747474);
           axios.post(this.ajaxUrl+"/survey_single/v1/send",data)
           .then(response => {
              // console.log(response,11111111111111)
              if(response.status == 200){
-               $(".orderSelectDialog").addClass("hide");
+               $(".underlying-wrap").addClass("hide");
+
+               //修改5.22
+                 this.checkedCities = [""];
+                 this.signatureList = [""];
                //this.open6();
                this.$alert('发送完成！', '温馨提示', {
                   confirmButtonText: '确定',
@@ -932,7 +1116,7 @@ export default {
                 //obj.surveyBaseInfoId = 1997;
                 obj.surveyBaseInfoId = this.ImgInfo[i].id;
                 obj.damagedPart = arr[i];
-                obj.claimAmount = this.claimMoneyOne[i];
+                obj.claimAmount = this.claimMoneyOne[i] ? this.claimMoneyOne[i]:"";
                 claimList.push(obj)
                
              }
@@ -981,6 +1165,7 @@ export default {
          var noList = [];
          var num = 0;
          var str = "";
+         var partsSelectedList = [];//部位选中表
          var monber = 0;
          for(var i = 0;i < arr.length;i++){
               num ++ ;
@@ -989,36 +1174,67 @@ export default {
               }else{
                  str = "";
               };
-              claimInformationOne += str
-              if(num%8 == 0 && claimInformationOne != ""){
-                noList.push(claimInformationOne);
-                str = "";
-                claimInformationOne = "";
-              }
+              claimInformationOne += str;
+                //5.22新加
+                if(num%8 == 0){
+                   if(claimInformationOne != ""){
+                       partsSelectedList.push(1);
+                       noList.push(claimInformationOne);
+                       str = "";
+                       claimInformationOne = "";
+                   }else{
+                       noList.push(claimInformationOne);
+                       str = "";
+                       claimInformationOne = "";
+                       partsSelectedList.push(0);
+                   }
+
+                };
+              // if(num%8 == 0 && claimInformationOne != ""){
+              //   noList.push(claimInformationOne);
+              //   str = "";
+              //   claimInformationOne = "";
+              // }
 
           };
 
           //理赔部位表
          var list =  this.modifyData(noList);
-         console.log(list,"我是原始部位")
-         if(list.length != this.ImgInfo.length){
-              this.$message.error("请将信息填写完成！");
-              return
-         }
-         for(var i  in this.claimMoneyOne){
-            monber ++;
-         }
-         if(monber != this.ImgInfo.length){
+         console.log(list,"我是原始部位");
+          for(var i = 0; i < partsSelectedList.length; i++){
+                  if(partsSelectedList[i] == 1 && this.claimMoneyOne[i]){
+                    //alert(11111111)
+                      //理赔信息
+                      var claimList = this.disposalData(list);
+                      console.log(list,"我是部位")
+                      this.claimList = claimList;
+                      console.log(claimList,"5654654654")
+                      // this.signatureData();
+                      // console.log(claimList,11111111111)
+                      $(".claim-wrap").addClass("hide");
+                     
+                     return
+                  }
+            };
             this.$message.error("请将信息填写完成！");
-            return
-         }
-          //理赔信息
-           var claimList = this.disposalData(list);
-           console.log(list,"我是部位")
-           this.claimList = claimList;
-           this.signatureData();
-           // console.log(claimList,11111111111)
-            $(".claim-wrap").addClass("hide");
+         // if(list.length != this.ImgInfo.length){
+         //      this.$message.error("请将信息填写完成！");
+         //      return
+         // }
+         // for(var i  in this.claimMoneyOne){
+         //    monber ++;
+         // }
+         // if(monber != this.ImgInfo.length){
+         //    this.$message.error("请将信息填写完成！");
+         //    return
+         // }
+         //  //理赔信息
+         //   var claimList = this.disposalData(list);
+         //   console.log(list,"我是部位")
+         //   this.claimList = claimList;
+         //   this.signatureData();
+         //   // console.log(claimList,11111111111)
+         //    $(".claim-wrap").addClass("hide");
         
          // console.log(this.ImgInfo,222222)
          // console.log(claimList,6666666666)
@@ -1066,6 +1282,8 @@ export default {
         },
         closeClaimDiolag(){
            $(".claim-wrap").addClass("hide");
+
+           $(".triggerCheckout").trigger("click");
         },
         handleCheckedChange(value) {
           if(value[1] == "转赔授权书"){
