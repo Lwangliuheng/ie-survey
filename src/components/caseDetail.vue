@@ -170,7 +170,7 @@
   }
   .send-documents{
     position:absolute;
-    left:200px;
+    left:90px;
     top:0px;
     overflow: hidden;
   }
@@ -192,7 +192,7 @@
     margin-top:-2px;
   }
 
-  .claim-wrap{
+  .claim-wrap-tong{
     background: rgba(0,0,0,0.3);
     width:100%;
     position: fixed;
@@ -338,6 +338,16 @@
   .beizhuInfoIncidentGra{
     color:#c8c8c8;
   }
+  .xe_top{
+    padding-bottom:10px;
+  }
+  .checkbox-wrap-xe{
+    padding-left:80px;
+  }
+  .el-radio+.el-radio{
+    margin-left: 0px !important;
+    margin-top:10px;
+  }
 </style>
 <template>
   <div class="caseDetail">
@@ -350,24 +360,70 @@
              <div class="select-wrap">
                 <el-checkbox-group v-model="checkedTypes" @change="handleCheckedChange">
                    <!--  <el-checkbox v-for="city in cityOptions" :label="city" :key="city">{{city}}</el-checkbox> -->
-                    <el-checkbox label="电子查勘单" disabled @click="getDetails"></el-checkbox>
+                    <el-checkbox label="电子查勘单" disabled ></el-checkbox>
+                  <!--    -->
                     <el-checkbox label="转赔授权书" :disabled="selectStateOne"></el-checkbox>
                     <el-checkbox label="快赔协议" :disabled="selectStateTwo" class="triggerCheckout"></el-checkbox>
+                    <el-checkbox label="小额快赔" :disabled="selectStateThree" class="triggerXeCheckout" v-if="caseDetailData.reportVehicleInfo.insuranceCompanyCode == 110000003007"></el-checkbox>
                 </el-checkbox-group>
              </div>
 
               <!-- 修改5.22 -->
                   <span class="sent-but" @click="underlyingThreeCar">发送单证</span>
                   <span class="sent-but" @click="setDetails">查看</span>
-                 
+                  <span class="sent-but" @click="goApplicationBook" v-if="caseDetailData.reportVehicleInfo.insuranceCompanyCode == 110000003007">申请书</span>
             <!--  <span class="sent-but" @click="setElectronic">发送单证</span>
              <span class="sent-but" @click="setDetails">查看</span> -->
              <!-- <a :href="url" class="sent-but" @click="setDetails" target="_blank">查看</a> -->
             
          </div>
-
+           <!-- 小额理赔弹框 -->
+    <div class="claim-wrap-tong claim-wrap-xe hide">
+        <div class="claim-content">
+          <div class="top-wrap">
+              <h4>请完善理赔信息</h4>
+              <span @click="closeXeClaimDiolag" class="xmark">×</span>
+          </div>
+           <div class="che-one-wrap"> 
+              <div class="che-one" v-for="(item,index) in ImgInfo">
+                   <p class="plate">{{item.originalVehicleLicenseNo}}</p>
+                   <div class="part-wrap part-wrap-one" >
+                      <div class="part" @click="part($event,item)" >正前部<span>1</span></div>
+                      <div class="part" @click="part($event,item)" >左前部<span>2</span></div>
+                      <div class="part" @click="part($event,item)" >右前部<span>3</span></div>
+                      <div class="part" @click="part($event,item)" >左中部<span>4</span></div>
+                      <div class="part" @click="part($event,item)" >正后部<span>5</span></div>
+                      <div class="part" @click="part($event,item)" >左后部<span>6</span></div>
+                      <div class="part" @click="part($event,item)" >右后部<span>7</span></div>
+                      <div class="part" @click="part($event,item)" >右中部<span>8</span></div>
+                   </div>
+                   <div class="input-box">
+                         <span>赔付金额</span>
+                         <input type="text" name="" @blur="one_part($event,index)">
+                    </div>
+              </div>
+             <div class="checkbox-wrap checkbox-wrap-xe">
+               <p class="xe_top">您在本次事故中需要提供的有关证明和材料是：</p>
+                <el-checkbox-group v-model="checkedMaterial"  @change="handleCheckedMaterialChange">
+                      <el-checkbox v-for="material in materialOptions" :label="material" :key="material">{{material}}</el-checkbox>
+                </el-checkbox-group>
+              </div>
+              <div class="checkbox-wrap checkbox-wrap-xe">
+                <p class="xe_top">损失确认:</p>
+                 <el-radio v-model="radio" label="1">三者方已获得赔付，如后期产生理赔纠纷与保险公司无关</el-radio>
+                 <el-radio v-model="radio" label="0">三者方未获得赔付，甲方授权贵公司将本次理赔款项划入三者方账户</el-radio>
+               <!--  <el-checkbox-group v-model="lossConfirmation"  @change="handleCheckedLossChange">
+                      <el-checkbox label="三者方已获得赔付，如后期产生理赔纠纷与保险公司无关" :disabled="lossStatus" ></el-checkbox>
+                      <el-checkbox label="三者方未获得赔付，甲方授权贵公司将本次理赔款项划入三者方账户" :disabled="!lossStatus"></el-checkbox>
+                </el-checkbox-group> -->
+              </div>
+              <el-button type="primary" class="but-claim" @click="claimXeButton">确定</el-button>
+          </div>
+              
+        </div>
+    </div>
           <!-- 理赔信息弹框 -->
-    <div class="claim-wrap hide">
+    <div class="claim-wrap-tong claim-wrap hide">
         <div class="claim-content">
           <div class="top-wrap">
               <h4>请完善理赔信息</h4>
@@ -594,6 +650,7 @@ import axios from 'axios'
 export default {
   data() {
       return{
+        radio:'1',
         isbeizhuInfoIncidentGra:true,
         IncidentContent:"",//事故经过内容
         editorIncidentStatue:false,//编辑事故经过状态
@@ -607,14 +664,23 @@ export default {
         isTargetSign: true,
         isThirdSign: false,
         claimList:[],
+        LossList:[],
+        MaterialList:["被保险人身份证","银行卡"],
         signatureList:[],
         claimMoneyOne:{},
         ImgInfo: [],
         checkedCities:[""],
+        checkedMaterial:["被保险人身份证","银行卡"],//小额快赔勾选默认资料
+        lossConfirmation:["三者方已获得赔付，如后期产生理赔纠纷与保险公司无关"],//小额快赔勾选默认损失确认
+        materialOptions:["被保险人身份证","银行卡"],//小额快赔勾选资料
+        lossStatus:false,
+        lossConfirmationOptions:["三者方已获得赔付，如后期产生理赔纠纷与保险公司无关","三者方未获得赔付，甲方授权贵公司将本次理赔款项划入三者方账户"],//小额快赔勾选默认损失确认
         cityOptions:["标的签字","三者签字"],
         checkedTypes:["电子查勘单"],
+        selectState:true,
         selectStateOne:false,
         selectStateTwo:false,
+        selectStateThree:false,
         // cityOptions:["电子查勘单","转赔授权书","快赔协议"],
         beizhuActive: false,
         showOldActive: false,
@@ -648,6 +714,8 @@ export default {
     created(){
        this.id = localStorage.getItem("caseDetailDataId")
        this.caseDetailData =  JSON.parse(localStorage.getItem("caseDetailData"));
+        console.log(this.caseDetailData.reportVehicleInfo.insuranceCompanyCode)
+       console.log(this.caseDetailData.reportVehicleInfo.insuranceCompanyCode == 110000003007)
        console.log(this.caseDetailData,"shuju")
        this.longitude = this.caseDetailData.accidentInfo.accidentAddrLongitude;
        this.latitude = this.caseDetailData.accidentInfo.accidentAddrLatitude;
@@ -988,6 +1056,12 @@ export default {
          a.click();
          
       },
+      //6.22
+      goApplicationBook(){
+        var id = this.caseDetailData.surveySingleId
+        localStorage.setItem("wIdData",id);
+         this.$router.push('/applicationBook')
+      },
       setDetails(){
 
          var type = this.caseDetailData.surveySingleStatus
@@ -1032,6 +1106,10 @@ export default {
       },
        //标的车和三者车状态//修改5.22
         underlyingThreeCarStatus(){
+          if(!this.selectStateThree && this.selectStateTwo && this.selectStateOne){
+              this.cityOptions = ["标的签字"];
+              return
+          };
           if(this.thirdActive){
              this.cityOptions = ["标的签字","三者签字"];
           }else{
@@ -1048,6 +1126,47 @@ export default {
             $('.underlying-wrap').removeClass("hide");
            
           },
+          //小额理赔
+          smallClaims(data){
+               axios.post(this.ajaxUrl+'/small_claim/v1/send',data)
+               .then(response => {
+                  if(response.status == 200){
+                    $(".underlying-wrap").addClass("hide");
+
+                    //修改5.22
+                      this.checkedCities = [""];
+                      this.signatureList = [""];
+                    //this.open6();
+                    this.$alert('发送完成！', '温馨提示', {
+                       confirmButtonText: '确定',
+                       callback: action => {
+                         
+                       }
+                   });
+                  }
+               }, err => {
+                 console.log(err);
+                 $(".loadingBox").addClass('hide')
+               })
+               .catch((error) => {
+                 console.log(error)
+                 $(".loadingBox").addClass('hide')
+               })
+          },
+
+          //小额理赔
+          modifierMaterialList(){
+             var arr = [];
+             var length = this.MaterialList.length;
+
+             if(length  > 0){
+                 arr.push(this.MaterialList[0]);
+                 if(length  > 1){
+                   arr.push(this.MaterialList[1])
+                 };
+             };
+            return arr
+        },
       //发送订单
         setElectronic(e){
           console.log(this.caseDetailData,"我是case数据");
@@ -1077,6 +1196,18 @@ export default {
             data.isThirdSign = this.isThirdSign;
             data.claimList = this.claimList;
           }
+
+
+          //小额赔偿新增
+          if(!this.selectStateThree && this.selectStateTwo && this.selectStateOne){
+              data.type = '';
+              data.evidenceType = this.modifierMaterialList();
+              data.lossConf = this.radio;
+              console.log(data,747474747747474);
+              this.smallClaims(data);
+              //小额赔偿接口
+              return
+          };
          console.log(data,747474747747474);
           axios.post(this.ajaxUrl+"/survey_single/v1/send",data)
           .then(response => {
@@ -1158,7 +1289,69 @@ export default {
         }
         return arr
       },
-        //理赔确定按钮
+      //小额理赔
+      claimXeButton(){
+        var MaterialLength = this.MaterialList.length;
+        console.log(this.MaterialList)
+        // var LossLength = this.LossList.length;
+        if(MaterialLength == 0){
+           this.$message.error("请将信息填写完成！");
+           return
+        };
+         var arr = $(".part");
+         var claimInformationOne = "";
+         var noList = [];
+         var num = 0;
+         var str = "";
+         var partsSelectedList = [];//部位选中表
+         var monber = 0;
+         for(var i = 0;i < arr.length;i++){
+              num ++ ;
+              if($(arr[i]).hasClass("checkoutGreen")){
+                 str = $(arr[i]).children("span").html() + "-";
+              }else{
+                 str = "";
+              };
+              claimInformationOne += str;
+                //5.22新加
+                if(num%8 == 0){
+                   if(claimInformationOne != ""){
+                       partsSelectedList.push(1);
+                       noList.push(claimInformationOne);
+                       str = "";
+                       claimInformationOne = "";
+                   }else{
+                       noList.push(claimInformationOne);
+                       str = "";
+                       claimInformationOne = "";
+                       partsSelectedList.push(0);
+                   }
+
+                };
+      
+          };
+          //理赔部位表
+         var list =  this.modifyData(noList);
+         console.log(list,"我是原始部位");
+          for(var i = 0; i < partsSelectedList.length; i++){
+                  if(partsSelectedList[i] == 1 && this.claimMoneyOne[i]){
+                    //alert(11111111)
+                      //理赔信息
+                      var claimList = this.disposalData(list);
+                      console.log(list,"我是部位")
+                      this.claimList = claimList;
+                      console.log(claimList,"5654654654")
+                      // this.signatureData();
+                      // console.log(claimList,11111111111)
+                      $(".claim-wrap-xe").addClass("hide");
+                     
+                     return
+                  }
+            };
+            this.$message.error("请将信息填写完成！");
+
+      },
+      //理赔确定按钮
       claimButton(){
          var arr = $(".part");
          var claimInformationOne = "";
@@ -1257,6 +1450,13 @@ export default {
           console.log(list,8888)
 
         },
+        // handleCheckedLossChange(value){
+        //     this.LossList = value;
+        // },
+        handleCheckedMaterialChange(value){
+            // console.log(this.MaterialList)
+            this.MaterialList = value;
+        },
         handleCheckedCitiesChange(value) {
           this.signatureList = value;
           //alert(value)
@@ -1280,18 +1480,32 @@ export default {
         closeCzmDiolag(){
            $(".czm-wrap").addClass("hide");
         },
+        closeXeClaimDiolag(){
+            $(".claim-wrap-xe").addClass("hide");
+
+            $(".triggerXeCheckout").trigger("click");
+        },
         closeClaimDiolag(){
            $(".claim-wrap").addClass("hide");
 
            $(".triggerCheckout").trigger("click");
         },
         handleCheckedChange(value) {
+          if(value[1] == "小额快赔"){
+               $('.claim-wrap-xe').removeClass("hide");
+               this.selectStateTwo = true;
+               this.selectStateOne = true;
+               this.checkedTypes = ["小额快赔"];
+               return
+          }
           if(value[1] == "转赔授权书"){
+               this.selectStateThree = true;
                this.selectStateTwo = true;
                return
           }
           if(value[1] == "快赔协议"){
                $('.claim-wrap').removeClass("hide");
+               this.selectStateThree = true;
                this.selectStateOne = true;
                 if(this.thirdActive){
                     this.cityOptions = ["标的签字","三者签字"];
@@ -1302,6 +1516,8 @@ export default {
           }
           this.selectStateTwo = false;
           this.selectStateOne = false;
+          this.selectStateThree = false;
+          this.checkedTypes = ["电子查勘单"];
         },
         saveBeizhu(){
           this.beizhuInfo = this.beizhuInfo.replace(/(^\s*)|(\s*$)/g, "");

@@ -5,7 +5,7 @@ import login from '@/page/login'
 import historyCase from '@/page/historyCase'
 import message from '@/page/message'
 import takePicHelps from '@/components/takePicHelps'
-
+import applicationBook from '@/page/applicationBook'
 Vue.use(Router);
 
 export default new Router({
@@ -39,6 +39,10 @@ export default new Router({
     {
       path: '/message',
       component: message
+    },
+    {
+      path: '/applicationBook',
+      component: applicationBook
     },
     {
       path: '/takePicHelps',

@@ -24,7 +24,10 @@ var loadinginstace = ''
 axios.interceptors.request.use(config => {
   console.log('9'+config.url)
   // element ui Loading方法
-
+   //小额
+  if(config.url == '/boot-pub-survey-video/small_claim/v1/send'){
+    loadinginstace = ElementUI.Loading.service({ fullscreen: true })
+  }
   if(config.url == '/boot-pub-survey-video/survey/order/v2/photo/choice'){
     loadinginstace = ElementUI.Loading.service({ fullscreen: true })
   }
