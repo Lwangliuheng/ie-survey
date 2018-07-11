@@ -219,11 +219,16 @@
               </div>
               <div class="infoDiv">
                 <p>报案人姓名：{{leftData.reporterName}}</p>
-                <p>报案人电话：<span id="bdtel">{{leftData.reporterPhone}}<span></span></span></p>
+                <p>报案人电话：<span id="bdtel">{{leftData.reporterPhone}}<span></span></span>
+                <img v-if="insurecode == 111111111111" src="../images/phone.png" class="callPhone_img" @click="callPhone($event,leftData.reporterPhone)">
+                </p>
               </div>
               <div class="infoDiv">
                 <p>查勘员姓名：{{leftData.liveSurveyorName}} </p>
-                <p>查勘员电话：{{leftData.liveSurveyorPhone }}</p>
+                <p>
+                查勘员电话：{{leftData.liveSurveyorPhone }}
+              <img v-if="insurecode == 111111111111" src="../images/phone.png" class="callPhone_img" @click="callPhone($event,leftData.liveSurveyorPhone)">
+                </p>
                 <p v-if="leftData.liveSurveyorStatus == '11'">查勘员状态：待指派</p>
                 <p v-if="leftData.liveSurveyorStatus == '12'">查勘员状态：已指派</p>
                 <p v-if="leftData.liveSurveyorStatus == '13'">查勘员状态：已到达</p>
@@ -486,12 +491,16 @@
         <p> 版权所有：北京中车宝联科技有限责任公司</p>
       </div>
     </div>
+      <!-- 打电话 -->
+    <call-modal v-if="callPhoneStatus" v-bind:phone="callPhoneNum"></call-modal>
   </div>
 </template>
 <script>
 
   import caseList from '@/components/caseList'
   import caseMonitor from '@/components/caseMonitor'
+  import callModal from '../components/callModal'
+  import Bus from "../../rtcv/static/bus.js"
   import Viewer from 'viewerjs';
   import axios from 'axios';
   export default {
@@ -500,6 +509,7 @@
     },
     data() {
       return{
+        insurecode:"",
         xsource:"",
         claimList:[],
         isTargetSign: false,
@@ -1334,6 +1344,8 @@
         list:[],
         showLocal: false,
         wlhData:"",
+        callPhoneNum:"",//拨打电话值
+        callPhoneStatus:false,
         isScreenShot: false,
         listeners: {
 //          "onConnNotify": webimhandler.onConnNotify, //选填
@@ -1372,7 +1384,10 @@
       }
       this.getNodealCase()
       this.checkStateOne();
-      this.getLeftData()
+      this.getLeftData();
+       Bus.$on('gbCallPhoneTc', () => { //Hub接收事件
+        this.callPhoneStatus = false;
+       });
       
     },
 
@@ -1380,6 +1395,8 @@
 
     },
     mounted () {
+      this.insurecode = localStorage.getItem('insurecode');
+      console.log(this.insurecode)
       var w = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;//浏览器宽度　
 
       this.clientWidth = w*(0.45)+'px';
@@ -1398,6 +1415,15 @@
 //      }, 1000)
     },
     methods: {
+       //打电话
+      callPhone(e,phone){
+        if(phone.length == 0){
+           this.open4("电话号不能为空!")
+          return
+        }
+        this.callPhoneStatus = true;
+        this.callPhoneNum = phone;
+      },
       handleCheckedCitiesChange(value) {
         this.signatureList = value;
           //alert(value)
@@ -1593,7 +1619,7 @@
     //doLoadActiveXPlugin();
     RTCRoom.httpRequest({
       //url: "https://lvb.qcloud.com/weapp/double_room/get_im_login_info",
-      url: "https://nweeyr0w.qcloud.la/weapp/double_room/get_im_login_info",
+      url: "https://160716803.shipinlipei.com/weapp/double_room/get_im_login_info",
       data: {userIDPrefix: "IE(ActiveX)"},
       method: "POST",
       success: function (ret) {
@@ -1602,8 +1628,8 @@
         }
         //gai
         //ret.data.serverDomain = "https://lvb.qcloud.com/weapp/double_room/";
-        //https://nweeyr0w.qcloud.la
-        ret.data.serverDomain = "https://nweeyr0w.qcloud.la/weapp/double_room/";
+        //https://160716803.shipinlipei.com
+        ret.data.serverDomain = "https://160716803.shipinlipei.com/weapp/double_room/";
         userID = ret.data.userID;
         ret.data.divId = "PusherAreaID";
         ret.data.userName = myUserName;
@@ -3490,7 +3516,7 @@
       }
     },
     components: {
-
+       callModal,
     },
     destroyed () {
       clearInterval(this.beatTime);

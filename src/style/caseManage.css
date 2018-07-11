@@ -967,3 +967,9 @@
     z-index: 99;
     object-fit:fill;
   }
+
+  .callPhone_img{
+    width:18px;
+    height:19px;
+    margin-left: 5px;
+  }

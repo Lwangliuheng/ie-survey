@@ -1,5 +1,5 @@
 var WebRTCRoom = (function () {
-
+//无用
 //  var serverDomain = '//xzb.qcloud.com/webrtc/weapp/webrtc_room',
   var serverDomain = '//nweeyr0w.qcloud.la/weapp/double_room',
    // var serverDomain = '//jiw5ccnh.qcloud.la/weapp/double_room',

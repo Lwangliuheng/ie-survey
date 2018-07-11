@@ -246,7 +246,7 @@
             .then(response => {
                 if(response.data.rescode == 200){
                   localStorage.setItem('A',"2");
-                  console.log(response.data.data)
+                  console.log(response.data.data,777777777)
                   localStorage.setItem('insurecode',response.data.data.insurecode);
                   localStorage.setItem('orgCode',response.data.data.organizationCode);
                   localStorage.setItem('chinaName',response.data.data.organizationName);
