@@ -1933,10 +1933,7 @@
           //this.xsource = this.source;
           if(this.source == 'wechat'){
             var url = '/survey/order/v2/photo/choice';
-          }else{
-            var url = '/survey/order/v1/photo/choice';
-          }
-          var data = {
+            var data = {
             "originalPhotoUrl":this.originalPhotoUrl,
             'photoType':this.photoType,
             // "photoUrl":this.watermarkPhotoUrl,
@@ -1944,6 +1941,18 @@
             "vehicleLicenseNo": this.savevehicleLicenseNo,
             "longitude":this.longitude,
             "latitude": this.latitude
+            }
+          }else{
+            var url = '/survey/order/v1/photo/choice';
+            var data = {
+            "originalPhotoUrl":this.originalPhotoUrl,
+            'photoType':this.photoType,
+            "photoUrl":this.watermarkPhotoUrl,
+            "surveyNo": this.roomId,
+            "vehicleLicenseNo": this.savevehicleLicenseNo,
+            "longitude":this.longitude,
+            "latitude": this.latitude
+            }
           }
           axios.post(this.ajaxUrl+url,data)
             .then(response => {

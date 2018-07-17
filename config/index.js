@@ -41,7 +41,6 @@ module.exports = {
         //target:'http://192.168.1.126:8080',
         //target:'https://survey.zhongchebaolian.com', // 测试
         target: 'https://chakan.zhongchebaolian.com', // 生产
-        // target: 'https://api.accidentx.zhongchebaolian.com', // 正式
         changeOrigin: true,
         // pathRewrite: {
         //   '^/phone-api-boot': '/phone-api-boot'
