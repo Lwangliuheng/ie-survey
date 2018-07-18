@@ -1,8 +1,8 @@
 var WebRTCRoom = (function () {
 
 //  var serverDomain = '//xzb.qcloud.com/webrtc/weapp/webrtc_room',
-  var serverDomain = '//160716803.shipinlipei.com/weapp/double_room',//生产
-  //var serverDomain = '//nweeyr0w.qcloud.la/weapp/double_room',//测试
+  //var serverDomain = '//160716803.shipinlipei.com/weapp/double_room',//生产
+  var serverDomain = '//nweeyr0w.qcloud.la/weapp/double_room',//测试
    // var serverDomain = '//jiw5ccnh.qcloud.la/weapp/double_room',
     requestNum = 0,
     heart = '', // 判断心跳变量

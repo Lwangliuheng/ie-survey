@@ -1619,7 +1619,7 @@
     //doLoadActiveXPlugin();
     RTCRoom.httpRequest({
       //url: "https://lvb.qcloud.com/weapp/double_room/get_im_login_info",
-      url: "https://160716803.shipinlipei.com/weapp/double_room/get_im_login_info",
+      url: "https://nweeyr0w.qcloud.la/weapp/double_room/get_im_login_info",
       data: {userIDPrefix: "IE(ActiveX)"},
       method: "POST",
       success: function (ret) {
@@ -1628,8 +1628,8 @@
         }
         //gai
         //ret.data.serverDomain = "https://lvb.qcloud.com/weapp/double_room/";
-        //https://160716803.shipinlipei.com
-        ret.data.serverDomain = "https://160716803.shipinlipei.com/weapp/double_room/";
+        //https://nweeyr0w.qcloud.la
+        ret.data.serverDomain = "https://nweeyr0w.qcloud.la/weapp/double_room/";
         userID = ret.data.userID;
         ret.data.divId = "PusherAreaID";
         ret.data.userName = myUserName;
