@@ -1,4 +1,9 @@
 const mutation = {
+  // xin
+  setPeopleHurtActive(state, obj) {
+    state.peopleHurtActive = obj
+  },
+
   setCaseDetailActive(state, obj) {
     state.caseDetailActive = obj
   },

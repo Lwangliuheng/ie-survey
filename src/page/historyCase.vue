@@ -279,6 +279,9 @@
       <div class="caseListTable" v-else>
         <p style="text-align:center;margin-top: 15px;">暂无数据</p>
       </div>
+      <!-- xin -->
+      <people-hurt v-if="peopleHurtActive"></people-hurt>
+
       <case-detail v-if="caseDetailActive"></case-detail>
       <sign-Seats v-if="signSeatsActive"></sign-Seats>
     </div>
@@ -296,6 +299,8 @@
   import axios from 'axios'
   import caseDetail from '../components/caseDetail'
   import signSeats from '../components/signSeats'
+  // xin
+  import peopleHurt from '../components/peopleHurtDetail'
   export default {
     data() {
       return {
@@ -573,7 +578,7 @@
         this.currentPageNo = currentPage;
         this.getCaseList()
       },
-      goCaseDetail(id){
+      goCaseDetail(id,num){
 
         axios.get(this.ajaxUrl+"/survey/order/history/v1/details/"+id)
           .then(response => {
@@ -582,6 +587,12 @@
               console.log(response.data.data,"xixixixixixixixix")
               localStorage.setItem("caseDetailData",data);
               localStorage.setItem("caseDetailDataId",id);
+               //xin
+              if(num == 4){
+                   this.$store.commit('setPeopleHurtActive', true);
+                   return
+              };
+
               this.$store.commit('setCaseDetailActive', true);
               this.caseDetailActive = this.$store.state.caseDetailActive;
             }
@@ -594,10 +605,18 @@
       }
     },
     components: {
+       // xin
+      peopleHurt,
+
       caseDetail,
       signSeats,
     },
     computed: {
+       // xin
+      peopleHurtActive(){
+        return this.$store.state.peopleHurtActive;
+      },
+
       getUserIcons(){
         return this.$store.state.caseDetailActive;
       },

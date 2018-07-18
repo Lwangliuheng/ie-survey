@@ -127,7 +127,7 @@
   .caseInfoBoxAdress{
     position: relative;
     display:inline-block;
-    width: 50%;
+    width: 22%;
   }
   .caseInfoBoxTitle{
     width: 70px;
@@ -172,13 +172,14 @@
     position:absolute;
     left:90px;
     top:0px;
+    padding-left:450px;
     overflow: hidden;
   }
   .sent-but{
     float:left;
     cursor:pointer;
     margin-right:30px;
-    width:100px;
+    width:140px;
     height:30px;
     background-color:green;
     border:1px solid green; 
@@ -231,14 +232,16 @@
     position: relative;
   }
   .claim-content{
-    width: 650px;
+    width: 900px;
     margin: 6vh;
-    margin-left:50%;
     background: #fff;
-    margin-top: 20vh;
     height:500px;
     overflow: scroll;
-    position: relative;
+    position: fixed;
+    left:50%;
+    top:50%;
+    margin-top:-30vh;
+    margin-left:-450px;
   }
   .top-wrap{
     overflow: hidden;
@@ -314,6 +317,7 @@
    .che-one-wrap{
     height:400px;
     overflow: scroll;
+    padding:20px 20px;
   }
   .underlying-wrap{
     background: rgba(0,0,0,0.3);
@@ -348,6 +352,46 @@
     margin-left: 0px !important;
     margin-top:10px;
   }
+
+
+  .rs-che-one{
+    border:1px solid #bbb;
+    border-top:none;
+  }
+  .rsContent{
+    /*padding:20px 20px;*/
+  }
+  .addinsitituteSpan{
+    display: inline-block;
+    min-width: 80px;
+    font-size: 15px;
+    text-align: right;
+    margin-right: 10px;
+  }
+  .creatInput{
+    height:35px;
+    line-height:35px;
+    padding-left: 6px;
+    border: 1px solid #bbb;
+    border-radius:4px;
+   /* width: 170px;*/
+  }
+  .clear {
+    zoom:1;
+  }
+  .clear:after {
+   clear:both;
+   content:'.';
+   display:block;
+   width: 0;
+   height: 0;
+   visibility:hidden;
+}
+.basic-li{
+  width:30%;
+  float:left;
+  margin:10px 0px;
+}
 </style>
 <template>
   <div class="caseDetail">
@@ -356,123 +400,79 @@
       <div class="oneMonitor clear">
         <h4 class="dialogTitle">案件详情</h4>
          <div class="send-documents">
-            <!--  <span class="sent-but" @click="setElectronic">发送单证</span> -->
-             <div class="select-wrap">
-                <el-checkbox-group v-model="checkedTypes" @change="handleCheckedChange">
-                   <!--  <el-checkbox v-for="city in cityOptions" :label="city" :key="city">{{city}}</el-checkbox> -->
-                    <el-checkbox label="电子查勘单" disabled ></el-checkbox>
-                  <!--    -->
-                    <el-checkbox label="转赔授权书" :disabled="selectStateOne"></el-checkbox>
-                    <el-checkbox label="快赔协议" :disabled="selectStateTwo" class="triggerCheckout"></el-checkbox>
-                    <el-checkbox label="小额快赔" :disabled="selectStateThree" class="triggerXeCheckout" v-if="caseDetailData.reportVehicleInfo.insuranceCompanyCode == 110000003007 && false"></el-checkbox>
-                </el-checkbox-group>
-             </div>
-
-              <!-- 修改5.22 -->
-                  <span class="sent-but" @click="underlyingThreeCar">发送单证</span>
-                  <span class="sent-but" @click="setDetails">查看</span>
-                  <span class="sent-but" @click="goApplicationBook" v-if="caseDetailData.reportVehicleInfo.insuranceCompanyCode == 110000003007 && false">申请书</span>
-            <!--  <span class="sent-but" @click="setElectronic">发送单证</span>
-             <span class="sent-but" @click="setDetails">查看</span> -->
-             <!-- <a :href="url" class="sent-but" @click="setDetails" target="_blank">查看</a> -->
-            
+            <span class="sent-but" @click="underlyingThreeCar">发送人伤查勘单</span>
+            <span style="lineHeight:30px;">(未发送)</span>
          </div>
-           <!-- 小额理赔弹框 -->
-    <div class="claim-wrap-tong claim-wrap-xe hide">
-        <div class="claim-content">
-          <div class="top-wrap">
-              <h4>请完善理赔信息</h4>
-              <span @click="closeXeClaimDiolag" class="xmark">×</span>
-          </div>
-           <div class="che-one-wrap"> 
-              <div class="che-one" v-for="(item,index) in ImgInfo">
-                   <p class="plate">{{item.originalVehicleLicenseNo}}</p>
-                   <div class="part-wrap part-wrap-one" >
-                      <div class="part" @click="part($event,item)" >正前部<span>1</span></div>
-                      <div class="part" @click="part($event,item)" >左前部<span>2</span></div>
-                      <div class="part" @click="part($event,item)" >右前部<span>3</span></div>
-                      <div class="part" @click="part($event,item)" >左中部<span>4</span></div>
-                      <div class="part" @click="part($event,item)" >正后部<span>5</span></div>
-                      <div class="part" @click="part($event,item)" >左后部<span>6</span></div>
-                      <div class="part" @click="part($event,item)" >右后部<span>7</span></div>
-                      <div class="part" @click="part($event,item)" >右中部<span>8</span></div>
-                   </div>
-                   <div class="input-box">
-                         <span>赔付金额</span>
-                         <input type="text" name="" @blur="one_part($event,index)">
-                    </div>
-              </div>
-             <div class="checkbox-wrap checkbox-wrap-xe">
-               <p class="xe_top">您在本次事故中需要提供的有关证明和材料是：</p>
-                <el-checkbox-group v-model="checkedMaterial"  @change="handleCheckedMaterialChange">
-                      <el-checkbox v-for="material in materialOptions" :label="material" :key="material">{{material}}</el-checkbox>
-                </el-checkbox-group>
-              </div>
-              <div class="checkbox-wrap checkbox-wrap-xe">
-                <p class="xe_top">损失确认:</p>
-                 <el-radio v-model="radio" label="1">三者方已获得赔付，如后期产生理赔纠纷与保险公司无关</el-radio>
-                 <el-radio v-model="radio" label="0">三者方未获得赔付，甲方授权贵公司将本次理赔款项划入三者方账户</el-radio>
-               <!--  <el-checkbox-group v-model="lossConfirmation"  @change="handleCheckedLossChange">
-                      <el-checkbox label="三者方已获得赔付，如后期产生理赔纠纷与保险公司无关" :disabled="lossStatus" ></el-checkbox>
-                      <el-checkbox label="三者方未获得赔付，甲方授权贵公司将本次理赔款项划入三者方账户" :disabled="!lossStatus"></el-checkbox>
-                </el-checkbox-group> -->
-              </div>
-              <el-button type="primary" class="but-claim" @click="claimXeButton">确定</el-button>
-          </div>
-              
-        </div>
-    </div>
           <!-- 理赔信息弹框 -->
     <div class="claim-wrap-tong claim-wrap hide">
         <div class="claim-content">
           <div class="top-wrap">
-              <h4>请完善理赔信息</h4>
+              <h4>发送人伤查勘单</h4>
               <span @click="closeClaimDiolag" class="xmark">×</span>
           </div>
           <div class="che-one-wrap"> 
-              <div class="che-one" v-for="(item,index) in ImgInfo">
-                   <p class="plate">{{item.originalVehicleLicenseNo}}</p>
-                   <div class="part-wrap part-wrap-one" >
-                      <div class="part" @click="part($event,item)" >正前部<span>1</span></div>
-                      <div class="part" @click="part($event,item)" >左前部<span>2</span></div>
-                      <div class="part" @click="part($event,item)" >右前部<span>3</span></div>
-                      <div class="part" @click="part($event,item)" >左中部<span>4</span></div>
-                      <div class="part" @click="part($event,item)" >正后部<span>5</span></div>
-                      <div class="part" @click="part($event,item)" >左后部<span>6</span></div>
-                      <div class="part" @click="part($event,item)" >右后部<span>7</span></div>
-                      <div class="part" @click="part($event,item)" >右中部<span>8</span></div>
-                   </div>
-                   <div class="input-box">
-                         <span>赔付金额</span>
-                         <input type="text" name="" @blur="one_part($event,index)">
-                    </div>
+              <div class="rs-che-one">
+                <div class="aimheader">基本信息</div>
+                <ul class="rsContent clear">
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">被保险人:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">报案编号:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">出险时间:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">出险地点:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">受害人/联系人:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">联系电话:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">就诊医院:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">医院等级:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">负责医师:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">医师电话:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">住院号:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">就诊科室及床号:</span>
+                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   </li>
+                </ul>
               </div>
-             <!--  <div class="checkbox-wrap">
-              <el-checkbox-group v-model="checkedCities"  @change="handleCheckedCitiesChange">
-                    <el-checkbox v-for="city in cityOptions" :label="city" :key="city">{{city}}</el-checkbox>
-              </el-checkbox-group>
-              </div> -->
+    
               <el-button type="primary" class="but-claim" @click="claimButton">确定</el-button>
           </div>
          
         </div>
     </div>
-      <!-- 标车三者车选择的弹框//修改5.22 -->
-         <div class="underlying-wrap hide">
-             <div class="claim-content-underiy">
-               <div class="top-wrap">
-                   <h4>请完善理赔信息</h4>
-                   <span class="xmark" @click="closeUnderlying">×</span>
-               </div>
-               <div class="checkbox-wrap">
-               <el-checkbox-group v-model="checkedCities"  @change="handleCheckedCitiesChange">
-                     <el-checkbox v-for="city in cityOptions" :label="city" :key="city">{{city}}</el-checkbox>
-               </el-checkbox-group>
-               </div>
-               <!-- 发送电子查勘单 -->
-               <el-button type="primary" class="but-claim" @click="setElectronic">确定</el-button>
-             </div>
-         </div>
         <!-- 标车姓名弹框 -->
     <div class="czm-wrap hide">
         <div class="czm-content">
@@ -523,23 +523,13 @@
                     <img @mouseenter="enter" @mouseleave="leave" src="../images/adress.png"/>
                     <div id="detailMap" class="hide" style="height:250px;width:250px;"></div>
                   </div>
+
                 </div>
+                 <!-- xin -->
+                
+                   <span>所在医院：</span><i class="chakanno">{{caseDetailData.accidentInfo .surveyNo }}</i>
               </div>
-
-             <!--  <div class="caseInfoBox" v-if="caseDetailData.accidentInfo.exceptionReason != null"><span>事故经过：</span><i>{{caseDetailData.accidentInfo.exceptionReason}}</i></div> -->
-          </div>
-
-          <div class="AimCar">
-            <div  class="aimheader clear">
-                <span style="color:#fff;">事故经过</span>
-                <span style="color:#fff;padding-right:10px;cursor: pointer;" v-if="editorIncidentStatue" @click="saveIncident" class="right">保存</span>
-                <span style="color:#fff;padding-right:10px;cursor: pointer;" v-if="!editorIncidentStatue"  @click="editorIncident" class="right">编辑</span>
-            </div>
-            <div class="aimInfo">
-              <textarea placeholder="请输入事故经过" class="beizhuInfo" v-model="IncidentContent" v-if="editorIncidentStatue">
-              </textarea>
-              <div class="beizhuInfoIncident beizhuInfo" v-bind:class="{beizhuInfoIncidentGra: isbeizhuInfoIncidentGra}" v-if="!editorIncidentStatue">{{IncidentContent}}</div>
-            </div>
+              
           </div>
 
           <div class="AimCar">
@@ -550,11 +540,19 @@
             </div>
           </div>
           <div class="AimCar">
-            <div class="aimheader">标的车</div>
+            <div class="aimheader">人伤信息</div>
             <div class="aimInfo">
               <table class="table" border="0" cellspacing="0" cellpadding="0">
-                <tr><td>车牌号:</td><td>{{caseDetailData.reportVehicleInfo.vehicleLicenseNo}}</td><td>车主姓名:</td><td>{{caseDetailData.reportVehicleInfo.reporterName}}<span class="czxm" @click="czxm($event,caseDetailData.reportVehicleInfo.id)">编辑</span></td><td>车主电话: </td><td>{{caseDetailData.reportVehicleInfo.reporterPhoneNo}}</td></tr>
-                <tr><td>保险公司:</td><td> {{caseDetailData.reportVehicleInfo.insuranceCompanyName}}</td><td>保险公司城市： </td><td>{{caseDetailData.reportVehicleInfo.insuranceCompanyCity}}</td><td> 处理机构：</td><td>{{caseDetailData.reportVehicleInfo.processOrgName}}</td></tr>
+                <tr>
+                <td>伤者姓名:</td>
+                <td>{{caseDetailData.reportVehicleInfo.reporterName}}<span class="czxm" @click="czxm($event,caseDetailData.reportVehicleInfo.id)">编辑</span></td>
+                <td>伤者电话: </td>
+                <td>{{caseDetailData.reportVehicleInfo.reporterPhoneNo}}</td>
+                <td>保险公司:</td>
+                <td> {{caseDetailData.reportVehicleInfo.insuranceCompanyName}}</td>
+                <td>城市： </td>
+                <td>{{caseDetailData.reportVehicleInfo.insuranceCompanyCity}}</td>
+                </tr>
               </table>
               <div class="aimCarImg" v-if="totalCountAim != 0">
                 <ul id="scaleImg">
@@ -576,33 +574,8 @@
             </div>
           </div>
           <!--<div class="thirdCar AimCar" v-if="thirdActive" v-for="(item,index) in thirdCar">-->
-          <div class="thirdCar AimCar" v-if="thirdActive" v-for="(item,index) in thirdCar">
-            <div class="aimheader">三者车({{item.vehicleLicenseNo}})<span style="color:#fff;padding-right:10px;cursor: pointer;" @click="savethirdCar(item.vehicleLicenseNo)" class="right">保存</span></div>
-            <div class="aimInfo">
-              <table class="table" border="0" cellspacing="0" cellpadding="0">
-                <tr><td>车牌号:</td><td>{{item.vehicleLicenseNo}}</td><td>车主电话: </td><td v-if="item.contactPhoneNo == null || item.contactPhoneNo == ''"> <input class="thirdphone" type="tel" maxlength="11" style="height:35px;" value="暂无"/><span class="czxm" @click="szcPhone($event,item.id,index)">编辑</span></td><td v-else><input  maxlength="11" class="thirdphone" style="height:35px;" type="tel" :value="item.contactPhoneNo"/><span class="czxm" @click="szcPhone($event,item.id,index)">编辑</span></td></tr>
-              </table>
-              <div class="aimCarImg thirdImg" v-if="item.thirdCarImg.length!=0">
-                <ul class="suibian">
-                  <li v-for="itemImg in item.thirdCarImg">
-                    <img :data-src="itemImg.photoUri" :src="itemImg.smallPhotoUri"/>
-                    <br>
-                    <span>{{itemImg.photoTypeComment}}</span>
-                  </li>
-                </ul>
-                <div class="phonesPaging" @click="getCarNo(item.vehicleLicenseNo)" >
-                  <el-pagination  @current-change='handleCurrentChangethird'
-                                  :current-page="1"
-                                  :page-size = "4"
-                                  layout="prev,next"
-                                  :total="item.total">
-                  </el-pagination>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="thirdCar AimCar " v-if="caseDetailData.surveyVideoRooms.length != 0">
-            <div class="aimheader">查勘现场视频</div>
+            <div class="aimheader">人伤视频信息</div>
             <!--<div v-if="showFlash">-->
               <!--<h1>Alternative content</h1>-->
               <!--<p><a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /></a></p>-->
@@ -1104,69 +1077,10 @@ export default {
            //      console.log(error)
            //    })
       },
-       //标的车和三者车状态//修改5.22
-        underlyingThreeCarStatus(){
-          if(!this.selectStateThree && this.selectStateTwo && this.selectStateOne){
-              this.cityOptions = ["标的签字"];
-              return
-          };
-          if(this.thirdActive){
-             this.cityOptions = ["标的签字","三者签字"];
-          }else{
-            this.cityOptions = ["标的签字"];
-          }
-        },
-        //修改5.22
-          closeUnderlying(e){
-           $('.underlying-wrap').addClass("hide");
-          },
           //发送订单按钮//修改5.22
           underlyingThreeCar(e){
-            this.underlyingThreeCarStatus();
-            $('.underlying-wrap').removeClass("hide");
-           
+             $('.claim-wrap').removeClass("hide");
           },
-          //小额理赔
-          smallClaims(data){
-               axios.post(this.ajaxUrl+'/small_claim/v1/send',data)
-               .then(response => {
-                  if(response.status == 200){
-                    $(".underlying-wrap").addClass("hide");
-
-                    //修改5.22
-                      this.checkedCities = [""];
-                      this.signatureList = [""];
-                    //this.open6();
-                    this.$alert('发送完成！', '温馨提示', {
-                       confirmButtonText: '确定',
-                       callback: action => {
-                         
-                       }
-                   });
-                  }
-               }, err => {
-                 console.log(err);
-                 $(".loadingBox").addClass('hide')
-               })
-               .catch((error) => {
-                 console.log(error)
-                 $(".loadingBox").addClass('hide')
-               })
-          },
-
-          //小额理赔
-          modifierMaterialList(){
-             var arr = [];
-             var length = this.MaterialList.length;
-
-             if(length  > 0){
-                 arr.push(this.MaterialList[0]);
-                 if(length  > 1){
-                   arr.push(this.MaterialList[1])
-                 };
-             };
-            return arr
-        },
       //发送订单
         setElectronic(e){
           console.log(this.caseDetailData,"我是case数据");
@@ -1390,7 +1304,7 @@ export default {
               // }
 
           };
-          console.log(noList,999999)
+
           //理赔部位表
          var list =  this.modifyData(noList);
          console.log(list,"我是原始部位");
@@ -1487,8 +1401,6 @@ export default {
         },
         closeClaimDiolag(){
            $(".claim-wrap").addClass("hide");
-
-           $(".triggerCheckout").trigger("click");
         },
         handleCheckedChange(value) {
           if(value[1] == "小额快赔"){
@@ -1710,7 +1622,7 @@ export default {
         },
         closCaseDetail(){
           $(".caseDetail").addClass("hide")
-          this.$store.commit('setCaseDetailActive', false)
+          this.$store.commit('setPeopleHurtActive', false)
         },
         enter(){
           $("#detailMap").removeClass("hide")
@@ -1777,7 +1689,7 @@ export default {
             .then(response => {
               if(response.data.rescode == 200){
                 this.open2(response.data.resdes);
-                this.$store.commit('setCaseDetailActive', false);//关闭详情组件组件
+                this.$store.commit('setPeopleHurtActive', false);//关闭详情组件组件
                 this.$store.commit('getcaseListActive', true)//调用列表接口
               }else{
                 if(response.data.rescode == "300"){

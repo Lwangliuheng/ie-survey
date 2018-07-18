@@ -1,4 +1,7 @@
 const state = {
+  // xin
+  peopleHurtActive:false,
+
   caseDetailActive: false,
   insititutEditorActive: false,
   headerActive: false,
