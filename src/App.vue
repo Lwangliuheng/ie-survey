@@ -12,5 +12,10 @@ export default {
 </script>
 
 <style>
-
+  .el-input--suffix .el-input__inner{
+    margin-top: 0px;
+  }
+  .el-date-editor.el-input{
+    width: 162px;
+ }
 </style>

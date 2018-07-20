@@ -62,6 +62,21 @@
     font-size: 15px;
     line-height: 30px;
     padding-left:15px;
+    position:relative;
+  }
+  .addBut{
+    width:20px;
+    height:20px;
+    background-color: #2EAB3B;
+    border-radius: 50%;
+    line-height:17px;
+    text-align: center;
+    position:absolute;
+    right:10px;
+    top:5px;
+    border:1px solid #FFFFFF;
+    color:#FFFFFF;
+    cursor: pointer;
   }
   .aimInfo{
     width: 100%;
@@ -357,16 +372,17 @@
   .rs-che-one{
     border:1px solid #bbb;
     border-top:none;
-  }
-  .rsContent{
-    /*padding:20px 20px;*/
+    margin-bottom:20px;
   }
   .addinsitituteSpan{
     display: inline-block;
-    min-width: 80px;
-    font-size: 15px;
+    width: 118px;
+    font-size: 14px;
     text-align: right;
-    margin-right: 10px;
+   /* margin-right: 4px;*/
+  }
+  .rsContent{
+    padding-bottom: 20px;
   }
   .creatInput{
     height:35px;
@@ -374,7 +390,7 @@
     padding-left: 6px;
     border: 1px solid #bbb;
     border-radius:4px;
-   /* width: 170px;*/
+    width: 162px;
   }
   .clear {
     zoom:1;
@@ -388,10 +404,63 @@
    visibility:hidden;
 }
 .basic-li{
-  width:30%;
   float:left;
   margin:10px 0px;
 }
+ .tuiBox{
+    position: absolute;
+    top: 40px;
+    left: 44%;
+    max-height:400px;
+    overflow-y:scroll;
+    z-index: 20;
+  }
+  .addinsitituteSpan-two{
+    width:66px;
+  }
+  .creatInput-two{
+    width:120px;
+  }
+  .checkListOne{
+      width:100px;
+  }
+  .checkListOneTe{
+      width:114px;
+  }
+  .checkListOne-wrap{
+    padding:10px 0px 10px 30px;
+  }
+  .el-checkbox{
+    margin-right:0px !important;
+  }
+  .feed_textarea{
+    width:500px;
+    resize: none;
+    height: 70px;
+    max-height: 70px;
+    border:1px solid #dddddd;
+    border-radius: 10px;
+    padding:3px 3px;
+    text-indent:2px;
+    font-size: 15px;
+    vertical-align:top;
+  }
+  .fgx{
+    border:1px dashed #BBBBBB;
+    margin:0px 30px;
+  }
+  .bz{
+    padding:0px 30px;
+    color:#E51C23;
+    margin-bottom:10px;
+  }
+  .signBut{
+    margin-bottom:20px;
+  }
+  .el-input--suffix .el-input__inner{
+    margin-top: 0px !important;
+    width:160px !important;
+  }
 </style>
 <template>
   <div class="caseDetail">
@@ -399,74 +468,378 @@
       <span @click="closCaseDetail" class="right closCaseDetail">×</span>
       <div class="oneMonitor clear">
         <h4 class="dialogTitle">案件详情</h4>
-         <div class="send-documents">
+         <!-- <div class="send-documents">
             <span class="sent-but" @click="underlyingThreeCar">发送人伤查勘单</span>
             <span style="lineHeight:30px;">(未发送)</span>
+         </div> -->
+         <div class="send-documents">
+            <span class="sent-but" @click="lookHurtBill">查看人伤查勘单</span>
+            <span style="lineHeight:30px;">(已发送，已签字)</span>
          </div>
-          <!-- 理赔信息弹框 -->
+        <!-- 查看人伤查勘单 -->
+      <div class="claim-wrap-tong claim-wrap-ckHurt hide">
+        <div class="claim-content">
+          <div class="top-wrap">
+              <h4>人伤查勘单</h4>
+              <span @click="closeHurtDiolag" class="xmark">×</span>
+          </div>
+          <div style="width:800px;margin:0 auto;">
+            <img src="" style="width:100%;height:200px;" >
+          </div>
+           <div class="footerBox">
+            <span class="download" @click="downLoadHurt">下载</span>
+          </div>
+        </div>
+      </div>
+          <!-- 发送人伤查勘单 -->
     <div class="claim-wrap-tong claim-wrap hide">
         <div class="claim-content">
           <div class="top-wrap">
               <h4>发送人伤查勘单</h4>
               <span @click="closeClaimDiolag" class="xmark">×</span>
           </div>
-          <div class="che-one-wrap"> 
+          <div class="che-one-wrap">
+               <!-- 基本信息 -->
               <div class="rs-che-one">
                 <div class="aimheader">基本信息</div>
                 <ul class="rsContent clear">
                    <li class="basic-li">
-                       <span class="addinsitituteSpan">被保险人:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                       <span class="addinsitituteSpan">被保险人：</span>
+                       <input type="text" class="creatInput" v-model="insuredName" placeholder="请输入被保险人姓名" >
                    </li>
                    <li class="basic-li">
-                       <span class="addinsitituteSpan">报案编号:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                       <span class="addinsitituteSpan">报案编号：</span>
+                       <input type="text" class="creatInput"  v-model="reportNumber" placeholder="请输入报案编号" >
                    </li>
                    <li class="basic-li">
-                       <span class="addinsitituteSpan">出险时间:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
-                   </li>
-
-                   <li class="basic-li">
-                       <span class="addinsitituteSpan">出险地点:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
-                   </li>
-                   <li class="basic-li">
-                       <span class="addinsitituteSpan">受害人/联系人:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
-                   </li>
-                   <li class="basic-li">
-                       <span class="addinsitituteSpan">联系电话:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                       <span class="addinsitituteSpan">出险时间：</span>
+                       <input type="text" class="creatInput" v-model="outTime"  placeholder="请输入出险时间" >
+                    <!--   <el-date-picker
+                                 v-model="outTime"
+                                 type="date"
+                                 size="mini"
+                                 format="yyyy 年 MM 月 dd 日"
+                                 value-format="yyyy-MM-dd"
+                                 placeholder="选择日期"
+                                 >
+                      </el-date-picker> -->
                    </li>
 
                    <li class="basic-li">
-                       <span class="addinsitituteSpan">就诊医院:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                       <span class="addinsitituteSpan">出险地点：</span>
+                       <input type="text" class="creatInput" v-model="outPlace" placeholder="请输入出险地点" >
                    </li>
                    <li class="basic-li">
-                       <span class="addinsitituteSpan">医院等级:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                       <span class="addinsitituteSpan">受害人/联系人：</span>
+                       <input type="text" class="creatInput" v-model="baseVictimName"  placeholder="请输入受害人/联系人姓名" >
                    </li>
                    <li class="basic-li">
-                       <span class="addinsitituteSpan">负责医师:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                       <span class="addinsitituteSpan">联系电话：</span>
+                       <input type="text" class="creatInput" v-model="victimPhone"  placeholder="请输入联系电话" >
                    </li>
 
                    <li class="basic-li">
-                       <span class="addinsitituteSpan">医师电话:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                       <span class="addinsitituteSpan">就诊医院：</span>
+                       <input type="text" class="creatInput" v-model="clinicHospital"  placeholder="请输入就诊医院" >
                    </li>
                    <li class="basic-li">
-                       <span class="addinsitituteSpan">住院号:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                   <span class="addinsitituteSpan">医院等级：</span>
+                      <select class="creatInput" v-model="hospitalLevelCode" >
+                         <option v-for="item in hospitalLevel" :value="item.code">{{item.name}}</option>
+                       </select>
                    </li>
                    <li class="basic-li">
-                       <span class="addinsitituteSpan">就诊科室及床号:</span>
-                       <input type="text" class="creatInput" @focus="cityFocus" v-model="cityModel" @input="checkCity">
+                       <span class="addinsitituteSpan">负责医师：</span>
+                       <input type="text" class="creatInput" v-model="responsibleDoctor" placeholder="请输入负责医师" >
+                   </li>
+
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">医师电话：</span>
+                       <input type="text" class="creatInput" v-model="doctorPhone" placeholder="请输入医师电话" >
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">住院号：</span>
+                       <input type="text" class="creatInput" v-model="admissionNumber"  placeholder="请输入住院号" >
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">就诊科室及床号：</span>
+                       <input type="text" class="creatInput" v-model="bedNumber" placeholder="请输入就诊科室及床号" >
                    </li>
                 </ul>
               </div>
+              
+               <!-- 伤/亡者基本情况 -->
+              <div class="rs-che-one">
+                <div class="aimheader">伤/亡者基本情况</div>
+                <ul class="rsContent clear">
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">姓名：</span>
+                       <input type="text" v-model="suffererName" class="creatInput creatInput-two" placeholder="请输入姓名" >
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan addinsitituteSpan-two">性别：</span>
+                       <select class="creatInput creatInput-two"  v-model="genderCode" >
+                          <option  value="女">女</option>
+                          <option  value="男">男</option>
+                       </select>
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan addinsitituteSpan-two">年龄：</span>
+                       <input type="text" class="creatInput creatInput-two" v-model="suffererAge"  style="width:100px;" placeholder="请输入年龄" > 岁
+                   </li>
+
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan" style="width:93px;">户口性质：</span>
+                       <select class="creatInput creatInput-two" v-model="registeredCode" >
+                          <option  value="0">农业</option>
+                          <option  value="非农业">非农业</option>
+                       </select>
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">职务：</span>
+                       <input type="text" class="creatInput" v-model="suffererDuty" placeholder="请输入受害人/联系人姓名" >
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan addinsitituteSpan-two">收入：</span>
+                       <input type="text" class="creatInput" v-model="suffererIncome" placeholder="请输入联系电话" > 元
+                   </li>
+
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan" style="width:138px">收入领取方式：</span>
+                       <select class="creatInput" v-model="incomeCode" >
+                          <option  value="现金">现金</option>
+                          <option  value="转账">转账</option>
+                       </select>
+                      
+                   </li>
+                   <li class="basic-li">
+                   <span class="addinsitituteSpan">身份证：</span>
+                      <input type="text" style='width:308px;' v-model="IDcard" class="creatInput" placeholder="请输入就诊医院" >
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">工作单位：</span>
+                       <input type="text" v-model="suffererOrganization" style='width:290px;marginRight:4px;' class="creatInput" placeholder="请输入负责医师" >
+                   </li>
+
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">居住地点及年限：</span>
+                       <input type="text"  class="creatInput" v-model="residentialLocation" style="width:290px;" placeholder="请输入医师电话" >
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan" style="width:78px;">住房性质：</span>
+                        <select class="creatInput" style="width:100px;" v-model="housingCode" >
+                          <option  value="自有">自有</option>
+                          <option  value="租用">租用</option>
+                       </select>
+                      
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan" style="width:97px;">已住院天数：</span>
+                       <input type="text" style='width:120px;' v-model="stayLength" class="creatInput" placeholder="请输入已住院天数" > 天
+                   </li>
+
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan" >已花费医疗费用：</span>
+                       <input type="text" class="creatInput" v-model="hospitalizationCosts" placeholder="请输入医师电话" > 元
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan" style="width:145px;">预计花费医疗总额：</span>
+                       <input type="text" class="creatInput" v-model="totalAmount" placeholder="请输入住院号" > 元
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan" style="width:100px;">是否已手术：</span>
+                        <select class="creatInput" style="width:100px;" v-model="surgeryCode" >
+                           <option  value="否">否</option>
+                           <option  value="是">是</option>
+                       </select>
+                       
+                   </li>
+                    <li class="basic-li">
+                       <span class="addinsitituteSpan" style="width:134px;">预估可达伤残等级：</span>
+                       <input type="text" class="creatInput" placeholder="请输入医师电话" v-model="degreeDisability" > 级
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan"style="width:130px;">受伤时所在位置：</span>
+                        <select class="creatInput" v-model="siteCode" >
+                          <option  value="第三者车上人员">第三者车上人员</option>
+                          <option  value="车上人员">车上人员</option>
+                          <option  value="行人（非机动车辆人员）">行人（非机动车辆人员）</option>
+                       </select>
+                   </li>
+                </ul>
+              </div>
+
+
+               <!--伤情描述 -->
+              <div class="rs-che-one">
+                <div class="aimheader">伤情描述</div>
+                <div class="rsContent">
+                    <el-checkbox-group v-model="checkList" class="checkListOne-wrap" @change="changeCheckbox">
+                        <el-checkbox label="颅脑损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="容貌损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="颈部损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="颈椎损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="锁骨损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="胸骨损伤" class="checkListOne checkListOneTe"></el-checkbox>
+                        <el-checkbox label="肋骨骨折" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="脊柱骨折" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="脊髓损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="骨盆骨折" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="股骨头骨折" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="上臂骨折" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="下肢骨折" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="手部骨折" class="checkListOne checkListOneTe"></el-checkbox>
+                        <el-checkbox label="足部骨折" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="心脏损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="肺部损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="肝脏损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="脾脏损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="胰脏损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="肾脏损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="其它内脏损伤" class="checkListOne checkListOneTe"></el-checkbox>
+                        <el-checkbox label="软组织损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="五官损伤" class="checkListOne"></el-checkbox>
+                        <el-checkbox label="肌腱韧带损伤" class="checkListOne"></el-checkbox>
+                    </el-checkbox-group>
+                    <span style="marginLeft:30px;">具体伤情描述：</span>
+                    <textarea class="feed_textarea" v-model="injuryDescribe"   placeholder="请输入伤情描述" >
+                    </textarea>
+                   
+                </div>
+              </div>
+               
+                <!-- 护理人员基本情况 -->
+              <div class="rs-che-one">
+                <div class="aimheader">
+                护理人员基本情况
+                <span class="addBut" @click="addNurseMessage">+</span>
+                </div>
+                <div v-for="(item,index) in nurseMessage">
+                    <div class="fgx" v-if="index != 0"></div>
+                    <ul class="rsContent clear">
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan">护工姓名：</span>
+                           <input type="text" :value="item.hsXm" @blur="nursingNameFocus($event,index)" class="creatInput" placeholder="请输入护工姓名" >
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan">工作单位：</span>
+                           <input type="text" :value="item.hsDw" @blur="workFocus($event,index)" class="creatInput" placeholder="请输入护工工作单位" >
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan">职务：</span>
+                           <input type="text" :value="item.hsZw"  @blur="dutyFocus($event,index)"  class="creatInput" placeholder="请输入护工职务" >
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan">收入：</span>
+                           <input type="text" :value="item.hsSr" @blur="incomeFocus($event,index)" style="width:120px;" class="creatInput" placeholder="请输入出险地点" > 元/天
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan">联系电话：</span>
+                           <input type="text" :value="item.hsDh" @blur="nursingPhoneFocus($event,index)" class="creatInput" placeholder="请输入出险地点" >
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan">与伤者关系：</span>
+                           <input type="text" :value="item.hsGx" @blur="relationshipFocus($event,index)" class="creatInput" placeholder="请输入受害人/联系人姓名" >
+                       </li>
+                    </ul>
+                   
+                </div>
+              </div>
+
+                <!-- 家庭成员情况 -->
+              <div class="rs-che-one">
+                <div class="aimheader">
+                 家庭成员情况
+                <span class="addBut" @click="addFamilyMessage">+</span>
+                </div>
+                <div v-for="(item,index) in familyMessage">
+                    <div class="fgx" v-if="index != 0"></div>
+                    <ul class="rsContent clear">
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan">姓名：</span>
+                           <input type="text" :value="item.jtXm" @blur="familyNameFocus($event,index)" class="creatInput" placeholder="请输入护工姓名" >
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan" style="width:100px;">年龄：</span>
+                           <input type="text" :value="item.jtNl" @blur="familyAgeFocus($event,index)" class="creatInput" placeholder="请输入年龄" > 岁
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan" style="width:130px;">有无劳动能力：</span>
+                            <select class="creatInput" style="width:100px;" :value="item.jtLd" @change="chooseLaborcapacity($event,index)">
+                               <option  value="否">否</option>
+                               <option  value="是">是</option>
+                           </select>
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan">有无收入来源：</span>
+                            <select class="creatInput" style="width:100px;" :value="item.jtSr"  @change="chooseSourcerevenue($event,index)">
+                               <option  value="无">无</option>
+                               <option  value="有">有</option>
+                           </select>
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan">户口性质：</span>
+                           <select class="creatInput" @change="chooseHousehold($event,index)" :value="item.jtHk">
+                              <option  value="农业">农业</option>
+                              <option  value="非农业">非农业</option>
+                           </select>
+
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan" style="width:106px;">与伤者关系：</span>
+                           <select class="creatInput"  style="width:190px;" :value="item.jtGx" @change="chooseRelationship($event,index)" >
+                              <option  value="配偶">配偶</option>
+                              <option  value="子女">子女</option>
+                              <option  value="父母">父母</option>
+                              <option  value="兄弟姐妹">兄弟姐妹</option>
+                              <option  value="其它有抚养/赡养关系的人">其它有抚养/赡养关系的人</option>
+                           </select>
+                       </li>
+                       <li class="basic-li">
+                           <span class="addinsitituteSpan">出生日期：</span>
+                           <el-date-picker
+                                 v-model="item.jtCs"
+                                 type="date"
+                                 size="mini"
+                                 format="yyyy 年 MM 月 dd 日"
+                                 value-format="yyyy-MM-dd"
+                                 placeholder="选择日期"
+                                 @change="(value)=>{
+                                    chooseData(value,index);
+                                  }"
+                                 >
+                            </el-date-picker>
+                       </li>
+                    </ul>
+                   
+                </div>
+              </div>
+
+               <!-- 伤者银行卡信息 -->
+              <div class="rs-che-one">
+                <div class="aimheader">伤者银行卡信息</div>
+                <ul class="rsContent clear">
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">持卡人姓名：</span>
+                       <input type="text" class="creatInput" v-model="cardholderName" placeholder="请输入被保险人姓名" >
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">开户行：</span>
+                       <input type="text" class="creatInput" v-model="cardholderBank" placeholder="请输入报案编号" >
+                   </li>
+                   <li class="basic-li">
+                       <span class="addinsitituteSpan">卡号：</span>
+                       <input type="text" class="creatInput" v-model="cardNumber" placeholder="请输入出险时间" >
+                   </li>
+                  
+                </ul>
+                <p class="bz">备注：请务必提供伤者本人银行卡信息，便于支付赔款。</p>
+              </div>
+              <div class="signBut">
+                 <el-checkbox v-model="signRadio">伤者无法签字</el-checkbox>
+              </div>
+              
+
     
               <el-button type="primary" class="but-claim" @click="claimButton">确定</el-button>
           </div>
@@ -623,6 +996,68 @@ import axios from 'axios'
 export default {
   data() {
       return{
+        insuredName:"",//被保险人：
+        reportNumber:"",//报案编号：
+        outTime:"",//出险时间：
+        outPlace:"",//出险地点：
+        baseVictimName:"",//受害人/联系人：
+        victimPhone:"",//联系电话：
+        clinicHospital:"",//就诊医院：
+        responsibleDoctor:"",//负责医师：
+        doctorPhone:"",//医师电话：
+        admissionNumber:"",//住院号：
+        bedNumber:"",//就诊科室及床号：
+        suffererName:"",//伤者姓名：
+        genderCode:"",//伤者性别：
+        suffererAge:"",//伤者年龄：
+        registeredCode:"",//伤者户口性质：
+        suffererDuty:"",//伤者职务：
+        suffererIncome:"",//伤者收入：
+        incomeCode:"",//伤者收入领取方式：
+        IDcard:"",//伤者身份证：
+        suffererOrganization:"",//伤者工作单位：
+        residentialLocation:"",//伤者居住地点及年限：
+        housingCode:"",//伤者住房性质：
+        stayLength:"",//伤者已住院天数：
+        hospitalizationCosts:"",//伤者已花费医疗费用：
+        totalAmount:"",//伤者预计花费医疗总额：
+        surgeryCode:"",//伤者是否已手术：
+        degreeDisability:"",//伤者预估可达伤残等级：
+        siteCode:"",//伤者受伤时所在位置：
+        injuryDescribe:"",//伤情描述具体伤情描述：
+        cardholderName:"",//伤者银行卡信息持卡人姓名：
+        cardholderBank:"",//伤者银行卡信息开户行：
+        cardNumber:"",//伤者银行卡信息卡号：
+        signRadio:false,//伤者无法签字
+        //dataValue:"",//出生日期
+        hospitalLevelCode:0,//医院等级code
+        hospitalLevel:[    //医院等级
+        {name:1111,code:0},
+        {name:22222,code:1},
+        {name:3333,code:2},
+        {name:4444,code:3}
+        ],
+        checkList: [],//伤情描述
+        nurseMessage:[{
+           hsXm:"",//姓名
+           hsDw:"",//单位
+           hsZw:"",//职务
+           hsSr:"",//收入
+           hsDh:"",//电话
+           hsGx:"",//与伤者关系
+        }],//护士循环数组
+        familyMessage:[{
+            jtXm:"",//姓名
+            jtNl:"",//年龄
+            jtLd:"",//劳动能力
+            jtSr:"",//收入
+            jtHk:"",//户口性质
+            jtGx:"",//与伤者关系
+            jtCs:"",//出生日期
+        }],//家庭循环数组
+
+
+
         radio:'1',
         isbeizhuInfoIncidentGra:true,
         IncidentContent:"",//事故经过内容
@@ -771,6 +1206,119 @@ export default {
 //      caseOrder: string
     },
     methods: {
+
+      // xin
+      chooseLevel(name,code){
+          alert(code)
+      },
+      //伤情描述
+      changeCheckbox(value){
+         console.log(value);
+         console.log(this.checkList,4444444)
+      },
+      //添加护士信息
+      addNurseMessage(){
+         var data = {
+           hsXm:"",//姓名
+           hsDw:"",//单位
+           hsZw:"",//职务
+           hsSr:"",//收入
+           hsDh:"",//电话
+           hsGx:"",//与伤者关系
+         };
+         this.nurseMessage.push(data);
+      },
+      //护工姓名
+      nursingNameFocus(e,index){
+        this.nurseMessage[index].hsXm = e.target.value;
+         // alert(e.target.value)
+         // alert(index)
+      },
+      //工作单位
+      workFocus(e,index){
+        this.nurseMessage[index].hsDw = e.target.value;
+         // alert(e.target.value)
+         // alert(index)
+      },
+      //职务
+      dutyFocus(e,index){
+        this.nurseMessage[index].hsZw = e.target.value;
+        // alert(e.target.value)
+        // alert(index)
+      },
+      //收入：
+      incomeFocus(e,index){
+         this.nurseMessage[index].hsSr = e.target.value;
+        //  alert(e.target.value)
+        // alert(index)
+      },
+      //联系电话
+      nursingPhoneFocus(e,index){
+        this.nurseMessage[index].hsDh = e.target.value;
+        // alert(e.target.value)
+        // alert(index)
+      },
+      //与伤者关系
+      relationshipFocus(e,index){
+        this.nurseMessage[index].hsGx = e.target.value;
+           // alert(e.target.value)
+           // alert(index)
+      },
+      //添加家庭成员
+      addFamilyMessage(){
+         var data = {
+            jtXm:"",//姓名
+            jtNl:"",//年龄
+            jtLd:"",//劳动能力
+            jtSr:"",//收入
+            jtHk:"",//户口性质
+            jtGx:"",//与伤者关系
+            jtCs:"",//出生日期
+         };
+         this.familyMessage.push(data);
+      },
+      //姓名
+      familyNameFocus(e,index){
+        this.familyMessage[index].jtXm = e.target.value;
+           // alert(e.target.value)
+           // alert(index)
+      },
+      //年龄
+      familyAgeFocus(e,index){
+        this.familyMessage[index].jtNl = e.target.value;
+           // alert(e.target.value)
+           // alert(index)
+      },
+      //有无劳动能力：
+      chooseLaborcapacity(e,index){
+        this.familyMessage[index].jtLd = e.target.value;
+          // alert(e.target.value);
+          // alert(index)
+      },
+      //有无收入来源：
+      chooseSourcerevenue(e,index){
+        this.familyMessage[index].jtSr = e.target.value;
+          // alert(e.target.value);
+          // alert(index)
+      },
+      //户口性质：
+      chooseHousehold(e,index){
+        this.familyMessage[index].jtHk = e.target.value;
+          // alert(e.target.value);
+          // alert(index)
+      },
+      //与伤者关系：
+      chooseRelationship(e,index){
+        this.familyMessage[index].jtGx = e.target.value;
+          // alert(e.target.value);
+          // alert(index)
+      },
+      //日期选择
+      chooseData(value,index){
+        this.familyMessage[index].jtCs = value;   
+      },
+
+
       // open4(resdes) {
       //     this.$message({
       //           showClose: true,
@@ -1053,34 +1601,75 @@ export default {
             console.log(url,88888888888888888);
             console.log(url+ "message");
             window.open(url+ "message")
-          // alert(type)
-          //this.$router.push("message");
-            // var id = this.caseDetailData.surveySingleId
-            // var url = window.location.href.substring(0,(window.location.href.indexOf("#")+2));
-            // console.log(url,88888888888888888);
-            // console.log(url+ this.ajaxUrl+"survey_single/v1/view?surveySingleId="+ id);
-            // window.open(url+ this.ajaxUrl+"survey_single/v1/view?surveySingleId="+ id)
-            // var url = window.location.href.substring(0,(window.location.href.indexOf("#")+2));
-           // axios.get(this.ajaxUrl+"/survey_single/v1/view?surveySingleId="+ id)
-           //    .then(response => {
-           //          console.log(id,"跳转id")
-           //          // var url = "https://survey.zhongchebaolian.com" + this.ajaxUrl+"/survey_single/v1/view?surveySingleId="+ id
-           //          var url = window.location.href.substring(0,(window.location.href.indexOf("#")+2));
-           //          console.log(url,88888888888888888)
-           //          console.log(url+ this.ajaxUrl+"/survey_single/v1/view?surveySingleId="+ id)
-           //          //window.open(url)
-           //          this.openWin(url);
-           //    }, err => {
-           //      console.log(err);
-           //    })
-           //    .catch((error) => {
-           //      console.log(error)
-           //    })
       },
-          //发送订单按钮//修改5.22
+          //发送订单按钮
           underlyingThreeCar(e){
-             $('.claim-wrap').removeClass("hide");
+             this.getSurveyInfo();
           },
+          //查看订单按钮
+          lookHurtBill(){
+             $(".claim-wrap-ckHurt").removeClass("hide");
+          },
+          // xin
+      getSurveyInfo(){
+         this.insuredName = ""; //被保险人：
+         this.reportNumber = ""; //报案编号：
+         this.outTime = ""; //出险时间：
+         this.outPlace = ""; //出险地点：
+         this.baseVictimName = ""; //受害人/联系人：
+         this.victimPhone = ""; //联系电话：
+         this.clinicHospital = ""; //就诊医院：
+         this.responsibleDoctor = ""; //负责医师：
+         this.doctorPhone = ""; //医师电话：
+         this.admissionNumber = ""; //住院号：
+         this.bedNumber = ""; //就诊科室及床号：
+         this.hospitalLevelCode = 1;//医院等级code
+         this.suffererName = ""; //伤者姓名：
+         this.genderCode = ""; //伤者性别：
+         this.suffererAge = ""; //伤者年龄：
+         this.registeredCode = ""; //伤者户口性质：
+         this.suffererDuty = ""; //伤者职务：
+         this.suffererIncome = ""; 
+         this.incomeCode = ""; //伤者收入领取方式：
+         this.IDcard = ""; //伤者身份证：
+         this.suffererOrganization = ""; //伤者工作单位：
+         this.residentialLocation = ""; //伤者居住地点及年限：
+         this.housingCode = ""; //伤者住房性质：
+         this.stayLength = ""; //伤者已住院天数：
+         this.hospitalizationCosts = ""; //伤者已花费医疗费用：
+         this.totalAmount = ""; //伤者预计花费医疗总额：
+         this.surgeryCode = ""; //伤者是否已手术：
+         this.degreeDisability = ""; //伤者预估可达伤残等级：
+         this.siteCode = ""; //伤者受伤时所在位置：
+         this.injuryDescribe = ""; //伤情描述具体伤情描述：
+         this.cardholderName = ""; //伤者银行卡信息持卡人姓名：
+         this.cardholderBank = ""; //伤者银行卡信息开户行：
+         this.cardNumber = ""; //伤者银行卡信息卡号：
+         this.signRadio = false; //伤者无法签字
+
+
+         this.checkList = [];//伤情描述
+         this.nurseMessage = [{
+           hsXm:"",//姓名
+           hsDw:"",//单位
+           hsZw:"",//职务
+           hsSr:"",//收入
+           hsDh:"",//电话
+           hsGx:"",//与伤者关系
+          }];//护理人员基本情况
+         this.familyMessage = [{
+            jtXm:"",//姓名
+            jtNl:"",//年龄
+            jtLd:"",//劳动能力
+            jtSr:"",//收入
+            jtHk:"",//户口性质
+            jtGx:"",//与伤者关系
+            jtCs:"",//出生日期
+          }];// 家庭成员情况 
+
+        $('.claim-wrap').removeClass("hide");
+
+      },
       //发送订单
         setElectronic(e){
           console.log(this.caseDetailData,"我是case数据");
@@ -1267,86 +1856,67 @@ export default {
       },
       //理赔确定按钮
       claimButton(){
-         var arr = $(".part");
-         var claimInformationOne = "";
-         var noList = [];
-         var num = 0;
-         var str = "";
-         var partsSelectedList = [];//部位选中表
-         var monber = 0;
-         for(var i = 0;i < arr.length;i++){
-              num ++ ;
-              if($(arr[i]).hasClass("checkoutGreen")){
-                 str = $(arr[i]).children("span").html() + "-";
-              }else{
-                 str = "";
-              };
-              claimInformationOne += str;
-                //5.22新加
-                if(num%8 == 0){
-                   if(claimInformationOne != ""){
-                       partsSelectedList.push(1);
-                       noList.push(claimInformationOne);
-                       str = "";
-                       claimInformationOne = "";
-                   }else{
-                       noList.push(claimInformationOne);
-                       str = "";
-                       claimInformationOne = "";
-                       partsSelectedList.push(0);
-                   }
+         var data = {
+            insuredName:this.insuredName,//被保险人：
+            reportNumber:this.reportNumber,//报案编号：
+            outTime:this.outTime,//出险时间：
+            outPlace:this.outPlace,//出险地点：
+            baseVictimName:this.baseVictimName,//受害人/联系人：
+            victimPhone:this.victimPhone,//联系电话：
+            clinicHospital:this.clinicHospital,//就诊医院：
+            responsibleDoctor:this.responsibleDoctor,//负责医师：
+            doctorPhone:this.doctorPhone,//医师电话：
+            admissionNumber:this.admissionNumber,//住院号：
+            bedNumber:this.bedNumber,//就诊科室及床号：
+            hospitalLevelCode:this.hospitalLevelCode,//医院等级code
+            suffererName:this.suffererName,//伤者姓名：
+            genderCode:this.genderCode,//伤者性别：
+            suffererAge:this.suffererAge,//伤者年龄：
+            registeredCode:this.registeredCode,//伤者户口性质：
+            suffererDuty:this.suffererDuty,//伤者职务：
+            suffererIncome:this.suffererIncome,
+            incomeCode:this.incomeCode,//伤者收入领取方式：
+            IDcard:this.IDcard,//伤者身份证：
+            suffererOrganization:this.suffererOrganization,//伤者工作单位：
+            residentialLocation:this.residentialLocation,//伤者居住地点及年限：
+            housingCode:this.housingCode,//伤者住房性质：
+            stayLength:this.stayLength,//伤者已住院天数：
+            hospitalizationCosts:this.hospitalizationCosts,//伤者已花费医疗费用：
+            totalAmount:this.totalAmount,//伤者预计花费医疗总额：
+            surgeryCode:this.surgeryCode,//伤者是否已手术：
+            degreeDisability:this.degreeDisability,//伤者预估可达伤残等级：
+            siteCode:this.siteCode,//伤者受伤时所在位置：
+            injuryDescribe:this.injuryDescribe,//伤情描述具体伤情描述：
+            cardholderName:this.cardholderName,//伤者银行卡信息持卡人姓名：
+            cardholderBank:this.cardholderBank,//伤者银行卡信息开户行：
+            cardNumber:this.cardNumber,//伤者银行卡信息卡号：
+            signRadio:this.signRadio//伤者无法签字
 
-                };
-              // if(num%8 == 0 && claimInformationOne != ""){
-              //   noList.push(claimInformationOne);
-              //   str = "";
-              //   claimInformationOne = "";
-              // }
-
-          };
-
-          //理赔部位表
-         var list =  this.modifyData(noList);
-         console.log(list,"我是原始部位");
-          for(var i = 0; i < partsSelectedList.length; i++){
-                  if(partsSelectedList[i] == 1 && this.claimMoneyOne[i]){
-                    //alert(11111111)
-                      //理赔信息
-                      var claimList = this.disposalData(list);
-                      console.log(list,"我是部位")
-                      this.claimList = claimList;
-                      console.log(claimList,"5654654654")
-                      // this.signatureData();
-                      // console.log(claimList,11111111111)
-                      $(".claim-wrap").addClass("hide");
-                     
-                     return
-                  }
-            };
-            this.$message.error("请将信息填写完成！");
-         // if(list.length != this.ImgInfo.length){
-         //      this.$message.error("请将信息填写完成！");
-         //      return
-         // }
-         // for(var i  in this.claimMoneyOne){
-         //    monber ++;
-         // }
-         // if(monber != this.ImgInfo.length){
-         //    this.$message.error("请将信息填写完成！");
-         //    return
-         // }
-         //  //理赔信息
-         //   var claimList = this.disposalData(list);
-         //   console.log(list,"我是部位")
-         //   this.claimList = claimList;
-         //   this.signatureData();
-         //   // console.log(claimList,11111111111)
-         //    $(".claim-wrap").addClass("hide");
-        
-         // console.log(this.ImgInfo,222222)
-         // console.log(claimList,6666666666)
-         
+         };
+         data.checkList = this.checkList;//伤情描述
+         data.nurseMessage = this.nurseMessage;//护理人员基本情况
+         data.familyMessage = this.familyMessage;// 家庭成员情况
+          
+          this.open7(data);
       },
+      open7(data) {
+        this.$confirm("确认发送？", '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning',
+          center: true
+        }).then(() => {
+          this.subEnsureRequest(data)
+        }).catch(() => {
+  
+        });
+      },
+      //发送请求
+      subEnsureRequest(data){
+          console.log(data,33333333333)
+          $(".claim-wrap").addClass("hide");
+      }, 
+
       getImgInfo(){
             var list = [];
             // console.log(this.caseDetailData.reportVehicleInfo.id,"我是id")
@@ -1399,37 +1969,14 @@ export default {
 
             $(".triggerXeCheckout").trigger("click");
         },
+        closeHurtDiolag(){
+            $(".claim-wrap-ckHurt").addClass("hide");
+        },
         closeClaimDiolag(){
            $(".claim-wrap").addClass("hide");
         },
         handleCheckedChange(value) {
-          if(value[1] == "小额快赔"){
-               $('.claim-wrap-xe').removeClass("hide");
-               this.selectStateTwo = true;
-               this.selectStateOne = true;
-               this.checkedTypes = ["小额快赔"];
-               return
-          }
-          if(value[1] == "转赔授权书"){
-               this.selectStateThree = true;
-               this.selectStateTwo = true;
-               return
-          }
-          if(value[1] == "快赔协议"){
-               $('.claim-wrap').removeClass("hide");
-               this.selectStateThree = true;
-               this.selectStateOne = true;
-                if(this.thirdActive){
-                    this.cityOptions = ["标的签字","三者签字"];
-                 }else{
-                   this.cityOptions = ["标的签字"];
-                 }
-               return
-          }
-          this.selectStateTwo = false;
-          this.selectStateOne = false;
-          this.selectStateThree = false;
-          this.checkedTypes = ["电子查勘单"];
+           alert(value)
         },
         saveBeizhu(){
           this.beizhuInfo = this.beizhuInfo.replace(/(^\s*)|(\s*$)/g, "");
@@ -1621,8 +2168,8 @@ export default {
             })
         },
         closCaseDetail(){
-          $(".caseDetail").addClass("hide")
-          this.$store.commit('setPeopleHurtActive', false)
+          $(".caseDetail").addClass("hide");
+          this.$store.commit('setPeopleHurtActive', false);
         },
         enter(){
           $("#detailMap").removeClass("hide")
@@ -1676,6 +2223,11 @@ export default {
           }
         },
         downLoadCase(){
+          var  surveyId = parseInt(this.surveyId)
+          window.open(this.ajaxUrl+"/survey/order/history/v1/details/download/"+surveyId)
+        },
+        //人伤下载
+        downLoadHurt(){
           var  surveyId = parseInt(this.surveyId)
           window.open(this.ajaxUrl+"/survey/order/history/v1/details/download/"+surveyId)
         },

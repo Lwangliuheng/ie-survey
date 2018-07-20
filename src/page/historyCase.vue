@@ -263,7 +263,7 @@
             <td>{{item.startHandleTime}}</td>
             <td>{{item.accidentAddress}}</td>
             <td>{{stateHandling(item.surveySingleStatus)}}</td>
-            <td ><span class="listView" @click="goCaseDetail(item.id)">查看</span></td>
+            <td ><span class="listView" @click="goCaseDetail(item.id,4)">查看</span></td>
           </tr>
           </tbody>
         </table>
