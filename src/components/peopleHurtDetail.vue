@@ -461,6 +461,102 @@
     margin-top: 0px !important;
     width:160px !important;
   }
+
+
+
+
+  .affirmBook-top{
+     padding:20px 0px 10px;
+  }
+  .affirmBook-content{
+
+    border:1px solid #b6b6b6;
+  }
+  .affirmBook-top h2{
+    text-align: center;
+    margin-bottom:10px;
+  }
+   .affirmBook-top p{
+    text-align: center;
+  }
+  .base-one{
+    width:50%;
+    float:left;
+  }
+  .base-two{
+    width:25%;
+    float:left;
+  }
+  .base-three{
+    width:33.3%;
+    float:left;
+  }
+  .base-list{
+    border-right:1px solid #b6b6b6;
+    border-bottom:1px solid #b6b6b6;
+    float:left;
+    height:30px;
+    line-height: 30px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .base-list-left{
+    width:32%;
+  }
+  .base-list-right{
+    width:68%;
+  }
+  .base-one-last{
+    border-right:none;
+  }
+  .left{
+    float:left;
+  }
+  .right{
+    float:right;
+  }
+  .base-left{
+    text-align: center;
+    width:10%;
+    padding:71px 0px;
+    border-right:1px solid #b6b6b6;
+    border-bottom:1px solid #b6b6b6;
+  }
+  .base-left-two{
+    padding:120px 0px;
+  }
+  .base-list-two-left{
+    width:42%;
+  }
+   .base-list-two-right{
+    width:58%;
+  }
+  .traumaticList{
+    width:15%;
+    float:left;
+    text-align: center;
+    line-height: 30px;
+  }
+  .tableList{
+    width:15%;
+   /* float:left;
+    text-align: center;
+    line-height: 30px;*/
+  }
+  .jtsq{
+    padding:6px 30px;
+    word-wrap: break-word;
+    word-break: normal;
+  }
+  .table-wid{
+    height:50px;
+    line-height: 15px;
+    padding-top:5px;
+  }
+  .border-none{
+    border:none;
+    /*border-top:1px solid #b6b6b6;*/
+  }
 </style>
 <template>
   <div class="caseDetail">
@@ -477,14 +573,429 @@
             <span style="lineHeight:30px;">(已发送，已签字)</span>
          </div>
         <!-- 查看人伤查勘单 -->
-      <div class="claim-wrap-tong claim-wrap-ckHurt hide">
-        <div class="claim-content">
+      <div class="claim-wrap-tong claim-wrap-ckHurt hide" >
+        <div class="claim-content" style="width:1000px;marginLeft:-500px;">
           <div class="top-wrap">
               <h4>人伤查勘单</h4>
               <span @click="closeHurtDiolag" class="xmark">×</span>
           </div>
           <div style="width:800px;margin:0 auto;">
-            <img src="" style="width:100%;height:200px;" >
+             <div class="affirmBook-top">
+                 <h2>
+                   中华联合保险
+                 </h2>
+                 <p style="border-top:1px solid #232323;marginBottom:30px;"></p>
+                 <p>222222</p>
+             </div>
+             <div class="affirmBook-content">
+                <ul class="clear">
+                  <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                      被保险人：
+                    </p>
+                    <p class="base-list base-list-right">2222</p>
+                  </li>
+                  <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                     保险编号：
+                    </p>
+                    <p class="base-list base-list-right base-one-last">2222</p>
+                  </li>
+                   <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                      出险时间：
+                    </p>
+                    <p class="base-list base-list-right">2222</p>
+                  </li>
+                  <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                      出险地点：
+                    </p>
+                    <p class="base-list base-list-right base-one-last">2222</p>
+                  </li>
+                   <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                      受害人/联系人：
+                    </p>
+                    <p class="base-list base-list-right">2222</p>
+                  </li>
+                  <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                      联系电话：
+                    </p>
+                    <p class="base-list base-list-right base-one-last">2222</p>
+                  </li>
+                   <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                      就诊医院：
+                    </p>
+                    <p class="base-list base-list-right">2222</p>
+                  </li>
+                  <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                     医院等级：
+                    </p>
+                    <p class="base-list base-list-right base-one-last">2222</p>
+                  </li>
+                   <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                      负责医师：
+                    </p>
+                    <p class="base-list base-list-right">2222</p>
+                  </li>
+                  <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                      医师电话：
+                    </p>
+                    <p class="base-list base-list-right base-one-last">2222</p>
+                  </li>
+                   <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                      住院号：
+                    </p>
+                    <p class="base-list base-list-right">2222</p>
+                  </li>
+                  <li class="clear base-one">
+                    <p class="base-list base-list-left">
+                      就诊科室及床号：
+                    </p>
+                    <p class="base-list base-list-right base-one-last">2222</p>
+                  </li>
+                </ul>
+
+                <div class="clear">
+                    <div class="left base-left">
+                        伤/亡者基本情况
+                    </div>
+                    <ul class="left clear" style="width:90%;">
+                       <li class="clear base-two">
+                         <p class="base-list base-list-two-left">
+                           姓名：
+                         </p>
+                         <p class="base-list base-list-two-right">2222</p>
+                       </li>
+                       <li class="clear base-two">
+                         <p class="base-list base-list-two-left">
+                           性别：
+                         </p>
+                         <p class="base-list base-list-two-right">2222</p>
+                       </li>
+                       <li class="clear base-two">
+                         <p class="base-list base-list-two-left">
+                           年龄：
+                         </p>
+                         <p class="base-list base-list-two-right">2222</p>
+                       </li>
+                       <li class="clear base-two">
+                         <p class="base-list base-list-two-left">
+                           户口性质：
+                         </p>
+                         <p class="base-list base-list-two-right base-one-last">2222</p>
+                       </li>
+                       <li class="clear base-three">
+                         <p class="base-list base-list-two-left">
+                           职务：
+                         </p>
+                         <p class="base-list base-list-two-right">2222</p>
+                       </li>
+                       <li class="clear base-three">
+                         <p class="base-list base-list-two-left">
+                           收入：
+                         </p>
+                         <p class="base-list base-list-two-right">2222</p>
+                       </li>
+                       <li class="clear base-three">
+                         <p class="base-list base-list-two-left">
+                           领取方式：
+                         </p>
+                         <p class="base-list base-list-two-right base-one-last">2222</p>
+                       </li>
+                        <li class="clear base-one">
+                         <p class="base-list base-list-left">
+                           身份证：
+                         </p>
+                         <p class="base-list base-list-right">2222</p>
+                       </li>
+                       <li class="clear base-one">
+                         <p class="base-list  base-list-left">
+                           工作单位：
+                         </p>
+                         <p class="base-list base-list-right base-one-last">2222</p>
+                       </li>
+                       <li class="clear base-one" style="width:70%;">
+                         <p class="base-list base-list-left">
+                           记住地点及年限：
+                         </p>
+                         <p class="base-list base-list-right">2222</p>
+                       </li>
+                       <li class="clear base-three" style="width:30%;">
+                         <p class="base-list base-list-two-left ">
+                           住房性质：
+                         </p>
+                         <p class="base-list base-list-two-right base-one-last">2222</p>
+                       </li>
+                        <li class="clear base-three">
+                         <p class="base-list base-list-two-left">
+                           已住院天数：
+                         </p>
+                         <p class="base-list base-list-two-right">2222</p>
+                       </li>
+                       <li class="clear base-three">
+                         <p class="base-list base-list-two-left" style="width:44%;">
+                           已花费医疗费用：
+                         </p>
+                         <p class="base-list base-list-two-right" style="width:56%;">2222</p>
+                       </li>
+                       <li class="clear base-three">
+                         <p class="base-list base-list-two-left" style="width:50%;">
+                           预计花费医疗总额：
+                         </p>
+                         <p class="base-list base-list-two-right base-one-last" style="width:50%;">2222</p>
+                       </li>
+                       <li class="clear base-three">
+                         <p class="base-list base-list-two-left">
+                           是否已手术：
+                         </p>
+                         <p class="base-list base-list-two-right">2222</p>
+                       </li>
+                       <li class="clear base-three">
+                         <p class="base-list base-list-two-left" style="width:50%;">
+                           预估可达伤残等级：
+                         </p>
+                         <p class="base-list base-list-two-right" style="width:50%;">2222</p>
+                       </li>
+                       <li class="clear base-three">
+                         <p class="base-list base-list-two-left" style="width:50%;">
+                           受伤时所在位置：
+                         </p>
+                         <p class="base-list base-list-two-right base-one-last" style="width:50%;">2222</p>
+                       </li>
+                    </ul>
+                </div>
+                
+                 <div class="clear">
+                    <div class="left base-left base-left-two injury-top">
+                        伤情描述
+                    </div>
+                    <div class="left injury-content" style="width:90%;">
+                       <ul class="clear" >
+                          <li class="traumaticList">
+                              姓名
+                          </li>
+                          <li class="traumaticList">
+                              性别
+                          </li>
+                          <li class="traumaticList">
+                              年龄
+                          </li>
+                          <li class="traumaticList">
+                              户口性质
+                          </li>
+                          <li class="traumaticList">
+                              姓名
+                          </li>
+                          <li class="traumaticList">
+                              性别
+                          </li>
+                          <li class="traumaticList">
+                              年龄
+                          </li>
+                          <li class="traumaticList">
+                              户口性质
+                          </li>
+                            <li class="traumaticList">
+                              姓名
+                          </li>
+                          <li class="traumaticList">
+                              性别
+                          </li>
+                          <li class="traumaticList">
+                              年龄
+                          </li>
+                          <li class="traumaticList">
+                              户口性质
+                          </li>
+                          <li class="traumaticList">
+                              姓名
+                          </li>
+                          <li class="traumaticList">
+                              性别
+                          </li>
+                          <li class="traumaticList">
+                              年龄
+                          </li>
+                          <li class="traumaticList">
+                              户口性质
+                          </li>
+                            <li class="traumaticList">
+                              姓名
+                          </li>
+                          <li class="traumaticList">
+                              性别
+                          </li>
+                          <li class="traumaticList">
+                              年龄
+                          </li>
+                          <li class="traumaticList">
+                              户口性质
+                          </li>
+                          <li class="traumaticList">
+                              姓名
+                          </li>
+                          <li class="traumaticList">
+                              性别
+                          </li>
+                          <li class="traumaticList">
+                              年龄
+                          </li>
+                          <li class="traumaticList">
+                              户口性质
+                          </li>
+                       </ul>
+                       <div class="jtsq">
+                         <span>具体伤情描述：</span>
+                         4545665445664546546545454566544566454654654545456654456645465465454
+                       </div>
+                    </div>
+                </div>
+                
+
+                 <div class="clear">
+                    <div class="left base-left base-left-two nurse-top">
+                        护理人员情况
+                    </div>
+                    <div class="left nurse-content" style="width:90%;borderTop:1px solid #b6b6b6">
+                        <ul class="clear" >
+                           <li class="traumaticList base-list">
+                               姓名
+                           </li>
+                           <li class="traumaticList base-list" style="width:19%">
+                               工作单位
+                           </li>
+                           <li class="traumaticList base-list" style="width:18%">
+                               职务
+                           </li>
+                           <li class="traumaticList base-list">
+                               收入
+                           </li>
+                           <li class="traumaticList base-list" style="width:18%">
+                               联系电话
+                           </li>
+                           <li class="traumaticList base-list base-one-last">
+                               与伤者关系
+                           </li>
+                        </ul>
+                         <ul class="clear" >
+                           <li class="traumaticList base-list table-wid">
+                               1
+                           </li>
+                           <li class="traumaticList base-list table-wid" style="width:19%">
+                               2
+                           </li>
+                           <li class="traumaticList base-list table-wid" style="width:18%">
+                               3
+                           </li>
+                           <li class="traumaticList base-list table-wid">
+                               4
+                           </li>
+                           <li class="traumaticList base-list table-wid" style="width:18%">
+                               18236169404
+                           </li>
+                           <li class="traumaticList base-list table-wid base-one-last">
+                               其它有抚养/赡养关系的人
+                           </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+                
+
+                 <div class="clear">
+                    <div class="left base-left base-left-two family-top">
+                        家庭成员情况（限死亡伤残事故）
+                    </div>
+                    <div class="left family-content" style="width:90%;borderTop:1px solid #b6b6b6">
+                        <ul class="clear" >
+                           <li class="base-list tableList">
+                               姓名
+                           </li>
+                           <li class="base-list tableList" style="width:10%;">
+                               年龄
+                           </li>
+                           <li class="base-list tableList">
+                               出生日期
+                           </li>
+                           <li class="base-list tableList">
+                               有无劳动能力
+                           </li>
+                           <li class="base-list tableList">
+                               有无生活来源
+                           </li>
+                           <li class="base-list tableList">
+                               户口性质
+                           </li>
+                           <li class="base-list base-one-last tableList">
+                               与伤者关系
+                           </li>
+                        </ul>
+                        <ul class="clear" >
+                           <li class="base-list tableList table-wid">
+                               姓名
+                           </li>
+                           <li class="base-list tableList table-wid" style="width:10%;">
+                               年龄
+                           </li>
+                           <li class="base-list tableList table-wid">
+                               出生日期
+                           </li>
+                           <li class="base-list tableList table-wid">
+                               有无劳动能力
+                           </li>
+                           <li class="base-list tableList table-wid">
+                               有无生活来源
+                           </li>
+                           <li class="base-list tableList table-wid">
+                               户口性质
+                           </li>
+                           <li class="base-list base-one-last table-wid tableList">
+                               其它有抚养/赡养关系的人
+                           </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+                
+                 <div class="clear">
+                    <div class="left base-left" style="padding:30px 0px;">
+                        温馨提示：
+                    </div>
+                    <div class="left" style="width:90%;borderTop:1px solid #b6b6b6">
+                       <p style="padding:10px;">请务必提供伤者本人银行卡信息，便于支付赔款。</p>
+                       <ul class="left clear" style="width:90%;">
+                         <li class="clear base-three">
+                           <p class="base-list base-list-two-left border-none">
+                             持卡人姓名：
+                           </p>
+                           <p class="base-list base-list-two-right border-none">2222</p>
+                         </li>
+                         <li class="clear base-three">
+                           <p class="base-list base-list-two-left border-none">
+                             开户行:
+                           </p>
+                           <p class="base-list base-list-two-right border-none">2222</p>
+                         </li>
+                         <li class="clear base-three">
+                           <p class="base-list base-list-two-left border-none">
+                             卡号：
+                           </p>
+                           <p class="base-list base-list-two-right base-one-last border-none">2222</p>
+                         </li>
+                      </ul>
+                    </div>
+                </div>
+
+
+             </div>
           </div>
            <div class="footerBox">
             <span class="download" @click="downLoadHurt">下载</span>
@@ -1206,7 +1717,18 @@ export default {
 //      caseOrder: string
     },
     methods: {
-
+      //设置护理人员高度
+      setNurseHeight(){
+        var nurseHeight = $(".nurse-content").height();
+        $(".nurse-top").css("paddingTop",nurseHeight/2+5);
+        $(".nurse-top").css("paddingBottom",nurseHeight/2+5);
+        var injuryHeight = $('.injury-content').height();
+        $(".injury-top").css("paddingTop",injuryHeight/2+5);
+        $(".injury-top").css("paddingBottom",injuryHeight/2+5);
+        var familyHeight = $('.family-content').height();
+        $(".family-top").css("paddingTop",familyHeight/2+5);
+        $(".family-top").css("paddingBottom",familyHeight/2+5);
+      },
       // xin
       chooseLevel(name,code){
           alert(code)
@@ -1609,6 +2131,8 @@ export default {
           //查看订单按钮
           lookHurtBill(){
              $(".claim-wrap-ckHurt").removeClass("hide");
+             //动态设置高度
+             this.setNurseHeight();
           },
           // xin
       getSurveyInfo(){
